@@ -13,9 +13,12 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.ruaho.note.view.PostilView;
+
 public class MyWebviewActivity extends AppCompatActivity {
 
     private WebView mWebView;
+    private PostilView mPostilView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,6 +34,8 @@ public class MyWebviewActivity extends AppCompatActivity {
     }
 
     void initView(){
+        mPostilView = findViewById(R.id.mypostilview);
+        mPostilView.setMode(PostilView.Mode.DRAW);
         mWebView = findViewById(R.id.mywebview);
         mWebView.getSettings().setJavaScriptEnabled(true);
 //        mWebView.getSettings().setSupportZoom(true);
