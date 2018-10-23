@@ -12,6 +12,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.TextView;
 
 import com.ruaho.note.view.PostilView;
 
@@ -19,6 +20,8 @@ public class MyWebviewActivity extends AppCompatActivity {
 
     private WebView mWebView;
     private PostilView mPostilView;
+    private TextView mTagTxt;
+    private TextView mBackTxt;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -26,6 +29,7 @@ public class MyWebviewActivity extends AppCompatActivity {
         setContentView(R.layout.content_webview2);
         hideBar();
         initView();
+        initWebView();
     }
 
     void hideBar(){
@@ -35,7 +39,25 @@ public class MyWebviewActivity extends AppCompatActivity {
 
     void initView(){
         mPostilView = findViewById(R.id.mypostilview);
-        mPostilView.setMode(PostilView.Mode.DRAW);
+        mTagTxt = findViewById(R.id.mbiaoji);
+        mTagTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mPostilView.getMode() == PostilView.Mode.NOT_EDIT){
+                    mPostilView.setMode(PostilView.Mode.DRAW);
+                }
+            }
+        });
+        mBackTxt = findViewById(R.id.note_back);
+        mBackTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MyWebviewActivity.this.finish();
+            }
+        });
+    }
+
+    void initWebView(){
         mWebView = findViewById(R.id.mywebview);
         mWebView.getSettings().setJavaScriptEnabled(true);
 //        mWebView.getSettings().setSupportZoom(true);

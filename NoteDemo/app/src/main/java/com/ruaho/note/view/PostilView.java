@@ -48,7 +48,7 @@ public class PostilView extends View{
         NOT_EDIT
     }
 
-    private Mode mMode = Mode.DRAW;
+    private Mode mMode = Mode.NOT_EDIT;
 
 
     public PostilView(Context context) {
@@ -267,6 +267,9 @@ public class PostilView extends View{
     @SuppressWarnings("all")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if(mMode == Mode.NOT_EDIT){
+            return super.onTouchEvent(event);
+        }
         if(!isEnabled()){
             return false;
         }

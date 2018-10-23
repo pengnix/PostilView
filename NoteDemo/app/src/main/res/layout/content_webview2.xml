@@ -10,10 +10,12 @@
         android:layout_width="match_parent"
         android:layout_height="30dp">
         <TextView
+        android:id="@+id/note_back"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="20dp"
+        android:textColor="@color/red"
         android:text="关闭"/>
         <TextView
             android:id="@+id/mbiaoji"
@@ -21,6 +23,7 @@
             android:layout_height="20dp"
             android:layout_alignParentRight="true"
             android:layout_marginRight="20dp"
+            android:textColor="@color/red"
             android:text="标记"/>
         <TextView
             android:id="@+id/mwenzi"
@@ -28,6 +31,7 @@
             android:layout_height="20dp"
             android:layout_toLeftOf="@id/mbiaoji"
             android:layout_marginRight="20dp"
+            android:textColor="@color/red"
             android:text="文字"/>
         <TextView
             android:id="@+id/mguanli"
@@ -35,6 +39,7 @@
             android:layout_height="20dp"
             android:layout_toLeftOf="@id/mwenzi"
             android:layout_marginRight="20dp"
+            android:textColor="@color/red"
             android:text="管理"/>
         <TextView
             android:layout_width="wrap_content"
