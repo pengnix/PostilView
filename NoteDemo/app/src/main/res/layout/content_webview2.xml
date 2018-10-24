@@ -49,7 +49,8 @@
     </RelativeLayout>
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="1">
     <WebView
             android:id="@+id/mywebview"
             android:layout_width="match_parent"
@@ -61,9 +62,42 @@
             android:background="#00000000"/>
     </FrameLayout>
 
-    <!--<TextView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="webview"/>-->
+    <LinearLayout
+        android:id="@+id/note_bottom_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:orientation="horizontal"
+        android:visibility="gone">
+        <TextView
+            android:layout_width="@dimen/note_bar_default_width"
+            android:layout_height="20dp"
+            android:layout_weight="1"
+            android:text="画笔"/>
+        <TextView
+            android:layout_width="@dimen/note_bar_default_width"
+            android:layout_height="20dp"
+            android:layout_weight="1"
+            android:text="画刷"/>
+        <TextView
+            android:layout_width="@dimen/note_bar_default_width"
+            android:layout_height="20dp"
+            android:layout_weight="1"
+            android:text="擦除"/>
+        <TextView
+            android:layout_width="@dimen/note_bar_default_width"
+            android:layout_height="20dp"
+            android:layout_weight="1"
+            android:text="向后"/>
+        <TextView
+            android:layout_width="@dimen/note_bar_default_width"
+            android:layout_height="20dp"
+            android:layout_weight="1"
+            android:text="向前"/>
+        <TextView
+            android:layout_width="@dimen/note_bar_default_width"
+            android:layout_height="20dp"
+            android:layout_weight="1"
+            android:text="删除本次批注"/>
+    </LinearLayout>
 
 </LinearLayout>

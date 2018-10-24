@@ -12,6 +12,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ruaho.note.view.PostilView;
@@ -22,6 +23,7 @@ public class MyWebviewActivity extends AppCompatActivity {
     private PostilView mPostilView;
     private TextView mTagTxt;
     private TextView mBackTxt;
+    private LinearLayout mBottomToolbar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,6 +40,7 @@ public class MyWebviewActivity extends AppCompatActivity {
     }
 
     void initView(){
+        mBottomToolbar = findViewById(R.id.note_bottom_toolbar);
         mPostilView = findViewById(R.id.mypostilview);
         mTagTxt = findViewById(R.id.mbiaoji);
         mTagTxt.setOnClickListener(new View.OnClickListener() {
@@ -45,6 +48,7 @@ public class MyWebviewActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(mPostilView.getMode() == PostilView.Mode.NOT_EDIT){
                     mPostilView.setMode(PostilView.Mode.DRAW);
+                    mBottomToolbar.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -55,6 +59,7 @@ public class MyWebviewActivity extends AppCompatActivity {
                 MyWebviewActivity.this.finish();
             }
         });
+
     }
 
     void initWebView(){
