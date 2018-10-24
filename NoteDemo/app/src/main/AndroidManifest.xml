@@ -29,7 +29,8 @@
         <activity
             android:name=".AddWordActivity"
             android:screenOrientation="landscape"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize">
         </activity>
     </application>
 

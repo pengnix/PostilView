@@ -7,8 +7,27 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/preview_title_height"></LinearLayout>
-
+        android:layout_height="@dimen/preview_title_height">
+        <TextView
+            android:id="@+id/preview_word_close_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:paddingLeft="20dp"
+            android:textColor="@color/red"
+            android:layout_alignParentLeft="true"
+            android:text="@string/preview_word_close"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:text="添加"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
+    <EditText
+        android:id="@+id/preview_add_words"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:lines="1"
+        />
 </LinearLayout>
