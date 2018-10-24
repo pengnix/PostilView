@@ -1,10 +1,8 @@
 package com.ruaho.note.notedemo;
 
-import android.graphics.Color;
-import android.os.Build;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
@@ -17,7 +15,7 @@ import android.widget.TextView;
 
 import com.ruaho.note.view.PostilView;
 
-public class MyWebviewActivity extends AppCompatActivity {
+public class PreviewWebviewActivity extends AppCompatActivity {
 
     private WebView mWebView;
     private PostilView mPostilView;
@@ -29,11 +27,12 @@ public class MyWebviewActivity extends AppCompatActivity {
     private TextView mToBackTxt;
     private TextView mToFrontTxt;
     private TextView mEraseAllTxt;
+    private TextView mWordTxt;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.content_webview2);
+        setContentView(R.layout.preview_content_webview);
         hideBar();
         initView();
         initWebView();
@@ -54,6 +53,7 @@ public class MyWebviewActivity extends AppCompatActivity {
         mEraseAllTxt = findViewById(R.id.preview_cancel_all);
         mTagTxt = findViewById(R.id.mbiaoji);
         mBackTxt = findViewById(R.id.note_back);
+        mWordTxt = findViewById(R.id.preview_wenzi);
 
         mPenTxt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,7 +92,7 @@ public class MyWebviewActivity extends AppCompatActivity {
         mBackTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MyWebviewActivity.this.finish();
+                PreviewWebviewActivity.this.finish();
             }
         });
         mEraseAllTxt.setOnClickListener(new View.OnClickListener() {
@@ -101,7 +101,17 @@ public class MyWebviewActivity extends AppCompatActivity {
                 mPostilView.clear();
             }
         });
+        mWordTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                jumpToAddWordsActivity();
+            }
+        });
+    }
 
+    private void jumpToAddWordsActivity(){
+        Intent intent = new Intent(PreviewWebviewActivity.this,AddWordActivity.class);
+        startActivity(intent);
     }
 
     void initWebView(){

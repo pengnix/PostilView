@@ -22,7 +22,12 @@
         </activity>
 
         <activity
-            android:name=".MyWebviewActivity"
+            android:name=".PreviewWebviewActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".AddWordActivity"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>

@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MyWebviewActivity">
+    tools:context=".PreviewWebviewActivity">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp">
+        android:layout_height="@dimen/preview_title_height">
         <TextView
         android:id="@+id/note_back"
         android:layout_width="wrap_content"
@@ -34,7 +34,7 @@
             android:textColor="@color/red"
             android:text="标记"/>
         <TextView
-            android:id="@+id/mwenzi"
+            android:id="@+id/preview_wenzi"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:layout_toLeftOf="@id/mbiaoji"
@@ -45,7 +45,7 @@
             android:id="@+id/mguanli"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
-            android:layout_toLeftOf="@id/mwenzi"
+            android:layout_toLeftOf="@id/preview_wenzi"
             android:layout_marginRight="20dp"
             android:textColor="@color/red"
             android:text="管理"/>
