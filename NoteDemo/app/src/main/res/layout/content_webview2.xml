@@ -18,6 +18,14 @@
         android:textColor="@color/red"
         android:text="关闭"/>
         <TextView
+            android:id="@+id/note_save"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_toRightOf="@+id/note_back"
+            android:layout_marginLeft="20dp"
+            android:textColor="@color/red"
+            android:text="保存"/>
+        <TextView
             android:id="@+id/mbiaoji"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
@@ -69,31 +77,31 @@
         android:orientation="horizontal"
         android:visibility="gone">
         <TextView
+            android:id="@+id/preview_pen"
             android:layout_width="@dimen/note_bar_default_width"
             android:layout_height="20dp"
             android:layout_weight="1"
             android:text="画笔"/>
         <TextView
-            android:layout_width="@dimen/note_bar_default_width"
-            android:layout_height="20dp"
-            android:layout_weight="1"
-            android:text="画刷"/>
-        <TextView
+            android:id="@+id/preview_erase"
             android:layout_width="@dimen/note_bar_default_width"
             android:layout_height="20dp"
             android:layout_weight="1"
             android:text="擦除"/>
         <TextView
+            android:id="@+id/preview_back"
             android:layout_width="@dimen/note_bar_default_width"
             android:layout_height="20dp"
             android:layout_weight="1"
             android:text="向后"/>
         <TextView
+            android:id="@+id/preview_front"
             android:layout_width="@dimen/note_bar_default_width"
             android:layout_height="20dp"
             android:layout_weight="1"
             android:text="向前"/>
         <TextView
+            android:id="@+id/preview_cancel_all"
             android:layout_width="@dimen/note_bar_default_width"
             android:layout_height="20dp"
             android:layout_weight="1"

@@ -24,6 +24,11 @@ public class MyWebviewActivity extends AppCompatActivity {
     private TextView mTagTxt;
     private TextView mBackTxt;
     private LinearLayout mBottomToolbar;
+    private TextView mPenTxt;
+    private TextView mEraseTxt;
+    private TextView mToBackTxt;
+    private TextView mToFrontTxt;
+    private TextView mEraseAllTxt;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,9 +45,41 @@ public class MyWebviewActivity extends AppCompatActivity {
     }
 
     void initView(){
-        mBottomToolbar = findViewById(R.id.note_bottom_toolbar);
         mPostilView = findViewById(R.id.mypostilview);
+        mBottomToolbar = findViewById(R.id.note_bottom_toolbar);
+        mPenTxt = findViewById(R.id.preview_pen);
+        mEraseTxt = findViewById(R.id.preview_erase);
+        mToBackTxt = findViewById(R.id.preview_back);
+        mToFrontTxt = findViewById(R.id.preview_front);
+        mEraseAllTxt = findViewById(R.id.preview_cancel_all);
         mTagTxt = findViewById(R.id.mbiaoji);
+        mBackTxt = findViewById(R.id.note_back);
+
+        mPenTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPostilView.setMode(PostilView.Mode.DRAW);
+            }
+        });
+        mEraseTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPostilView.setMode(PostilView.Mode.ERASER);
+            }
+        });
+        mToBackTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPostilView.undo();
+            }
+        });
+        mToFrontTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPostilView.redo();
+            }
+        });
+
         mTagTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,11 +89,16 @@ public class MyWebviewActivity extends AppCompatActivity {
                 }
             }
         });
-        mBackTxt = findViewById(R.id.note_back);
         mBackTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 MyWebviewActivity.this.finish();
+            }
+        });
+        mEraseAllTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPostilView.clear();
             }
         });
 
