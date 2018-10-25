@@ -14,7 +14,12 @@ import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.ruaho.note.view.PostilTag;
 import com.ruaho.note.view.PostilView;
+import com.ruaho.note.view.ScreenUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PreviewWebviewActivity extends AppCompatActivity {
 
@@ -31,6 +36,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     private TextView mWordTxt;
     public final static int REQUEST_ADD_TEXT = 1;
     private static int REQUEST_ADD_TEXT_RESULT = 3;
+    List<PostilTag> mPostilTagList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,6 +45,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         hideBar();
         initView();
         initWebView();
+        mPostilTagList = new ArrayList<PostilTag>();
     }
 
     void hideBar(){
@@ -89,6 +96,9 @@ public class PreviewWebviewActivity extends AppCompatActivity {
                 if(mPostilView.getMode() == PostilView.Mode.NOT_EDIT){
                     mPostilView.setMode(PostilView.Mode.DRAW);
                     mBottomToolbar.setVisibility(View.VISIBLE);
+                } else {
+                    mPostilView.setMode(PostilView.Mode.NOT_EDIT);
+                    mBottomToolbar.setVisibility(View.GONE);
                 }
             }
         });
@@ -152,6 +162,11 @@ public class PreviewWebviewActivity extends AppCompatActivity {
             if (REQUEST_ADD_TEXT == requestCode){
                 String result = data.getExtras().getString("result");
                 Log.i("getResult!",result);
+                int height = ScreenUtils.getScreebHeight(getApplicationContext());
+                int width = ScreenUtils.getScreenWidth(getApplicationContext());
+                Log.i("getResult!","height = " + height + "width = " + width);
+                mPostilTagList.add(new PostilTag(width/2,height/2,result));
+                mPostilView.updatePostilTag(mPostilTagList);
                 return;
             }
         }

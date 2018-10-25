@@ -2,6 +2,7 @@ package com.ruaho.note.view;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -15,6 +16,8 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.ruaho.note.notedemo.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +28,11 @@ public class PostilView extends View{
     private float mLastX;
     private float mLastY;
     private Bitmap mBufferBitmap;
+    private Bitmap mTagBitmap;
+    private int mTagBitmapHeight;
+    private int mTagBitmapWidth;
     private Canvas mBufferCanvas;
+    List<PostilTag> postilTagList;
 
     private static final int MAX_CACHE_STEP = 20;
 
@@ -53,16 +60,19 @@ public class PostilView extends View{
 
     public PostilView(Context context) {
         super(context);
+        initData();
         init();
     }
 
     public PostilView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        initData();
         init();
     }
 
     public PostilView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        initData();
         init();
     }
 
@@ -88,6 +98,15 @@ public class PostilView extends View{
         mXferModeDraw = new PorterDuffXfermode(PorterDuff.Mode.SRC);
         mXferModeClear = new PorterDuffXfermode(PorterDuff.Mode.CLEAR);
         mPaint.setXfermode(mXferModeDraw);
+
+        mTagBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.tag);
+        mTagBitmapHeight = mTagBitmap.getHeight();
+        mTagBitmapWidth = mTagBitmap.getWidth();
+        Log.i("getResult!","mTagBitmap" + mTagBitmapHeight + ":" + mTagBitmapWidth);
+    }
+
+    void initData(){
+        postilTagList = new ArrayList<PostilTag>();
     }
 
     private void initBuffer(){
@@ -262,6 +281,11 @@ public class PostilView extends View{
         if (mBufferBitmap != null) {
             canvas.drawBitmap(mBufferBitmap, 0, 0, null);
         }
+        for(PostilTag tag:postilTagList){
+            Log.i("getResult!","draw tag" + tag.xPos + ":" + tag.yPos);
+            canvas.drawBitmap(mTagBitmap , tag.xPos - mTagBitmapWidth/2, tag.yPos - mTagBitmapHeight/2, null);
+//            canvas.drawCircle(tag.xPos,tag.yPos,50,mPaint);
+        }
     }
 
     @SuppressWarnings("all")
@@ -307,5 +331,10 @@ public class PostilView extends View{
                 break;
         }
         return true;
+    }
+
+    public void updatePostilTag(List<PostilTag> list){
+        postilTagList = list;
+        invalidate();
     }
 }
