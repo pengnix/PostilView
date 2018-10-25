@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.webkit.WebChromeClient;
@@ -28,6 +29,8 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     private TextView mToFrontTxt;
     private TextView mEraseAllTxt;
     private TextView mWordTxt;
+    public final static int REQUEST_ADD_TEXT = 1;
+    private static int REQUEST_ADD_TEXT_RESULT = 3;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -111,7 +114,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
 
     private void jumpToAddWordsActivity(){
         Intent intent = new Intent(PreviewWebviewActivity.this,AddWordActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent,REQUEST_ADD_TEXT);
     }
 
     void initWebView(){
@@ -140,6 +143,19 @@ public class PreviewWebviewActivity extends AppCompatActivity {
             }
 
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        Log.i("getResult!","requestCode="+ requestCode +"resultCode=" + resultCode);
+        if(REQUEST_ADD_TEXT_RESULT == resultCode){
+            if (REQUEST_ADD_TEXT == requestCode){
+                String result = data.getExtras().getString("result");
+                Log.i("getResult!",result);
+                return;
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private class WebChromeClientProgress extends WebChromeClient {

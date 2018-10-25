@@ -1,6 +1,7 @@
 package com.ruaho.note.notedemo;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,7 @@ public class AddWordActivity extends AppCompatActivity {
 
     private EditText mEditText;
     private TextView mCloseTxt;
+    private static int REQUEST_ADD_TEXT_RESULT = 3;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,6 +36,11 @@ public class AddWordActivity extends AppCompatActivity {
         mCloseTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent();
+                String result = mEditText.getText().toString();
+                Log.i("getResult!","result = " + result);
+                intent.putExtra("result", result);
+                AddWordActivity.this.setResult(REQUEST_ADD_TEXT_RESULT, intent);
                 AddWordActivity.this.finish();
             }
         });

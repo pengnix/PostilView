@@ -8,6 +8,7 @@
     tools:context=".MainActivity">
 
     <RelativeLayout
+        android:background="#C5C1AA"
         android:layout_width="match_parent"
         android:layout_height="@dimen/preview_title_height">
         <TextView
@@ -28,6 +29,6 @@
         android:id="@+id/preview_add_words"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:lines="1"
+        android:lines="6"
         />
 </LinearLayout>
