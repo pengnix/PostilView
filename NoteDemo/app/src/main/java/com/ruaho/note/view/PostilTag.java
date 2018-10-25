@@ -16,4 +16,9 @@ public class PostilTag {
         this.yPos = yPos;
         this.content = content;
     }
+
+    public void updatePos(int x,int y){
+        xPos = x;
+        yPos = y;
+    }
 }

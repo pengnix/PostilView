@@ -165,8 +165,9 @@ public class PreviewWebviewActivity extends AppCompatActivity {
                 int height = ScreenUtils.getScreebHeight(getApplicationContext());
                 int width = ScreenUtils.getScreenWidth(getApplicationContext());
                 Log.i("getResult!","height = " + height + "width = " + width);
-                mPostilTagList.add(new PostilTag(width/2,height/2,result));
-                mPostilView.updatePostilTag(mPostilTagList);
+                mPostilView.addPostilTag(new PostilTag(width/2,height/2,result));
+//                mPostilTagList.add(new PostilTag(width/2,height/2,result));
+//                mPostilView.updatePostilTag(mPostilTagList);
                 return;
             }
         }

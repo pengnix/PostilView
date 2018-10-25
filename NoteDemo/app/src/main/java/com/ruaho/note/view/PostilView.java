@@ -31,6 +31,7 @@ public class PostilView extends View{
     private Bitmap mTagBitmap;
     private int mTagBitmapHeight;
     private int mTagBitmapWidth;
+    private PostilTag currentTag;
     private Canvas mBufferCanvas;
     List<PostilTag> postilTagList;
 
@@ -52,7 +53,8 @@ public class PostilView extends View{
     public enum Mode {
         DRAW,
         ERASER,
-        NOT_EDIT
+        NOT_EDIT,
+        MOVE_TAG
     }
 
     private Mode mMode = Mode.NOT_EDIT;
@@ -107,6 +109,7 @@ public class PostilView extends View{
 
     void initData(){
         postilTagList = new ArrayList<PostilTag>();
+        currentTag = null;
     }
 
     private void initBuffer(){
@@ -281,27 +284,42 @@ public class PostilView extends View{
         if (mBufferBitmap != null) {
             canvas.drawBitmap(mBufferBitmap, 0, 0, null);
         }
-        for(PostilTag tag:postilTagList){
-            Log.i("getResult!","draw tag" + tag.xPos + ":" + tag.yPos);
-            canvas.drawBitmap(mTagBitmap , tag.xPos - mTagBitmapWidth/2, tag.yPos - mTagBitmapHeight/2, null);
-//            canvas.drawCircle(tag.xPos,tag.yPos,50,mPaint);
+//        for(PostilTag tag:postilTagList){
+//            Log.i("getResult!","draw tag" + tag.xPos + ":" + tag.yPos);
+//            canvas.drawBitmap(mTagBitmap , tag.xPos - mTagBitmapWidth/2, tag.yPos - mTagBitmapHeight/2, null);
+//        }
+        if(currentTag != null){
+            Log.i("getResult!","draw tag" + currentTag.xPos + ":" + currentTag.yPos);
+            canvas.drawBitmap(mTagBitmap , currentTag.xPos - mTagBitmapWidth/2, currentTag.yPos - mTagBitmapHeight/2, null);
+
         }
     }
 
     @SuppressWarnings("all")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if(mMode == Mode.NOT_EDIT){
-            return super.onTouchEvent(event);
-        }
         if(!isEnabled()){
             return false;
         }
         final int action = event.getAction() & MotionEvent.ACTION_MASK;
         final float x = event.getX();
         final float y = event.getY();
+
+        if(mMode == Mode.NOT_EDIT){
+            boolean result = containTagBitmap((int)x,(int)y);
+            Log.i("getResult!","result = " + result);
+            if(!result){
+                return super.onTouchEvent(event);
+            } else {
+                mMode = Mode.MOVE_TAG;
+            }
+        }
         switch (action) {
             case MotionEvent.ACTION_DOWN:
+                if(mMode == Mode.MOVE_TAG){
+                    currentTag.updatePos((int)x,(int)y);
+                    break;
+                }
                 mLastX = x;
                 mLastY = y;
                 if (mPath == null) {
@@ -310,6 +328,11 @@ public class PostilView extends View{
                 mPath.moveTo(x,y);
                 break;
             case MotionEvent.ACTION_MOVE:
+                if(mMode == Mode.MOVE_TAG){
+                    currentTag.updatePos((int)x,(int)y);
+                    invalidate();
+                    break;
+                }
                 //这里终点设为两点的中心点的目的在于使绘制的曲线更平滑，如果终点直接设置为x,y，效果和lineto是一样的,实际是折线效果
                 mPath.quadTo(mLastX, mLastY, (x + mLastX) / 2, (y + mLastY) / 2);
                 if (mBufferBitmap == null) {
@@ -319,11 +342,16 @@ public class PostilView extends View{
                     break;
                 }
                 mBufferCanvas.drawPath(mPath,mPaint);
+
                 invalidate();
                 mLastX = x;
                 mLastY = y;
                 break;
             case MotionEvent.ACTION_UP:
+                if(mMode == Mode.MOVE_TAG){
+                    mMode = Mode.NOT_EDIT;
+                    break;
+                }
                 if (mMode == Mode.DRAW || mCanEraser) {
                     saveDrawingPath();
                 }
@@ -333,8 +361,29 @@ public class PostilView extends View{
         return true;
     }
 
+    public boolean containTagBitmap(int x,int y){
+        if(currentTag != null){
+            int top = currentTag.yPos - mTagBitmapHeight/2;
+            int bottom= currentTag.yPos + mTagBitmapHeight/2;
+            int left= currentTag.xPos - mTagBitmapWidth/2;
+            int right= currentTag.xPos + mTagBitmapWidth/2;
+            Log.i("getResult!","top = " + top + "bottom = " + bottom + "left = " + left + "right = " + right);
+            Log.i("getResult!","x = " + x + "y = " + y);
+            if(x > left && x < right && y > top && y < bottom){
+                return true;
+            }
+        }
+        return false;
+
+    }
+
     public void updatePostilTag(List<PostilTag> list){
         postilTagList = list;
+        invalidate();
+    }
+
+    public void addPostilTag(PostilTag tag){
+        currentTag = tag;
         invalidate();
     }
 }
