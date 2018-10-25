@@ -1,6 +1,18 @@
 package com.ruaho.note.view;
 
 public class PostilTag {
+    public int getxPos() {
+        return xPos;
+    }
+
+    public int getyPos() {
+        return yPos;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
     int xPos;
     int yPos;
     String content;
@@ -20,5 +32,14 @@ public class PostilTag {
     public void updatePos(int x,int y){
         xPos = x;
         yPos = y;
+    }
+
+    @Override
+    public String toString() {
+        return "PostilTag{" +
+                "xPos=" + xPos +
+                ", yPos=" + yPos +
+                ", content='" + content + '\'' +
+                '}';
     }
 }

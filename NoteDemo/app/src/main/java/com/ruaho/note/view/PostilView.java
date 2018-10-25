@@ -27,6 +27,8 @@ public class PostilView extends View{
     private Path mPath;
     private float mLastX;
     private float mLastY;
+    private float mTagOriginX;
+    private float mTagOriginY;
     private Bitmap mBufferBitmap;
     private Bitmap mTagBitmap;
     private int mTagBitmapHeight;
@@ -34,6 +36,7 @@ public class PostilView extends View{
     private PostilTag currentTag;
     private Canvas mBufferCanvas;
     List<PostilTag> postilTagList;
+    private static float CLICK_PRECISION= 3.0f;
 
     private static final int MAX_CACHE_STEP = 20;
 
@@ -80,6 +83,7 @@ public class PostilView extends View{
 
     public interface Callback {
         void onUndoRedoStatusChanged();
+        void openTag(PostilTag tag);
     }
 
     public void setCallback(Callback callback){
@@ -311,6 +315,8 @@ public class PostilView extends View{
             if(!result){
                 return super.onTouchEvent(event);
             } else {
+                mTagOriginX = x;
+                mTagOriginY = y;
                 mMode = Mode.MOVE_TAG;
             }
         }
@@ -350,6 +356,9 @@ public class PostilView extends View{
             case MotionEvent.ACTION_UP:
                 if(mMode == Mode.MOVE_TAG){
                     mMode = Mode.NOT_EDIT;
+                    if(isClickTag(x,y)){
+                        openTag();
+                    }
                     break;
                 }
                 if (mMode == Mode.DRAW || mCanEraser) {
@@ -374,7 +383,19 @@ public class PostilView extends View{
             }
         }
         return false;
+    }
 
+    public boolean isClickTag(float x,float y){
+        if((Math.abs(x-mTagOriginX) < CLICK_PRECISION) && (Math.abs(y-mTagOriginY) < CLICK_PRECISION)){
+            return true;
+        }
+        return false;
+    }
+
+    public void openTag(){
+        if(currentTag != null && mCallback != null){
+            mCallback.openTag(currentTag);
+        }
     }
 
     public void updatePostilTag(List<PostilTag> list){

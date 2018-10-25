@@ -120,6 +120,18 @@ public class PreviewWebviewActivity extends AppCompatActivity {
                 jumpToAddWordsActivity();
             }
         });
+
+        mPostilView.setCallback(new PostilView.Callback() {
+            @Override
+            public void onUndoRedoStatusChanged() {
+
+            }
+
+            @Override
+            public void openTag(PostilTag tag) {
+                Log.i("getResult!","tag = " + tag.toString());
+            }
+        });
     }
 
     private void jumpToAddWordsActivity(){
