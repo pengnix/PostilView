@@ -27,7 +27,10 @@ public class AddWordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_addwords);
         initView();
         hideBar();
-        callKeyboard();
+        mEditText.setFocusable(true);
+        mEditText.setFocusableInTouchMode(true);
+        mEditText.requestFocus();
+//        callKeyboard();
     }
 
     void initView(){
@@ -56,6 +59,7 @@ public class AddWordActivity extends AppCompatActivity {
         timer.schedule(new TimerTask() {
 
             public void run() {
+
                 Log.i("callKeyboard","1111111");
                 InputMethodManager inputManager = (InputMethodManager) getApplication().getSystemService(Context.INPUT_METHOD_SERVICE);
                 inputManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
