@@ -130,6 +130,11 @@ public class PreviewWebviewActivity extends AppCompatActivity {
             @Override
             public void openTag(PostilTag tag) {
                 Log.i("getResult!","tag = " + tag.toString());
+                Intent intent = new Intent(PreviewWebviewActivity.this,AddWordActivity.class);
+                intent.putExtra("content", tag.getContent());
+                intent.putExtra("x",tag.getxPos());
+                intent.putExtra("y",tag.getyPos());
+                startActivityForResult(intent,REQUEST_ADD_TEXT);
             }
         });
     }
@@ -173,11 +178,18 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         if(REQUEST_ADD_TEXT_RESULT == resultCode){
             if (REQUEST_ADD_TEXT == requestCode){
                 String result = data.getExtras().getString("result");
+                int x = data.getExtras().getInt("x");
+                int y = data.getExtras().getInt("y");
                 Log.i("getResult!",result);
                 int height = ScreenUtils.getScreebHeight(getApplicationContext());
                 int width = ScreenUtils.getScreenWidth(getApplicationContext());
                 Log.i("getResult!","height = " + height + "width = " + width);
-                mPostilView.addPostilTag(new PostilTag(width/2,height/2,result));
+                if(x != -1 && y != -1){
+                    mPostilView.addPostilTag(new PostilTag(x,y,result));
+                } else {
+                    mPostilView.addPostilTag(new PostilTag(width/2,height/2,result));
+                }
+
 //                mPostilTagList.add(new PostilTag(width/2,height/2,result));
 //                mPostilView.updatePostilTag(mPostilTagList);
                 return;

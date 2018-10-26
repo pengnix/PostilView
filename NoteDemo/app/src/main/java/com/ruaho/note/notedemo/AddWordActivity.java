@@ -20,13 +20,15 @@ public class AddWordActivity extends AppCompatActivity {
     private EditText mEditText;
     private TextView mCloseTxt;
     private static int REQUEST_ADD_TEXT_RESULT = 3;
-
+    private int x = -1;
+    private int y = -1;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addwords);
         initView();
         hideBar();
+        initData();
         mEditText.setFocusable(true);
         mEditText.setFocusableInTouchMode(true);
         mEditText.requestFocus();
@@ -43,10 +45,24 @@ public class AddWordActivity extends AppCompatActivity {
                 String result = mEditText.getText().toString();
                 Log.i("getResult!","result = " + result);
                 intent.putExtra("result", result);
+                intent.putExtra("x", x);
+                intent.putExtra("y", y);
                 AddWordActivity.this.setResult(REQUEST_ADD_TEXT_RESULT, intent);
                 AddWordActivity.this.finish();
             }
         });
+    }
+
+    void initData(){
+        Intent intent = getIntent();
+        if(intent != null){
+            String content = intent.getStringExtra("content");
+            if(content != null){
+                mEditText.setText(content);
+                x = intent.getIntExtra("x",-1);
+                y = intent.getIntExtra("y",-1);
+            }
+        }
     }
 
     void hideBar(){
