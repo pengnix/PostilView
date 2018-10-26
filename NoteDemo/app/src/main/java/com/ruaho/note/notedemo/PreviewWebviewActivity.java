@@ -189,9 +189,6 @@ public class PreviewWebviewActivity extends AppCompatActivity {
                 } else {
                     mPostilView.addPostilTag(new PostilTag(width/2,height/2,result));
                 }
-
-//                mPostilTagList.add(new PostilTag(width/2,height/2,result));
-//                mPostilView.updatePostilTag(mPostilTagList);
                 return;
             }
         }

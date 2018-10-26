@@ -32,7 +32,7 @@ public class AddWordActivity extends AppCompatActivity {
         mEditText.setFocusable(true);
         mEditText.setFocusableInTouchMode(true);
         mEditText.requestFocus();
-//        callKeyboard();
+        callKeyboard();
     }
 
     void initView(){
@@ -81,7 +81,7 @@ public class AddWordActivity extends AppCompatActivity {
                 inputManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
             }
 
-        }, 1000);
+        }, 500);
     }
 
     @Override
