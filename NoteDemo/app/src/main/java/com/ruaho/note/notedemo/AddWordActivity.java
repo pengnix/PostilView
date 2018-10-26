@@ -81,7 +81,7 @@ public class AddWordActivity extends AppCompatActivity {
                 inputManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
             }
 
-        }, 500);
+        }, 200);
     }
 
     @Override
