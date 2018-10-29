@@ -85,7 +85,6 @@ public class PostilView extends View{
     public interface Callback {
         void onUndoRedoStatusChanged();
         void openTag(PostilTag tag);
-        int getScrollY();
     }
 
     public void setCallback(Callback callback){
@@ -289,7 +288,7 @@ public class PostilView extends View{
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (mBufferBitmap != null) {
-            canvas.drawBitmap(mBufferBitmap, 0, 0, null);
+            canvas.drawBitmap(mBufferBitmap, 0, - offsetY, null);
         }
 //        for(PostilTag tag:postilTagList){
 //            Log.i("getResult!","draw tag" + tag.xPos + ":" + tag.yPos);
@@ -297,7 +296,7 @@ public class PostilView extends View{
 //        }
         if(currentTag != null){
             Log.i("getResult!","draw tag" + currentTag.xPos + ":" + currentTag.yPos);
-            canvas.drawBitmap(mTagBitmap , currentTag.xPos - mTagBitmapWidth/2, currentTag.yPos - mTagBitmapHeight/2, null);
+            canvas.drawBitmap(mTagBitmap , currentTag.xPos - mTagBitmapWidth/2, currentTag.yPos - mTagBitmapHeight/2 - offsetY, null);
 
         }
     }
@@ -320,7 +319,6 @@ public class PostilView extends View{
 //                Log.i("offset","offsetY = " + offsetY + "y = " + y + "mLastY = " +mLastY);
 //                mLastX = x;
 //                mLastY = y;
-                mCallback.getScrollY();
 //                Log.i("scrollY","ScrollY = " + mCallback.getScrollY());
 //                mCallback.getScrollY();
                 return super.onTouchEvent(event);
@@ -415,6 +413,12 @@ public class PostilView extends View{
 
     public void addPostilTag(PostilTag tag){
         currentTag = tag;
+        invalidate();
+    }
+
+    public void updateOffsetY(int dy){
+        offsetY = dy;
+        Log.i("offsetY","dy = " + dy);
         invalidate();
     }
 }

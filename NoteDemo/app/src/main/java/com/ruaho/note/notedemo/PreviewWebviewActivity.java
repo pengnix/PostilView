@@ -124,20 +124,9 @@ public class PreviewWebviewActivity extends AppCompatActivity {
 
         mPostilView.setCallback(new PostilView.Callback() {
             @Override
-            public int getScrollY() {
-                if(mWebView != null){
-                    Log.i("scrollY","ScrollY = " + mWebView.getScrollY());
-                    return mWebView.getScrollY();
-                }
-                return 0;
-            }
-
-            @Override
             public void onUndoRedoStatusChanged() {
 
             }
-
-
 
             @Override
             public void openTag(PostilTag tag) {
@@ -188,6 +177,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
             @Override
             public void onScroll(int dx, int dy) {
                 Log.i("dxdy","dx = " + dx + "dy = " +dy);
+                mPostilView.updateOffsetY(dy);
             }
         });
 //        mWebView.setOnScrollChangeListener(new View.OnScrollChangeListener() {

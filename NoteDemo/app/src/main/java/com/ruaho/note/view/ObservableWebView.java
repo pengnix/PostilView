@@ -26,7 +26,7 @@ public class ObservableWebView extends WebView {
                                    final int oldt) {
         super.onScrollChanged(l, t, oldl, oldt);
         if (mOnScrollChangedCallback != null) {
-            mOnScrollChangedCallback.onScroll(l - oldl, t - oldt);
+            mOnScrollChangedCallback.onScroll(l, t);
         }
     }
 
