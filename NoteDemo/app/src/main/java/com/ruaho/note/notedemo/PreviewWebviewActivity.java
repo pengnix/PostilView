@@ -1,7 +1,13 @@
 package com.ruaho.note.notedemo;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -19,6 +25,10 @@ import com.ruaho.note.view.PostilTag;
 import com.ruaho.note.view.PostilView;
 import com.ruaho.note.view.ScreenUtils;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,9 +45,14 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     private TextView mToFrontTxt;
     private TextView mEraseAllTxt;
     private TextView mWordTxt;
+    private TextView mSaveTxt;
     public final static int REQUEST_ADD_TEXT = 1;
     private static int REQUEST_ADD_TEXT_RESULT = 3;
     List<PostilTag> mPostilTagList;
+    private Handler mHandler;
+
+    private static final int MSG_SAVE_SUCCESS = 1;
+    private static final int MSG_SAVE_FAILED = 2;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,6 +62,12 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         initView();
         initWebView();
         mPostilTagList = new ArrayList<PostilTag>();
+        mHandler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+            }
+        };
     }
 
     void hideBar(){
@@ -65,6 +86,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mTagTxt = findViewById(R.id.mbiaoji);
         mBackTxt = findViewById(R.id.note_back);
         mWordTxt = findViewById(R.id.preview_wenzi);
+        mSaveTxt = findViewById(R.id.note_save);
 
         mPenTxt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,6 +160,12 @@ public class PreviewWebviewActivity extends AppCompatActivity {
                 startActivityForResult(intent,REQUEST_ADD_TEXT);
             }
         });
+        mSaveTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveImage();
+            }
+        });
     }
 
     private void jumpToAddWordsActivity(){
@@ -180,12 +208,6 @@ public class PreviewWebviewActivity extends AppCompatActivity {
                 mPostilView.updateOffsetY(dy);
             }
         });
-//        mWebView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-//            @Override
-//            public void onScrollChange(View view, int i, int i1, int i2, int i3) {
-//                Log.i("AAAAA","AAAA");
-//            }
-//        });
     }
 
     @Override
@@ -223,5 +245,61 @@ public class PreviewWebviewActivity extends AppCompatActivity {
 
     }
 
+    private void saveImage(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Bitmap bm = mPostilView.buildBitmap();
+                String savedFile = saveImage(bm, 100);
+                if (savedFile != null) {
+                    scanFile(PreviewWebviewActivity.this, savedFile);
+                    mHandler.obtainMessage(MSG_SAVE_SUCCESS).sendToTarget();
+                }else{
+                    mHandler.obtainMessage(MSG_SAVE_FAILED).sendToTarget();
+                }
+            }
+        }).start();
+    }
+
+    private static String saveImage(Bitmap bmp, int quality) {
+        if (bmp == null) {
+            return null;
+        }
+        File appDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        if (appDir == null) {
+            return null;
+        }
+        String fileName = "preview_demo" + ".png";
+        File file = new File(appDir, fileName);
+        Log.i("saveImage","file is" + file.getAbsolutePath() + ":" +file.getName());
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(file);
+            bmp.compress(Bitmap.CompressFormat.PNG, quality, fos);
+            fos.flush();
+            return file.getAbsolutePath();
+        } catch (FileNotFoundException e) {
+            Log.i("saveImage","FileNotFoundException");
+            e.printStackTrace();
+        } catch (IOException e) {
+            Log.i("saveImage","IOException");
+            e.printStackTrace();
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return null;
+    }
+
+    private static void scanFile(Context context, String filePath) {
+        Intent scanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        scanIntent.setData(Uri.fromFile(new File(filePath)));
+        context.sendBroadcast(scanIntent);
+    }
 
 }
