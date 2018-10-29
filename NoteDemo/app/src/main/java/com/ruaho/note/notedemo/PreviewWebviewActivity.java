@@ -3,6 +3,7 @@ package com.ruaho.note.notedemo;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -26,6 +27,7 @@ import com.ruaho.note.view.PostilView;
 import com.ruaho.note.view.ScreenUtils;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -46,6 +48,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     private TextView mEraseAllTxt;
     private TextView mWordTxt;
     private TextView mSaveTxt;
+    private TextView mControlTxt;
     public final static int REQUEST_ADD_TEXT = 1;
     private static int REQUEST_ADD_TEXT_RESULT = 3;
     List<PostilTag> mPostilTagList;
@@ -87,6 +90,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mBackTxt = findViewById(R.id.note_back);
         mWordTxt = findViewById(R.id.preview_wenzi);
         mSaveTxt = findViewById(R.id.note_save);
+        mControlTxt = findViewById(R.id.mguanli);
 
         mPenTxt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,6 +168,12 @@ public class PreviewWebviewActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 saveImage();
+            }
+        });
+        mControlTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadImage();
             }
         });
     }
@@ -294,6 +304,19 @@ public class PreviewWebviewActivity extends AppCompatActivity {
             }
         }
         return null;
+    }
+
+    public void loadImage(){
+        File appDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        String fileName = "preview_demo" + ".png";
+        String uri = appDir + "/" + fileName;
+        //File file = new File(appDir, fileName);
+        try{
+            FileInputStream fis = new FileInputStream(uri);
+            Bitmap bitmap  = BitmapFactory.decodeStream(fis);
+        } catch (FileNotFoundException e){
+            Log.i("saveImage","FileNotFoundException");
+        }
     }
 
     private static void scanFile(Context context, String filePath) {
