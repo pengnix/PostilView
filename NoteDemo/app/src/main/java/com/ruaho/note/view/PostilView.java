@@ -36,6 +36,7 @@ public class PostilView extends View{
     private PostilTag currentTag;
     private Canvas mBufferCanvas;
     List<PostilTag> postilTagList;
+    private float offsetY;
     private static float CLICK_PRECISION= 3.0f;
 
     private static final int MAX_CACHE_STEP = 20;
@@ -84,6 +85,7 @@ public class PostilView extends View{
     public interface Callback {
         void onUndoRedoStatusChanged();
         void openTag(PostilTag tag);
+        int getScrollY();
     }
 
     public void setCallback(Callback callback){
@@ -112,6 +114,7 @@ public class PostilView extends View{
     }
 
     void initData(){
+        offsetY = 0;
         postilTagList = new ArrayList<PostilTag>();
         currentTag = null;
     }
@@ -310,9 +313,16 @@ public class PostilView extends View{
         final float y = event.getY();
 
         if(mMode == Mode.NOT_EDIT){
-            boolean result = containTagBitmap((int)x,(int)y);
-            Log.i("getResult!","result = " + result);
-            if(!result){
+            boolean isTouchTag = containTagBitmap((int)x,(int)y);
+            Log.i("getResult!","isTouchTag = " + isTouchTag);
+            if(!isTouchTag){
+//                offsetY += (y-mLastY);
+//                Log.i("offset","offsetY = " + offsetY + "y = " + y + "mLastY = " +mLastY);
+//                mLastX = x;
+//                mLastY = y;
+                mCallback.getScrollY();
+//                Log.i("scrollY","ScrollY = " + mCallback.getScrollY());
+//                mCallback.getScrollY();
                 return super.onTouchEvent(event);
             } else {
                 mTagOriginX = x;

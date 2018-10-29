@@ -14,6 +14,7 @@ import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.ruaho.note.view.ObservableWebView;
 import com.ruaho.note.view.PostilTag;
 import com.ruaho.note.view.PostilView;
 import com.ruaho.note.view.ScreenUtils;
@@ -23,7 +24,7 @@ import java.util.List;
 
 public class PreviewWebviewActivity extends AppCompatActivity {
 
-    private WebView mWebView;
+    private ObservableWebView mWebView;
     private PostilView mPostilView;
     private TextView mTagTxt;
     private TextView mBackTxt;
@@ -123,9 +124,20 @@ public class PreviewWebviewActivity extends AppCompatActivity {
 
         mPostilView.setCallback(new PostilView.Callback() {
             @Override
+            public int getScrollY() {
+                if(mWebView != null){
+                    Log.i("scrollY","ScrollY = " + mWebView.getScrollY());
+                    return mWebView.getScrollY();
+                }
+                return 0;
+            }
+
+            @Override
             public void onUndoRedoStatusChanged() {
 
             }
+
+
 
             @Override
             public void openTag(PostilTag tag) {
@@ -152,6 +164,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mWebView.getSettings().setAllowFileAccess(true);
 //        mWebView.getSettings().setPluginsEnabled(true);
         mWebView.getSettings().setUseWideViewPort(true);
+        mWebView.setVerticalScrollBarEnabled(false);
 //        mWebView.getSettings().setBuiltInZoomControls(true);
         mWebView.requestFocus();
         mWebView.getSettings().setLoadWithOverviewMode(true);
@@ -159,7 +172,8 @@ public class PreviewWebviewActivity extends AppCompatActivity {
 //        String pdfUrl = "http://www8.cao.go.jp/okinawa/8/2012/0409-1-1.pdf";
         String pdfUrl = "https://source.android.com/security/reports/Google_Android_Security_2017_Report_Final.pdf";
 //        mWebView.loadUrl(pdfUrl);
-        mWebView.loadUrl("http://docs.google.com/gview?embedded=true&url=" +pdfUrl);
+//        mWebView.loadUrl("http://docs.google.com/gview?embedded=true&url=" +pdfUrl);
+        mWebView.loadUrl("http://www.baidu.com");
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -170,6 +184,18 @@ public class PreviewWebviewActivity extends AppCompatActivity {
             }
 
         });
+        mWebView.setOnScrollChangedCallback(new ObservableWebView.OnScrollChangedCallback() {
+            @Override
+            public void onScroll(int dx, int dy) {
+                Log.i("dxdy","dx = " + dx + "dy = " +dy);
+            }
+        });
+//        mWebView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+//            @Override
+//            public void onScrollChange(View view, int i, int i1, int i2, int i3) {
+//                Log.i("AAAAA","AAAA");
+//            }
+//        });
     }
 
     @Override
@@ -206,4 +232,6 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
+
+
 }

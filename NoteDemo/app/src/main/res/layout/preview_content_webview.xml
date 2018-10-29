@@ -59,10 +59,11 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
-    <WebView
+    <com.ruaho.note.view.ObservableWebView
             android:id="@+id/mywebview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:scrollbars="none"/>
     <com.ruaho.note.view.PostilView
             android:id="@+id/mypostilview"
             android:layout_width="match_parent"
