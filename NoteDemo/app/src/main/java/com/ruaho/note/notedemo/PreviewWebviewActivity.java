@@ -21,6 +21,7 @@ import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.ruaho.note.util.FileUtils;
 import com.ruaho.note.view.ObservableWebView;
 import com.ruaho.note.view.PostilTag;
 import com.ruaho.note.view.PostilView;
@@ -92,7 +93,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mSaveTxt = findViewById(R.id.note_save);
         mControlTxt = findViewById(R.id.mguanli);
 
-        mPostilView.setOldPicture(loadImage());
+        mPostilView.setOldPicture(FileUtils.loadImage());
 
         mPenTxt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -263,7 +264,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
             @Override
             public void run() {
                 Bitmap bm = mPostilView.buildBitmap();
-                String savedFile = saveImage(bm, 100);
+                String savedFile = FileUtils.saveImage(bm, 100);
                 if (savedFile != null) {
                     scanFile(PreviewWebviewActivity.this, savedFile);
                     mHandler.obtainMessage(MSG_SAVE_SUCCESS).sendToTarget();
@@ -274,55 +275,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         }).start();
     }
 
-    private static String saveImage(Bitmap bmp, int quality) {
-        if (bmp == null) {
-            return null;
-        }
-        File appDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-        if (appDir == null) {
-            return null;
-        }
-        String fileName = "preview_demo" + ".png";
-        File file = new File(appDir, fileName);
-        Log.i("saveImage","file is" + file.getAbsolutePath() + ":" +file.getName());
-        FileOutputStream fos = null;
-        try {
-            fos = new FileOutputStream(file);
-            bmp.compress(Bitmap.CompressFormat.PNG, quality, fos);
-            fos.flush();
-            return file.getAbsolutePath();
-        } catch (FileNotFoundException e) {
-            Log.i("saveImage","FileNotFoundException");
-            e.printStackTrace();
-        } catch (IOException e) {
-            Log.i("saveImage","IOException");
-            e.printStackTrace();
-        } finally {
-            if (fos != null) {
-                try {
-                    fos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return null;
-    }
 
-    public Bitmap loadImage(){
-        File appDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-        String fileName = "preview_demo" + ".png";
-        String uri = appDir + "/" + fileName;
-        Bitmap bitmap = null;
-        //File file = new File(appDir, fileName);
-        try{
-            FileInputStream fis = new FileInputStream(uri);
-            bitmap  = BitmapFactory.decodeStream(fis);
-        } catch (FileNotFoundException e){
-            Log.i("saveImage","FileNotFoundException");
-        }
-        return bitmap;
-    }
 
     private static void scanFile(Context context, String filePath) {
         Intent scanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
