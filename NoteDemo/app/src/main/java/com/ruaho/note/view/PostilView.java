@@ -310,7 +310,6 @@ public class PostilView extends View{
         if(currentTag != null){
             Log.i("getResult!","draw tag" + currentTag.getxPos() + ":" + currentTag.getyPos());
             canvas.drawBitmap(mTagBitmap , currentTag.getxPos() - mTagBitmapWidth/2, currentTag.getyPos() - mTagBitmapHeight/2 - offsetY, null);
-
         }
         if(picRecord != null && picRecord.getPicList() != null){
             List<Picture> picList = picRecord.getPicList();

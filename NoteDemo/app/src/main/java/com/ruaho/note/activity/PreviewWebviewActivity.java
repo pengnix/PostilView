@@ -78,6 +78,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     void loadHistory(){
         loadRecord();
         mPostilView.setHistoryPictureRecord(mPostRecord);
+        loadTags();
     }
 
     void hideBar(){
@@ -176,6 +177,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mSaveTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                saveTags();
 //                saveImage();
             }
         });
@@ -309,5 +311,13 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         if(null != recordString){
             mPostRecord = gson.fromJson(recordString, PostilRecord.class);
         }
+    }
+
+    private void saveTags(){
+
+    }
+
+    private void loadTags(){
+
     }
 }

@@ -24,7 +24,7 @@
             android:layout_toRightOf="@+id/note_back"
             android:layout_marginLeft="20dp"
             android:textColor="@color/red"
-            android:visibility="gone"
+            android:visibility="visible"
             android:text="保存"/>
         <TextView
             android:id="@+id/mbiaoji"
