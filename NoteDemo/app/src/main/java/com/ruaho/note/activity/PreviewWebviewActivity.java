@@ -138,6 +138,8 @@ public class PreviewWebviewActivity extends AppCompatActivity {
                     mPostilView.setMode(PostilView.Mode.NOT_EDIT);
                     mBottomToolbar.setVisibility(View.GONE);
                     saveImage();
+                    mPostilView.clear();
+                    mPostilView.setHistoryPictureRecord(mPostRecord);
                 }
             }
         });
