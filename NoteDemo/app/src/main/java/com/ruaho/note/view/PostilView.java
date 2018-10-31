@@ -16,7 +16,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.ruaho.note.notedemo.R;
+import com.ruaho.note.activity.R;
 import com.ruaho.note.util.DimenUtils;
 
 import java.util.ArrayList;

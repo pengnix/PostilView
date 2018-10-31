@@ -1,4 +1,4 @@
-package com.ruaho.note.notedemo;
+package com.ruaho.note.activity;
 
 import org.junit.Test;
 
