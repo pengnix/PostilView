@@ -1,4 +1,4 @@
-package com.ruaho.note.view;
+package com.ruaho.note.bean;
 
 public class PostilTag {
     public int getxPos() {

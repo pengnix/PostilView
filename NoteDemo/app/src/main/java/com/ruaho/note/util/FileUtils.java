@@ -20,19 +20,21 @@ public class FileUtils {
         if (appDir == null) {
             return null;
         }
-        String fileName = "preview_demo" + ".png";
+        String fileName = System.currentTimeMillis() + ".png";
         File file = new File(appDir, fileName);
-        Log.i("saveImage","file is" + file.getAbsolutePath() + ":" +file.getName());
+        Log.i("saveImage","file is" + fileName);
         FileOutputStream fos = null;
         try {
             fos = new FileOutputStream(file);
             bmp.compress(Bitmap.CompressFormat.PNG, quality, fos);
             fos.flush();
-            return file.getAbsolutePath();
+            return fileName;
         } catch (FileNotFoundException e) {
+            fileName = null;
             Log.i("saveImage","FileNotFoundException");
             e.printStackTrace();
         } catch (IOException e) {
+            fileName = null;
             Log.i("saveImage","IOException");
             e.printStackTrace();
         } finally {
@@ -44,13 +46,15 @@ public class FileUtils {
                 }
             }
         }
-        return null;
+        return fileName;
     }
 
-    public static Bitmap loadImage(){
+    public static Bitmap loadImage(String name){
+        Log.i("saveImage","loadImage="+ name);
         File appDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-        String fileName = "preview_demo" + ".png";
+        String fileName = name;
         String uri = appDir + "/" + fileName;
+        Log.i("saveImage","loadImage uri ="+ uri);
         Bitmap bitmap = null;
         //File file = new File(appDir, fileName);
         try{

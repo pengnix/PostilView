@@ -19,9 +19,13 @@ import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.ruaho.note.bean.Picture;
+import com.ruaho.note.bean.PostilRecord;
 import com.ruaho.note.util.FileUtils;
+import com.ruaho.note.util.NoteSharePreferenceUtils;
 import com.ruaho.note.view.ObservableWebView;
-import com.ruaho.note.view.PostilTag;
+import com.ruaho.note.bean.PostilTag;
 import com.ruaho.note.view.PostilView;
 import com.ruaho.note.util.ScreenUtils;
 
@@ -44,6 +48,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     private TextView mWordTxt;
     private TextView mSaveTxt;
     private TextView mControlTxt;
+    PostilRecord mPostRecord;
     public final static int REQUEST_ADD_TEXT = 1;
     private static int REQUEST_ADD_TEXT_RESULT = 3;
     List<PostilTag> mPostilTagList;
@@ -56,6 +61,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.preview_content_webview);
+        mPostRecord = new PostilRecord();
         hideBar();
         initView();
         initWebView();
@@ -66,6 +72,12 @@ public class PreviewWebviewActivity extends AppCompatActivity {
                 super.handleMessage(msg);
             }
         };
+        loadHistory();
+    }
+
+    void loadHistory(){
+        loadRecord();
+        mPostilView.setHistoryPictureRecord(mPostRecord);
     }
 
     void hideBar(){
@@ -87,7 +99,6 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mSaveTxt = findViewById(R.id.note_save);
         mControlTxt = findViewById(R.id.mguanli);
 
-        mPostilView.setOldPicture(FileUtils.loadImage());
 
         mPenTxt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,7 +176,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mSaveTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveImage();
+//                saveImage();
             }
         });
         mControlTxt.setOnClickListener(new View.OnClickListener() {
@@ -258,6 +269,9 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         String savedFile = FileUtils.saveImage(bm, 100);
         if (savedFile != null) {
             scanFile(PreviewWebviewActivity.this, savedFile);
+            Picture picture = new Picture((int)(mPostilView.getOffsetY()),savedFile);
+            mPostRecord.getPicList().add(picture);
+            saveRecord();
         }else{
         }
 //        new Thread(new Runnable() {
@@ -282,10 +296,18 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     }
 
     private void saveRecord(){
-
+        Gson gson = new Gson();
+        String recordString = gson.toJson(mPostRecord);
+        Log.i("saveImage","saveRecord = " + recordString);
+        NoteSharePreferenceUtils.setPrefString("NoteSharePreferenceUtils",recordString);
     }
 
     private void loadRecord(){
-
+        String recordString = NoteSharePreferenceUtils.getPrefString("NoteSharePreferenceUtils",null);
+        Gson gson = new Gson();
+        Log.i("saveImage","loadRecord = " + recordString);
+        if(null != recordString){
+            mPostRecord = gson.fromJson(recordString, PostilRecord.class);
+        }
     }
 }

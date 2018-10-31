@@ -17,10 +17,16 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.ruaho.note.activity.R;
+import com.ruaho.note.bean.Picture;
+import com.ruaho.note.bean.PostilRecord;
+import com.ruaho.note.bean.PostilTag;
 import com.ruaho.note.util.DimenUtils;
+import com.ruaho.note.util.FileUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PostilView extends View{
 
@@ -32,12 +38,13 @@ public class PostilView extends View{
     private float mTagOriginY;
     private Bitmap mBufferBitmap;
     private Bitmap mTagBitmap;
-    private Bitmap mOldBitmap;
+    private List<Bitmap> mHistoryBitmap;
     private int mTagBitmapHeight;
     private int mTagBitmapWidth;
     private PostilTag currentTag;
     private Canvas mBufferCanvas;
     List<PostilTag> postilTagList;
+    private PostilRecord picRecord;
     private float offsetY;
     private static float CLICK_PRECISION= 3.0f;
 
@@ -51,6 +58,7 @@ public class PostilView extends View{
     private int mDrawSize;
     private int mEraserSize;
     private int mPenAlpha = 255;
+    private Map<String,Integer> url2Index;
 
     private boolean mCanEraser;
 
@@ -94,6 +102,7 @@ public class PostilView extends View{
     }
 
     private void init() {
+        url2Index = new HashMap<String,Integer>();
         setDrawingCacheEnabled(true);
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
         mPaint.setStyle(Paint.Style.STROKE);
@@ -116,7 +125,7 @@ public class PostilView extends View{
     }
 
     void initData(){
-        mOldBitmap = null;
+        mHistoryBitmap = new ArrayList<Bitmap>();
         offsetY = 0;
         postilTagList = new ArrayList<PostilTag>();
         currentTag = null;
@@ -299,12 +308,21 @@ public class PostilView extends View{
 //            canvas.drawBitmap(mTagBitmap , tag.xPos - mTagBitmapWidth/2, tag.yPos - mTagBitmapHeight/2, null);
 //        }
         if(currentTag != null){
-            Log.i("getResult!","draw tag" + currentTag.xPos + ":" + currentTag.yPos);
-            canvas.drawBitmap(mTagBitmap , currentTag.xPos - mTagBitmapWidth/2, currentTag.yPos - mTagBitmapHeight/2 - offsetY, null);
+            Log.i("getResult!","draw tag" + currentTag.getxPos() + ":" + currentTag.getyPos());
+            canvas.drawBitmap(mTagBitmap , currentTag.getxPos() - mTagBitmapWidth/2, currentTag.getyPos() - mTagBitmapHeight/2 - offsetY, null);
 
         }
-        if(mOldBitmap != null){
-            canvas.drawBitmap(mOldBitmap, 0, - offsetY, null);
+        if(picRecord != null && picRecord.getPicList() != null){
+            List<Picture> picList = picRecord.getPicList();
+            for(Picture pic:picList){
+                String address = pic.getAddress();
+                Integer index = url2Index.get(address);
+                if(index == null){
+                    continue;
+                }
+                Bitmap bmp = mHistoryBitmap.get(index);
+                canvas.drawBitmap(bmp, 0, pic.getOffsetY()-offsetY, null);
+            }
         }
     }
 
@@ -387,10 +405,10 @@ public class PostilView extends View{
 
     public boolean containTagBitmap(int x,int y){
         if(currentTag != null){
-            int top = currentTag.yPos - mTagBitmapHeight/2;
-            int bottom= currentTag.yPos + mTagBitmapHeight/2;
-            int left= currentTag.xPos - mTagBitmapWidth/2;
-            int right= currentTag.xPos + mTagBitmapWidth/2;
+            int top = currentTag.getyPos() - mTagBitmapHeight/2;
+            int bottom= currentTag.getyPos() + mTagBitmapHeight/2;
+            int left= currentTag.getxPos() - mTagBitmapWidth/2;
+            int right= currentTag.getxPos() + mTagBitmapWidth/2;
             Log.i("getResult!","top = " + top + "bottom = " + bottom + "left = " + left + "right = " + right);
             Log.i("getResult!","x = " + x + "y = " + y);
             if(x > left && x < right && y > top && y < bottom){
@@ -429,9 +447,26 @@ public class PostilView extends View{
         invalidate();
     }
 
-    public void setOldPicture(Bitmap bitmap){
-        Log.i("saveImage","setOldPicture");
-        mOldBitmap = bitmap;
+    public float getOffsetY(){
+        return offsetY;
+    }
+
+    public void setHistoryPictureRecord(PostilRecord record){
+        Log.i("saveImage","setHistoryPictureRecord");
+        picRecord = record;
+        if(picRecord == null){
+            return;
+        }
+        List<Picture> picList = picRecord.getPicList();
+        if(picList == null){
+            return;
+        }
+        for(Picture pic:picList){
+            Bitmap bmp = FileUtils.loadImage(pic.getAddress());
+            mHistoryBitmap.add(bmp);
+            int index = mHistoryBitmap.size() - 1;
+            url2Index.put(pic.getAddress(),index);
+        }
         invalidate();
     }
 }

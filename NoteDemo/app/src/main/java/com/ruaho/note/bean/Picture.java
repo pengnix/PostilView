@@ -2,18 +2,26 @@ package com.ruaho.note.bean;
 
 public class Picture {
 
-    int offset;
+    int offsetY;
     String address;
 
     public Picture(int offset, String address) {
-        this.offset = offset;
+        this.offsetY = offset;
         this.address = address;
+    }
+
+    public int getOffsetY() {
+        return offsetY;
+    }
+
+    public String getAddress() {
+        return address;
     }
 
     @Override
     public String toString() {
         return "Picture{" +
-                "offset=" + offset +
+                "offsetY=" + offsetY +
                 ", address='" + address + '\'' +
                 '}';
     }
