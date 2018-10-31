@@ -24,6 +24,7 @@ import com.ruaho.note.bean.Picture;
 import com.ruaho.note.bean.PostilRecord;
 import com.ruaho.note.bean.PostilTagList;
 import com.ruaho.note.util.FileUtils;
+import com.ruaho.note.util.MD5Utils;
 import com.ruaho.note.util.NoteSharePreferenceUtils;
 import com.ruaho.note.view.ObservableWebView;
 import com.ruaho.note.bean.PostilTag;
@@ -312,13 +313,17 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         Gson gson = new Gson();
         String recordString = gson.toJson(mPostRecord);
         Log.i("saveImage","saveRecord = " + recordString);
-        NoteSharePreferenceUtils.setPrefString("NoteSharePreferenceUtils",recordString);
+        String key = MD5Utils.stringToMD5("NoteRecords" + url);
+        Log.i("saveImage","saveRecord key = " + key);
+        NoteSharePreferenceUtils.setPrefString(key,recordString);
     }
 
     private void loadRecord(){
-        String recordString = NoteSharePreferenceUtils.getPrefString("NoteSharePreferenceUtils",null);
+        String key = MD5Utils.stringToMD5("NoteRecords" + url);
+        String recordString = NoteSharePreferenceUtils.getPrefString(key,null);
         Gson gson = new Gson();
         Log.i("saveImage","loadRecord = " + recordString);
+        Log.i("saveImage","loadRecord key = " + key);
         if(null != recordString){
             mPostRecord = gson.fromJson(recordString, PostilRecord.class);
         }
@@ -328,13 +333,17 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         Gson gson = new Gson();
         String recordString = gson.toJson(mPostilTagList);
         Log.i("saveImage","saveTag = " + recordString);
-        NoteSharePreferenceUtils.setPrefString("NoteTags",recordString);
+        String key = MD5Utils.stringToMD5("NoteTags" + url);
+        Log.i("saveImage","saveTag key = " + key);
+        NoteSharePreferenceUtils.setPrefString(key,recordString);
     }
 
     private void loadTags(){
-        String recordString = NoteSharePreferenceUtils.getPrefString("NoteTags",null);
+        String key = MD5Utils.stringToMD5("NoteTags" + url);
+        String recordString = NoteSharePreferenceUtils.getPrefString(key,null);
         Gson gson = new Gson();
         Log.i("saveImage","loadTags = " + recordString);
+        Log.i("saveImage","loadTags key = " + key);
         if(null != recordString){
             mPostilTagList = gson.fromJson(recordString, PostilTagList.class);
         }
