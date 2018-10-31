@@ -254,27 +254,38 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     }
 
     private void saveImage(){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Bitmap bm = mPostilView.buildBitmap();
-                String savedFile = FileUtils.saveImage(bm, 100);
-                if (savedFile != null) {
-                    scanFile(PreviewWebviewActivity.this, savedFile);
-                    mHandler.obtainMessage(MSG_SAVE_SUCCESS).sendToTarget();
-                }else{
-                    mHandler.obtainMessage(MSG_SAVE_FAILED).sendToTarget();
-                }
-            }
-        }).start();
+        Bitmap bm = mPostilView.buildBitmap();
+        String savedFile = FileUtils.saveImage(bm, 100);
+        if (savedFile != null) {
+            scanFile(PreviewWebviewActivity.this, savedFile);
+        }else{
+        }
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                Bitmap bm = mPostilView.buildBitmap();
+//                String savedFile = FileUtils.saveImage(bm, 100);
+//                if (savedFile != null) {
+//                    scanFile(PreviewWebviewActivity.this, savedFile);
+//                    mHandler.obtainMessage(MSG_SAVE_SUCCESS).sendToTarget();
+//                }else{
+//                    mHandler.obtainMessage(MSG_SAVE_FAILED).sendToTarget();
+//                }
+//            }
+//        }).start();
     }
 
-
-
-    private static void scanFile(Context context, String filePath) {
+    private void scanFile(Context context, String filePath) {
         Intent scanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         scanIntent.setData(Uri.fromFile(new File(filePath)));
         context.sendBroadcast(scanIntent);
     }
 
+    private void saveRecord(){
+
+    }
+
+    private void loadRecord(){
+
+    }
 }

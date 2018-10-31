@@ -8,6 +8,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.ruaho.note.util.NoteSharePreferenceUtils;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -22,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         verifyStoragePermissions(this);
+        NoteSharePreferenceUtils.init(getApplicationContext());
     }
 
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
