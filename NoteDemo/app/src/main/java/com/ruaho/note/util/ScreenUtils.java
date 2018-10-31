@@ -1,4 +1,4 @@
-package com.ruaho.note.view;
+package com.ruaho.note.util;
 
 import android.content.Context;
 import android.content.res.Resources;

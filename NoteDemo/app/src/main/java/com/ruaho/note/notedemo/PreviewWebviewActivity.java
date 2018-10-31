@@ -24,7 +24,7 @@ import android.widget.TextView;
 import com.ruaho.note.view.ObservableWebView;
 import com.ruaho.note.view.PostilTag;
 import com.ruaho.note.view.PostilView;
-import com.ruaho.note.view.ScreenUtils;
+import com.ruaho.note.util.ScreenUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -92,6 +92,8 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mSaveTxt = findViewById(R.id.note_save);
         mControlTxt = findViewById(R.id.mguanli);
 
+        mPostilView.setOldPicture(loadImage());
+
         mPenTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -126,6 +128,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
                 } else {
                     mPostilView.setMode(PostilView.Mode.NOT_EDIT);
                     mBottomToolbar.setVisibility(View.GONE);
+                    saveImage();
                 }
             }
         });
@@ -173,7 +176,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mControlTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loadImage();
+//                loadImage();
             }
         });
     }
@@ -306,17 +309,19 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         return null;
     }
 
-    public void loadImage(){
+    public Bitmap loadImage(){
         File appDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         String fileName = "preview_demo" + ".png";
         String uri = appDir + "/" + fileName;
+        Bitmap bitmap = null;
         //File file = new File(appDir, fileName);
         try{
             FileInputStream fis = new FileInputStream(uri);
-            Bitmap bitmap  = BitmapFactory.decodeStream(fis);
+            bitmap  = BitmapFactory.decodeStream(fis);
         } catch (FileNotFoundException e){
             Log.i("saveImage","FileNotFoundException");
         }
+        return bitmap;
     }
 
     private static void scanFile(Context context, String filePath) {

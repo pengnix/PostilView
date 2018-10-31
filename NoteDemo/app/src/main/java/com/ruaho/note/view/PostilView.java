@@ -17,6 +17,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.ruaho.note.notedemo.R;
+import com.ruaho.note.util.DimenUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,7 @@ public class PostilView extends View{
     private float mTagOriginY;
     private Bitmap mBufferBitmap;
     private Bitmap mTagBitmap;
+    private Bitmap mOldBitmap;
     private int mTagBitmapHeight;
     private int mTagBitmapWidth;
     private PostilTag currentTag;
@@ -109,10 +111,12 @@ public class PostilView extends View{
         mTagBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.tag);
         mTagBitmapHeight = mTagBitmap.getHeight();
         mTagBitmapWidth = mTagBitmap.getWidth();
+
         Log.i("getResult!","mTagBitmap" + mTagBitmapHeight + ":" + mTagBitmapWidth);
     }
 
     void initData(){
+        mOldBitmap = null;
         offsetY = 0;
         postilTagList = new ArrayList<PostilTag>();
         currentTag = null;
@@ -288,7 +292,7 @@ public class PostilView extends View{
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (mBufferBitmap != null) {
-            canvas.drawBitmap(mBufferBitmap, 0, - offsetY, null);
+            canvas.drawBitmap(mBufferBitmap, 0, 0, null);
         }
 //        for(PostilTag tag:postilTagList){
 //            Log.i("getResult!","draw tag" + tag.xPos + ":" + tag.yPos);
@@ -298,6 +302,9 @@ public class PostilView extends View{
             Log.i("getResult!","draw tag" + currentTag.xPos + ":" + currentTag.yPos);
             canvas.drawBitmap(mTagBitmap , currentTag.xPos - mTagBitmapWidth/2, currentTag.yPos - mTagBitmapHeight/2 - offsetY, null);
 
+        }
+        if(mOldBitmap != null){
+            canvas.drawBitmap(mOldBitmap, 0, - offsetY, null);
         }
     }
 
@@ -419,6 +426,12 @@ public class PostilView extends View{
     public void updateOffsetY(int dy){
         offsetY = dy;
         Log.i("offsetY","dy = " + dy);
+        invalidate();
+    }
+
+    public void setOldPicture(Bitmap bitmap){
+        Log.i("saveImage","setOldPicture");
+        mOldBitmap = bitmap;
         invalidate();
     }
 }
