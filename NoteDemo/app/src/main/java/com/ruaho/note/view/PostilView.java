@@ -20,6 +20,7 @@ import com.ruaho.note.activity.R;
 import com.ruaho.note.bean.Picture;
 import com.ruaho.note.bean.PostilRecord;
 import com.ruaho.note.bean.PostilTag;
+import com.ruaho.note.bean.PostilTagList;
 import com.ruaho.note.util.DimenUtils;
 import com.ruaho.note.util.FileUtils;
 
@@ -41,10 +42,10 @@ public class PostilView extends View{
     private List<Bitmap> mHistoryBitmap;
     private int mTagBitmapHeight;
     private int mTagBitmapWidth;
-    private PostilTag currentTag;
     private Canvas mBufferCanvas;
-    List<PostilTag> postilTagList;
     private PostilRecord picRecord;
+    private PostilTagList mPostilTagList;
+    private PostilTag mCurrentTag;
     private float offsetY;
     private static float CLICK_PRECISION= 3.0f;
 
@@ -127,8 +128,6 @@ public class PostilView extends View{
     void initData(){
         mHistoryBitmap = new ArrayList<Bitmap>();
         offsetY = 0;
-        postilTagList = new ArrayList<PostilTag>();
-        currentTag = null;
     }
 
     private void initBuffer(){
@@ -303,14 +302,17 @@ public class PostilView extends View{
         if (mBufferBitmap != null) {
             canvas.drawBitmap(mBufferBitmap, 0, 0, null);
         }
-//        for(PostilTag tag:postilTagList){
-//            Log.i("getResult!","draw tag" + tag.xPos + ":" + tag.yPos);
-//            canvas.drawBitmap(mTagBitmap , tag.xPos - mTagBitmapWidth/2, tag.yPos - mTagBitmapHeight/2, null);
-//        }
-        if(currentTag != null){
-            Log.i("getResult!","draw tag" + currentTag.getxPos() + ":" + currentTag.getyPos());
-            canvas.drawBitmap(mTagBitmap , currentTag.getxPos() - mTagBitmapWidth/2, currentTag.getyPos() - mTagBitmapHeight/2 - offsetY, null);
+
+        if(mPostilTagList != null && mPostilTagList.getList() != null){
+            List<PostilTag> list =  mPostilTagList.getList();
+            for(PostilTag tag:list){
+                float left = tag.getxPos() - mTagBitmapWidth/2;
+                float top = tag.getyPos() - mTagBitmapHeight/2 - offsetY;
+                Log.i("getResult!","draw tag" + tag.getxPos() + ":" + tag.getyPos());
+                canvas.drawBitmap(mTagBitmap , left, top, null);
+            }
         }
+
         if(picRecord != null && picRecord.getPicList() != null){
             List<Picture> picList = picRecord.getPicList();
             for(Picture pic:picList){
@@ -355,7 +357,7 @@ public class PostilView extends View{
         switch (action) {
             case MotionEvent.ACTION_DOWN:
                 if(mMode == Mode.MOVE_TAG){
-                    currentTag.updatePos((int)x,(int)y);
+                    mCurrentTag.updatePos((int)x,(int)y);
                     break;
                 }
                 mLastX = x;
@@ -367,7 +369,7 @@ public class PostilView extends View{
                 break;
             case MotionEvent.ACTION_MOVE:
                 if(mMode == Mode.MOVE_TAG){
-                    currentTag.updatePos((int)x,(int)y);
+                    mCurrentTag.updatePos((int)x,(int)y);
                     invalidate();
                     break;
                 }
@@ -403,15 +405,17 @@ public class PostilView extends View{
     }
 
     public boolean containTagBitmap(int x,int y){
-        if(currentTag != null){
-            int top = currentTag.getyPos() - mTagBitmapHeight/2;
-            int bottom= currentTag.getyPos() + mTagBitmapHeight/2;
-            int left= currentTag.getxPos() - mTagBitmapWidth/2;
-            int right= currentTag.getxPos() + mTagBitmapWidth/2;
-            Log.i("getResult!","top = " + top + "bottom = " + bottom + "left = " + left + "right = " + right);
-            Log.i("getResult!","x = " + x + "y = " + y);
-            if(x > left && x < right && y > top && y < bottom){
-                return true;
+        if(mPostilTagList != null && mPostilTagList.getList() != null){
+            List<PostilTag> list =  mPostilTagList.getList();
+            for(PostilTag tag:list){
+                int top = tag.getyPos() - mTagBitmapHeight/2;
+                int bottom= tag.getyPos() + mTagBitmapHeight/2;
+                int left= tag.getxPos() - mTagBitmapWidth/2;
+                int right= tag.getxPos() + mTagBitmapWidth/2;
+                if(x > left && x < right && y > top && y < bottom){
+                    mCurrentTag = tag;
+                    return true;
+                }
             }
         }
         return false;
@@ -425,18 +429,23 @@ public class PostilView extends View{
     }
 
     public void openTag(){
-        if(currentTag != null && mCallback != null){
-            mCallback.openTag(currentTag);
+        if(mCurrentTag != null && mCallback != null){
+            mCallback.openTag(mCurrentTag);
         }
     }
 
-    public void updatePostilTag(List<PostilTag> list){
-        postilTagList = list;
+    public void setPostilTags(PostilTagList list){
+        mPostilTagList = list;
         invalidate();
     }
 
     public void addPostilTag(PostilTag tag){
-        currentTag = tag;
+        mPostilTagList.getList().add(tag);
+        invalidate();
+    }
+
+    public void updatePostilTag(PostilTag tag){
+        mCurrentTag.updateAll(tag.getOffsetY(),tag.getxPos(),tag.getyPos(),tag.getContent());
         invalidate();
     }
 

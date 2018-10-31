@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.ruaho.note.bean.Picture;
 import com.ruaho.note.bean.PostilRecord;
+import com.ruaho.note.bean.PostilTagList;
 import com.ruaho.note.util.FileUtils;
 import com.ruaho.note.util.NoteSharePreferenceUtils;
 import com.ruaho.note.view.ObservableWebView;
@@ -49,9 +50,9 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     private TextView mSaveTxt;
     private TextView mControlTxt;
     PostilRecord mPostRecord;
+    PostilTagList mPostilTagList;
     public final static int REQUEST_ADD_TEXT = 1;
     private static int REQUEST_ADD_TEXT_RESULT = 3;
-    List<PostilTag> mPostilTagList;
     private Handler mHandler;
 
     private static final int MSG_SAVE_SUCCESS = 1;
@@ -62,10 +63,10 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.preview_content_webview);
         mPostRecord = new PostilRecord();
+        mPostilTagList = new PostilTagList();
         hideBar();
         initView();
         initWebView();
-        mPostilTagList = new ArrayList<PostilTag>();
         mHandler = new Handler(){
             @Override
             public void handleMessage(Message msg) {
@@ -79,6 +80,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         loadRecord();
         mPostilView.setHistoryPictureRecord(mPostRecord);
         loadTags();
+        mPostilView.setPostilTags(mPostilTagList);
     }
 
     void hideBar(){
@@ -239,14 +241,16 @@ public class PreviewWebviewActivity extends AppCompatActivity {
                 String result = data.getExtras().getString("result");
                 int x = data.getExtras().getInt("x");
                 int y = data.getExtras().getInt("y");
+                int offset = data.getExtras().getInt("offsetY");
                 Log.i("getResult!",result);
                 int height = ScreenUtils.getScreebHeight(getApplicationContext());
                 int width = ScreenUtils.getScreenWidth(getApplicationContext());
                 Log.i("getResult!","height = " + height + "width = " + width);
                 if(x != -1 && y != -1){
-                    mPostilView.addPostilTag(new PostilTag(x,y,result));
+                    mPostilView.updatePostilTag(new PostilTag(offset,x,y,result));
                 } else {
-                    mPostilView.addPostilTag(new PostilTag(width/2,height/2,result));
+                    offset = (int)mPostilView.getOffsetY();
+                    mPostilView.addPostilTag(new PostilTag(offset,width/2,height/2,result));
                 }
                 return;
             }
@@ -314,10 +318,18 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     }
 
     private void saveTags(){
-
+        Gson gson = new Gson();
+        String recordString = gson.toJson(mPostilTagList);
+        Log.i("saveImage","saveTag = " + recordString);
+        NoteSharePreferenceUtils.setPrefString("NoteTags",recordString);
     }
 
     private void loadTags(){
-
+        String recordString = NoteSharePreferenceUtils.getPrefString("NoteTags",null);
+        Gson gson = new Gson();
+        Log.i("saveImage","loadTags = " + recordString);
+        if(null != recordString){
+            mPostilTagList = gson.fromJson(recordString, PostilTagList.class);
+        }
     }
 }

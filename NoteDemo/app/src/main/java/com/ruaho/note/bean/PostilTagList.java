@@ -13,4 +13,8 @@ public class PostilTagList {
     public PostilTagList(List<PostilTag> list) {
         this.list = list;
     }
+
+    public List<PostilTag> getList() {
+        return list;
+    }
 }
