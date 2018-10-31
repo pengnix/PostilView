@@ -54,6 +54,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     public final static int REQUEST_ADD_TEXT = 1;
     private static int REQUEST_ADD_TEXT_RESULT = 3;
     private Handler mHandler;
+    private String url = "";
 
     private static final int MSG_SAVE_SUCCESS = 1;
     private static final int MSG_SAVE_FAILED = 2;
@@ -62,6 +63,10 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.preview_content_webview);
+        Intent intent = getIntent();
+        if(intent != null){
+            url = intent.getStringExtra("previewurl");
+        }
         mPostRecord = new PostilRecord();
         mPostilTagList = new PostilTagList();
         hideBar();
@@ -215,7 +220,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         String pdfUrl = "https://source.android.com/security/reports/Google_Android_Security_2017_Report_Final.pdf";
 //        mWebView.loadUrl(pdfUrl);
 //        mWebView.loadUrl("http://docs.google.com/gview?embedded=true&url=" +pdfUrl);
-        mWebView.loadUrl("http://www.baidu.com");
+        mWebView.loadUrl(url);
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {

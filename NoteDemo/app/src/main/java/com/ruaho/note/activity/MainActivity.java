@@ -12,14 +12,18 @@ import com.ruaho.note.util.NoteSharePreferenceUtils;
 
 public class MainActivity extends AppCompatActivity {
 
+    String url = "http://www.baidu.com";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         findViewById(R.id.jump_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(MainActivity.this, PreviewWebviewActivity.class);
+                intent.putExtra("previewurl", url);
                 startActivity(intent);
             }
         });
