@@ -49,6 +49,7 @@
             android:layout_toLeftOf="@id/preview_wenzi"
             android:layout_marginRight="20dp"
             android:textColor="@color/red"
+            android:visibility="gone"
             android:text="管理"/>
         <TextView
             android:layout_width="wrap_content"
