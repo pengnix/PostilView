@@ -304,16 +304,6 @@ public class PostilView extends View{
             canvas.drawBitmap(mBufferBitmap, 0, 0, null);
         }
 
-//        if(mPostilTagList != null && mPostilTagList.getList() != null){
-//            List<PostilTag> list =  mPostilTagList.getList();
-//            for(PostilTag tag:list){
-//                float left = tag.getxPos() - mTagBitmapWidth/2;
-//                float top = tag.getyPos() - mTagBitmapHeight/2 - offsetY +tag.getOffsetY();
-//                Log.i("getResult!","draw tag" + tag.getxPos() + ":" + tag.getyPos());
-//                canvas.drawBitmap(mTagBitmap , left, top, null);
-//            }
-//        }
-
         if(mCurrentTag != null && mCurrentTag.isCanMove()){
             float left = mCurrentTag.getxPos() - mTagBitmapWidth/2;
             float top = mCurrentTag.getyPos() - mTagBitmapHeight/2 - offsetY +mCurrentTag.getOffsetY();
@@ -462,25 +452,6 @@ public class PostilView extends View{
         }
         return mCurrentTag.isCanMove();
     }
-
-//    public boolean isClickTag(float x,float y){
-//        if(mPostilTagList != null && mPostilTagList.getList() != null){
-//            List<PostilTag> list =  mPostilTagList.getList();
-//            for(PostilTag tag:list){
-//                int top = tag.getyPos() - mTagBitmapHeight/2 - (int)offsetY +tag.getOffsetY();
-//                int bottom= tag.getyPos() + mTagBitmapHeight/2 - (int)offsetY +tag.getOffsetY();
-//                int left= tag.getxPos() - mTagBitmapWidth/2;
-//                int right= tag.getxPos() + mTagBitmapWidth/2;
-//                if(x > left && x < right && y > top && y < bottom){
-//                    if(!tag.isCanMove()&& mCallback != null){
-//                        mCallback.openTag(tag);
-//                    }
-//                    return true;
-//                }
-//            }
-//        }
-//        return false;
-//    }
 
     public boolean isClickTag(float x,float y){
         if((Math.abs(x-mTagOriginX) < CLICK_PRECISION) && (Math.abs(y-mTagOriginY) < CLICK_PRECISION)){

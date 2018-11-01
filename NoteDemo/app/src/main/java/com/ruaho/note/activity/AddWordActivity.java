@@ -23,17 +23,25 @@ public class AddWordActivity extends AppCompatActivity {
     private int x = -1;
     private int y = -1;
     private int offsetY = -1;
+    private boolean canEdit;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        canEdit = true;
         setContentView(R.layout.activity_addwords);
         initView();
         hideBar();
         initData();
-        mEditText.setFocusable(true);
-        mEditText.setFocusableInTouchMode(true);
-        mEditText.requestFocus();
-        callKeyboard();
+        if(canEdit){
+            mEditText.setFocusable(true);
+            mEditText.setFocusableInTouchMode(true);
+            mEditText.requestFocus();
+            callKeyboard();
+        } else {
+            mEditText.setEnabled(false);
+            mEditText.setFocusable(false);
+            mEditText.setKeyListener(null);
+        }
     }
 
     void initView(){
@@ -60,6 +68,7 @@ public class AddWordActivity extends AppCompatActivity {
         if(intent != null){
             String content = intent.getStringExtra("content");
             if(content != null){
+                canEdit = false;
                 mEditText.setText(content);
                 x = intent.getIntExtra("x",-1);
                 y = intent.getIntExtra("y",-1);
