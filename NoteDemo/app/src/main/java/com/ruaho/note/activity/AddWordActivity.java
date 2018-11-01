@@ -19,6 +19,7 @@ public class AddWordActivity extends AppCompatActivity {
 
     private EditText mEditText;
     private TextView mCloseTxt;
+    private TextView mTitleTxt;
     private static int REQUEST_ADD_TEXT_RESULT = 3;
     private int x = -1;
     private int y = -1;
@@ -36,17 +37,19 @@ public class AddWordActivity extends AppCompatActivity {
             mEditText.setFocusable(true);
             mEditText.setFocusableInTouchMode(true);
             mEditText.requestFocus();
-            callKeyboard();
+//            callKeyboard();
         } else {
             mEditText.setEnabled(false);
             mEditText.setFocusable(false);
             mEditText.setKeyListener(null);
+            mTitleTxt.setText(R.string.preview_word_look);
         }
     }
 
     void initView(){
         mEditText = findViewById(R.id.preview_add_words);
         mCloseTxt = findViewById(R.id.preview_word_close_txt);
+        mTitleTxt = findViewById(R.id.preview_word_close_title_txt);
         mCloseTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
