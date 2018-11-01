@@ -307,7 +307,7 @@ public class PostilView extends View{
             List<PostilTag> list =  mPostilTagList.getList();
             for(PostilTag tag:list){
                 float left = tag.getxPos() - mTagBitmapWidth/2;
-                float top = tag.getyPos() - mTagBitmapHeight/2 - offsetY;
+                float top = tag.getyPos() - mTagBitmapHeight/2 - offsetY +tag.getOffsetY();
                 Log.i("getResult!","draw tag" + tag.getxPos() + ":" + tag.getyPos());
                 canvas.drawBitmap(mTagBitmap , left, top, null);
             }
@@ -408,8 +408,8 @@ public class PostilView extends View{
         if(mPostilTagList != null && mPostilTagList.getList() != null){
             List<PostilTag> list =  mPostilTagList.getList();
             for(PostilTag tag:list){
-                int top = tag.getyPos() - mTagBitmapHeight/2;
-                int bottom= tag.getyPos() + mTagBitmapHeight/2;
+                int top = tag.getyPos() - mTagBitmapHeight/2 - (int)offsetY +tag.getOffsetY();
+                int bottom= tag.getyPos() + mTagBitmapHeight/2 - (int)offsetY +tag.getOffsetY();
                 int left= tag.getxPos() - mTagBitmapWidth/2;
                 int right= tag.getxPos() + mTagBitmapWidth/2;
                 if(x > left && x < right && y > top && y < bottom){

@@ -181,6 +181,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
                 intent.putExtra("content", tag.getContent());
                 intent.putExtra("x",tag.getxPos());
                 intent.putExtra("y",tag.getyPos());
+                intent.putExtra("offsetY", tag.getOffsetY());
                 startActivityForResult(intent,REQUEST_ADD_TEXT);
             }
         });
@@ -255,9 +256,11 @@ public class PreviewWebviewActivity extends AppCompatActivity {
                 int width = ScreenUtils.getScreenWidth(getApplicationContext());
                 Log.i("getResult!","height = " + height + "width = " + width);
                 if(x != -1 && y != -1){
+                    Log.i("SSSSSSSS","update" + offset + ":" + x + ":" + y);
                     mPostilView.updatePostilTag(new PostilTag(offset,x,y,result));
                 } else {
                     offset = (int)mPostilView.getOffsetY();
+                    Log.i("SSSSSSSS","add" + offset+ ":" + width/2 + ":" + height/2);
                     mPostilView.addPostilTag(new PostilTag(offset,width/2,height/2,result));
                 }
                 return;
