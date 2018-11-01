@@ -44,11 +44,11 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     private TextView mTagTxt;
     private TextView mBackTxt;
     private LinearLayout mBottomToolbar;
-    private TextView mPenTxt;
-    private TextView mEraseTxt;
-    private TextView mToBackTxt;
-    private TextView mToFrontTxt;
-    private TextView mEraseAllTxt;
+    private ImageView mPenTxt;
+    private ImageView mEraseTxt;
+    private ImageView mToBackTxt;
+    private ImageView mToFrontTxt;
+    private ImageView mEraseAllTxt;
     private TextView mWordTxt;
     private TextView mSaveTxt;
     private TextView mControlTxt;

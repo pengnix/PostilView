@@ -6,4 +6,7 @@
     <dimen name="preview_title_btn_width">35dp</dimen>
     <dimen name="preview_title_btn_margintop">15dp</dimen>
     <dimen name="preview_top_txt_size">20sp</dimen>
+    <dimen name="preview_bottom_bar_height">90dp</dimen>
+    <dimen name="preview_bottom_bar_btn_height">35dp</dimen>
+    <dimen name="preview_bottom_bar_btn_margintop">25dp</dimen>
 </resources>

@@ -134,39 +134,45 @@
     <LinearLayout
         android:id="@+id/note_bottom_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="@dimen/preview_bottom_bar_height"
         android:orientation="horizontal"
+        android:background="@color/preview_bottom_gray"
         android:visibility="gone">
-        <TextView
+        <ImageView
             android:id="@+id/preview_pen"
             android:layout_width="@dimen/note_bar_default_width"
-            android:layout_height="20dp"
+            android:layout_height="@dimen/preview_bottom_bar_btn_height"
             android:layout_weight="1"
-            android:text="画笔"/>
-        <TextView
+            android:layout_marginTop="@dimen/preview_bottom_bar_btn_margintop"
+            android:src="@drawable/shixinbi"/>
+        <ImageView
             android:id="@+id/preview_erase"
             android:layout_width="@dimen/note_bar_default_width"
-            android:layout_height="20dp"
+            android:layout_height="@dimen/preview_bottom_bar_btn_height"
             android:layout_weight="1"
-            android:text="擦除"/>
-        <TextView
+            android:layout_marginTop="@dimen/preview_bottom_bar_btn_margintop"
+            android:src="@drawable/xiangpica"/>
+        <ImageView
             android:id="@+id/preview_back"
             android:layout_width="@dimen/note_bar_default_width"
-            android:layout_height="20dp"
+            android:layout_height="@dimen/preview_bottom_bar_btn_height"
             android:layout_weight="1"
-            android:text="向后"/>
-        <TextView
+            android:layout_marginTop="@dimen/preview_bottom_bar_btn_margintop"
+            android:src="@drawable/chexiao"/>
+        <ImageView
             android:id="@+id/preview_front"
             android:layout_width="@dimen/note_bar_default_width"
-            android:layout_height="20dp"
+            android:layout_height="@dimen/preview_bottom_bar_btn_height"
             android:layout_weight="1"
-            android:text="向前"/>
-        <TextView
+            android:layout_marginTop="@dimen/preview_bottom_bar_btn_margintop"
+            android:src="@drawable/qianjin"/>
+        <ImageView
             android:id="@+id/preview_cancel_all"
             android:layout_width="@dimen/note_bar_default_width"
-            android:layout_height="20dp"
+            android:layout_height="@dimen/preview_bottom_bar_btn_height"
             android:layout_weight="1"
-            android:text="删除本次批注"/>
+            android:layout_marginTop="@dimen/preview_bottom_bar_btn_margintop"
+            android:src="@drawable/shanchu"/>
     </LinearLayout>
 
 </LinearLayout>
