@@ -9,4 +9,5 @@
     <dimen name="preview_bottom_bar_height">90dp</dimen>
     <dimen name="preview_bottom_bar_btn_height">35dp</dimen>
     <dimen name="preview_bottom_bar_btn_margintop">25dp</dimen>
+    <dimen name="preview_bottom_seekbar_width">200dp</dimen>
 </resources>

@@ -19,6 +19,7 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -56,6 +57,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     private ImageView mTagCancel;
     private ImageView mTuyaSave;
     private ImageView mTuyaCancel;
+    private SeekBar mSeekBar;
     LinearLayout mTagTopBar;
     RelativeLayout mCommonToolBar;
     LinearLayout mTuYaContainer;
@@ -123,6 +125,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mTuYaContainer = findViewById(R.id.tuya_container);
         mTuyaSave = findViewById(R.id.tuya_save);
         mTuyaCancel = findViewById(R.id.tuya_cancel);
+        mSeekBar = findViewById(R.id.preview_seekbar);
 
         mPenTxt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,11 +160,6 @@ public class PreviewWebviewActivity extends AppCompatActivity {
                     showTuyaTopToolBar();
                     mBottomToolbar.setVisibility(View.VISIBLE);
                 } else {
-//                    mPostilView.setMode(PostilView.Mode.NOT_EDIT);
-//                    mBottomToolbar.setVisibility(View.GONE);
-//                    saveTuYaImage();
-//                    mPostilView.clear();
-//                    mPostilView.setHistoryPictureRecord(mPostRecord);
                 }
             }
         });

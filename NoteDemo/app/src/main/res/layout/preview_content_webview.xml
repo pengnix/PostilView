@@ -138,6 +138,11 @@
         android:orientation="horizontal"
         android:background="@color/preview_bottom_gray"
         android:visibility="gone">
+        <SeekBar
+            android:id="@+id/preview_seekbar"
+            android:layout_marginTop="@dimen/preview_bottom_bar_btn_margintop"
+            android:layout_width="@dimen/preview_bottom_seekbar_width"
+            android:layout_height="@dimen/preview_bottom_bar_btn_height" />
         <ImageView
             android:id="@+id/preview_pen"
             android:layout_width="@dimen/note_bar_default_width"
