@@ -119,7 +119,7 @@ public class PostilView extends View{
         mXferModeClear = new PorterDuffXfermode(PorterDuff.Mode.CLEAR);
         mPaint.setXfermode(mXferModeDraw);
 
-        mTagBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.tag);
+        mTagBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.pizhu_tag);
         mTagBitmapHeight = mTagBitmap.getHeight();
         mTagBitmapWidth = mTagBitmap.getWidth();
 

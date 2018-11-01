@@ -40,24 +40,22 @@
             android:layout_width="match_parent"
             android:visibility="gone"
             android:layout_height="@dimen/preview_title_height">
-            <TextView
+            <ImageView
                 android:id="@+id/tag_save"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="20dp"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="20dp"
-                android:textColor="@color/red"
-                android:text="保存"/>
-            <TextView
+                android:layout_height="@dimen/preview_title_btn_height"
+                android:layout_marginTop="@dimen/preview_title_btn_margintop"
+                android:src="@drawable/pizhu_baocun"
+                android:textColor="@color/red" />
+            <ImageView
                 android:id="@+id/tag_cancel"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="20dp"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="20dp"
-                android:textColor="@color/red"
-                android:text="取消"/>
+                android:layout_marginTop="@dimen/preview_title_btn_margintop"
+                android:layout_height="@dimen/preview_title_btn_height"
+                android:src="@drawable/pizhu_quxiao"
+                android:textColor="@color/red" />
         </LinearLayout>
         <RelativeLayout
             android:id="@+id/not_edit_container"
@@ -66,49 +64,60 @@
             <TextView
                 android:id="@+id/note_back"
                 android:layout_width="wrap_content"
-                android:layout_height="20dp"
+                android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_marginLeft="20dp"
+                android:textSize="@dimen/preview_top_txt_size"
                 android:textColor="@color/red"
+                android:layout_centerVertical="true"
                 android:text="关闭"/>
             <TextView
                 android:id="@+id/note_save"
                 android:layout_width="wrap_content"
-                android:layout_height="20dp"
+                android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/note_back"
                 android:layout_marginLeft="20dp"
+                android:textSize="@dimen/preview_top_txt_size"
                 android:textColor="@color/red"
+                android:layout_centerVertical="true"
                 android:visibility="gone"
                 android:text="保存"/>
             <TextView
                 android:id="@+id/mbiaoji"
                 android:layout_width="wrap_content"
-                android:layout_height="20dp"
+                android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="20dp"
+                android:textSize="@dimen/preview_top_txt_size"
                 android:textColor="@color/red"
+                android:layout_centerVertical="true"
                 android:text="标记"/>
             <TextView
                 android:id="@+id/preview_wenzi"
                 android:layout_width="wrap_content"
-                android:layout_height="20dp"
+                android:layout_height="wrap_content"
                 android:layout_toLeftOf="@id/mbiaoji"
                 android:layout_marginRight="20dp"
+                android:textSize="@dimen/preview_top_txt_size"
                 android:textColor="@color/red"
+                android:layout_centerVertical="true"
                 android:text="文字"/>
             <TextView
                 android:id="@+id/mguanli"
                 android:layout_width="wrap_content"
-                android:layout_height="20dp"
+                android:layout_height="wrap_content"
                 android:layout_toLeftOf="@id/preview_wenzi"
                 android:layout_marginRight="20dp"
+                android:textSize="@dimen/preview_top_txt_size"
                 android:textColor="@color/red"
                 android:visibility="gone"
+                android:layout_centerVertical="true"
                 android:text="管理"/>
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="20dp"
+                android:layout_height="wrap_content"
                 android:text="文档名XXXXXXXXXXX"
+                android:textSize="@dimen/preview_top_txt_size"
                 android:layout_centerInParent="true"/>
         </RelativeLayout>
     </FrameLayout>

@@ -16,6 +16,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -51,8 +52,8 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     private TextView mWordTxt;
     private TextView mSaveTxt;
     private TextView mControlTxt;
-    private TextView mTagSave;
-    private TextView mTagCancel;
+    private ImageView mTagSave;
+    private ImageView mTagCancel;
     private TextView mTuyaSave;
     private TextView mTuyaCancel;
     LinearLayout mTagTopBar;

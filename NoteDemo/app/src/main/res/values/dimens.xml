@@ -1,5 +1,9 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="note_bar_default_width">0dp</dimen>
-    <dimen name="preview_title_height">30dp</dimen>
+    <dimen name="preview_title_height">60dp</dimen>
+    <dimen name="preview_title_btn_height">35dp</dimen>
+    <dimen name="preview_title_btn_width">35dp</dimen>
+    <dimen name="preview_title_btn_margintop">15dp</dimen>
+    <dimen name="preview_top_txt_size">20sp</dimen>
 </resources>
