@@ -247,6 +247,23 @@ public class PreviewWebviewActivity extends AppCompatActivity {
                 mPostilView.clear();
             }
         });
+        mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                    Log.i("progresschange","i = " + i);
+                mPostilView.setPenRawSize(i);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
     }
 
     void showTagToolBar(){

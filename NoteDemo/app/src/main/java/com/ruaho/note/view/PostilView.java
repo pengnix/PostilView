@@ -112,6 +112,7 @@ public class PostilView extends View{
         mPaint.setStrokeJoin(Paint.Join.ROUND);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
         mDrawSize = DimenUtils.dp2pxInt(3);
+        Log.i("progresschange","size  = " + mDrawSize);
         mEraserSize = DimenUtils.dp2pxInt(30);
         mPaint.setStrokeWidth(mDrawSize);
         mPaint.setColor(0XFF000000);
