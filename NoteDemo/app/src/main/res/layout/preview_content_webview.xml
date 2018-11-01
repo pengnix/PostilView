@@ -10,6 +10,31 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/preview_title_height">
         <LinearLayout
+            android:id="@+id/tuya_container"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="@dimen/preview_title_height">
+            <TextView
+                android:id="@+id/tuya_save"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="20dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="20dp"
+                android:textColor="@color/red"
+                android:text="保存"/>
+            <TextView
+                android:id="@+id/tuya_cancel"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="20dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="20dp"
+                android:textColor="@color/red"
+                android:text="取消"/>
+        </LinearLayout>
+        <LinearLayout
             android:id="@+id/tag_container"
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -39,13 +64,13 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/preview_title_height">
             <TextView
-            android:id="@+id/note_back"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="20dp"
-            android:textColor="@color/red"
-            android:text="关闭"/>
+                android:id="@+id/note_back"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="20dp"
+                android:textColor="@color/red"
+                android:text="关闭"/>
             <TextView
                 android:id="@+id/note_save"
                 android:layout_width="wrap_content"
@@ -53,7 +78,7 @@
                 android:layout_toRightOf="@+id/note_back"
                 android:layout_marginLeft="20dp"
                 android:textColor="@color/red"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:text="保存"/>
             <TextView
                 android:id="@+id/mbiaoji"

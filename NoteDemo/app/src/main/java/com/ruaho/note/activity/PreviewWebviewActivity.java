@@ -53,8 +53,11 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     private TextView mControlTxt;
     private TextView mTagSave;
     private TextView mTagCancel;
+    private TextView mTuyaSave;
+    private TextView mTuyaCancel;
     LinearLayout mTagTopBar;
     RelativeLayout mCommonToolBar;
+    LinearLayout mTuYaContainer;
     PostilRecord mPostRecord;
     PostilTagList mPostilTagList;
     public final static int REQUEST_ADD_TEXT = 1;
@@ -116,6 +119,9 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mTagCancel = findViewById(R.id.tag_cancel);
         mTagTopBar  = findViewById(R.id.tag_container);
         mCommonToolBar = findViewById(R.id.not_edit_container);
+        mTuYaContainer = findViewById(R.id.tuya_container);
+        mTuyaSave = findViewById(R.id.tuya_save);
+        mTuyaCancel = findViewById(R.id.tuya_cancel);
 
         mPenTxt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,13 +153,14 @@ public class PreviewWebviewActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(mPostilView.getMode() == PostilView.Mode.NOT_EDIT){
                     mPostilView.setMode(PostilView.Mode.DRAW);
+                    showTuyaTopToolBar();
                     mBottomToolbar.setVisibility(View.VISIBLE);
                 } else {
-                    mPostilView.setMode(PostilView.Mode.NOT_EDIT);
-                    mBottomToolbar.setVisibility(View.GONE);
-                    saveTuYaImage();
-                    mPostilView.clear();
-                    mPostilView.setHistoryPictureRecord(mPostRecord);
+//                    mPostilView.setMode(PostilView.Mode.NOT_EDIT);
+//                    mBottomToolbar.setVisibility(View.GONE);
+//                    saveTuYaImage();
+//                    mPostilView.clear();
+//                    mPostilView.setHistoryPictureRecord(mPostRecord);
                 }
             }
         });
@@ -221,16 +228,44 @@ public class PreviewWebviewActivity extends AppCompatActivity {
                 mPostilView.clearCurrentPostilTag();
             }
         });
+        mTuyaSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPostilView.setMode(PostilView.Mode.NOT_EDIT);
+                mBottomToolbar.setVisibility(View.GONE);
+                saveTuYaImage();
+                showCommonToolBar();
+                mPostilView.clear();
+                mPostilView.setHistoryPictureRecord(mPostRecord);
+            }
+        });
+        mTuyaCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPostilView.setMode(PostilView.Mode.NOT_EDIT);
+                mBottomToolbar.setVisibility(View.GONE);
+                showCommonToolBar();
+                mPostilView.clear();
+            }
+        });
     }
 
     void showTagToolBar(){
         mTagTopBar.setVisibility(View.VISIBLE);
         mCommonToolBar.setVisibility(View.GONE);
+        mTuYaContainer.setVisibility(View.GONE);
     }
 
     void showCommonToolBar(){
         mTagTopBar.setVisibility(View.GONE);
         mCommonToolBar.setVisibility(View.VISIBLE);
+        mTuYaContainer.setVisibility(View.GONE);
+    }
+
+    void showTuyaTopToolBar(){
+        mTagTopBar.setVisibility(View.GONE);
+        mCommonToolBar.setVisibility(View.GONE);
+        mTuYaContainer.setVisibility(View.VISIBLE);
     }
 
     private void jumpToAddWordsActivity(){
