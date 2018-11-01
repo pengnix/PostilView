@@ -15,24 +15,20 @@
             android:layout_width="match_parent"
             android:visibility="gone"
             android:layout_height="@dimen/preview_title_height">
-            <TextView
+            <ImageView
                 android:id="@+id/tuya_save"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="20dp"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="20dp"
-                android:textColor="@color/red"
-                android:text="保存"/>
-            <TextView
+                android:layout_height="@dimen/preview_title_btn_height"
+                android:layout_marginTop="@dimen/preview_title_btn_margintop"
+                android:src="@drawable/pizhu_baocun"/>
+            <ImageView
                 android:id="@+id/tuya_cancel"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="20dp"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="20dp"
-                android:textColor="@color/red"
-                android:text="取消"/>
+                android:layout_height="@dimen/preview_title_btn_height"
+                android:layout_marginTop="@dimen/preview_title_btn_margintop"
+                android:src="@drawable/pizhu_quxiao"/>
         </LinearLayout>
         <LinearLayout
             android:id="@+id/tag_container"
@@ -46,16 +42,14 @@
                 android:layout_weight="1"
                 android:layout_height="@dimen/preview_title_btn_height"
                 android:layout_marginTop="@dimen/preview_title_btn_margintop"
-                android:src="@drawable/pizhu_baocun"
-                android:textColor="@color/red" />
+                android:src="@drawable/pizhu_baocun" />
             <ImageView
                 android:id="@+id/tag_cancel"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_marginTop="@dimen/preview_title_btn_margintop"
                 android:layout_height="@dimen/preview_title_btn_height"
-                android:src="@drawable/pizhu_quxiao"
-                android:textColor="@color/red" />
+                android:src="@drawable/pizhu_quxiao" />
         </LinearLayout>
         <RelativeLayout
             android:id="@+id/not_edit_container"

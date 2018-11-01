@@ -54,8 +54,8 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     private TextView mControlTxt;
     private ImageView mTagSave;
     private ImageView mTagCancel;
-    private TextView mTuyaSave;
-    private TextView mTuyaCancel;
+    private ImageView mTuyaSave;
+    private ImageView mTuyaCancel;
     LinearLayout mTagTopBar;
     RelativeLayout mCommonToolBar;
     LinearLayout mTuYaContainer;
