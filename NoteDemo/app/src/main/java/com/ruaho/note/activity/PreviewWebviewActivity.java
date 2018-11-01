@@ -46,6 +46,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     private TextView mBackTxt;
     private LinearLayout mBottomToolbar;
     private ImageView mPenTxt;
+    private ImageView mBrushTxt;
     private ImageView mEraseTxt;
     private ImageView mToBackTxt;
     private ImageView mToFrontTxt;
@@ -126,6 +127,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mTuyaSave = findViewById(R.id.tuya_save);
         mTuyaCancel = findViewById(R.id.tuya_cancel);
         mSeekBar = findViewById(R.id.preview_seekbar);
+        mBrushTxt = findViewById(R.id.preview_brush);
 
         mPenTxt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -247,6 +249,14 @@ public class PreviewWebviewActivity extends AppCompatActivity {
                 mPostilView.clear();
             }
         });
+
+        mBrushTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                
+            }
+        });
+
         mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {

@@ -152,6 +152,13 @@
             android:layout_marginTop="@dimen/preview_bottom_bar_btn_margintop"
             android:src="@drawable/shixinbi"/>
         <ImageView
+            android:id="@+id/preview_brush"
+            android:layout_width="@dimen/note_bar_default_width"
+            android:layout_height="@dimen/preview_bottom_bar_btn_height"
+            android:layout_weight="1"
+            android:layout_marginTop="@dimen/preview_bottom_bar_btn_margintop"
+            android:src="@drawable/caibi"/>
+        <ImageView
             android:id="@+id/preview_erase"
             android:layout_width="@dimen/note_bar_default_width"
             android:layout_height="@dimen/preview_bottom_bar_btn_height"
