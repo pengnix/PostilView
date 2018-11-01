@@ -17,6 +17,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -50,6 +51,10 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     private TextView mWordTxt;
     private TextView mSaveTxt;
     private TextView mControlTxt;
+    private TextView mTagSave;
+    private TextView mTagCancel;
+    LinearLayout mTagTopBar;
+    RelativeLayout mCommonToolBar;
     PostilRecord mPostRecord;
     PostilTagList mPostilTagList;
     public final static int REQUEST_ADD_TEXT = 1;
@@ -107,7 +112,10 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mWordTxt = findViewById(R.id.preview_wenzi);
         mSaveTxt = findViewById(R.id.note_save);
         mControlTxt = findViewById(R.id.mguanli);
-
+        mTagSave = findViewById(R.id.tag_save);
+        mTagCancel = findViewById(R.id.tag_cancel);
+        mTagTopBar  = findViewById(R.id.tag_container);
+        mCommonToolBar = findViewById(R.id.not_edit_container);
 
         mPenTxt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,7 +151,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
                 } else {
                     mPostilView.setMode(PostilView.Mode.NOT_EDIT);
                     mBottomToolbar.setVisibility(View.GONE);
-                    saveImage();
+                    saveTuYaImage();
                     mPostilView.clear();
                     mPostilView.setHistoryPictureRecord(mPostRecord);
                 }
@@ -188,16 +196,41 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mSaveTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveTags();
-//                saveImage();
+                //saveTags();
             }
         });
         mControlTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                loadImage();
             }
         });
+        mTagSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showCommonToolBar();
+                saveTagImage();
+                mPostilView.clearCurrentPostilTag();
+                mPostilView.setPostilTags(mPostilTagList);
+                //saveTags();
+            }
+        });
+        mTagCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showCommonToolBar();
+                mPostilView.clearCurrentPostilTag();
+            }
+        });
+    }
+
+    void showTagToolBar(){
+        mTagTopBar.setVisibility(View.VISIBLE);
+        mCommonToolBar.setVisibility(View.GONE);
+    }
+
+    void showCommonToolBar(){
+        mTagTopBar.setVisibility(View.GONE);
+        mCommonToolBar.setVisibility(View.VISIBLE);
     }
 
     private void jumpToAddWordsActivity(){
@@ -262,6 +295,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
                     offset = (int)mPostilView.getOffsetY();
                     Log.i("SSSSSSSS","add" + offset+ ":" + width/2 + ":" + height/2);
                     mPostilView.addPostilTag(new PostilTag(offset,width/2,height/2,result));
+                    showTagToolBar();
                 }
                 return;
             }
@@ -281,7 +315,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
 
     }
 
-    private void saveImage(){
+    private void saveTuYaImage(){
         Bitmap bm = mPostilView.buildBitmap();
         String savedFile = FileUtils.saveImage(bm, 100);
         if (savedFile != null) {
@@ -291,19 +325,20 @@ public class PreviewWebviewActivity extends AppCompatActivity {
             saveRecord();
         }else{
         }
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                Bitmap bm = mPostilView.buildBitmap();
-//                String savedFile = FileUtils.saveImage(bm, 100);
-//                if (savedFile != null) {
-//                    scanFile(PreviewWebviewActivity.this, savedFile);
-//                    mHandler.obtainMessage(MSG_SAVE_SUCCESS).sendToTarget();
-//                }else{
-//                    mHandler.obtainMessage(MSG_SAVE_FAILED).sendToTarget();
-//                }
-//            }
-//        }).start();
+    }
+
+    private void saveTagImage(){
+        Bitmap bm = mPostilView.buildBitmap();
+        String savedFile = FileUtils.saveImage(bm, 100);
+        if (savedFile != null) {
+            scanFile(PreviewWebviewActivity.this, savedFile);
+            PostilTag currentTag = mPostilView.getCurrentPostilTag();
+            currentTag.setCanMove(false);
+            PostilTag tag = new PostilTag(currentTag.getOffsetY(),currentTag.getxPos(),currentTag.getyPos(),currentTag.getContent(),savedFile);
+            mPostilTagList.getList().add(tag);
+            saveTags();
+        }else{
+        }
     }
 
     private void scanFile(Context context, String filePath) {

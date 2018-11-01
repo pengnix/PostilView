@@ -46,6 +46,7 @@ public class PostilView extends View{
     private PostilRecord picRecord;
     private PostilTagList mPostilTagList;
     private PostilTag mCurrentTag;
+    private PostilTag mAddNewTag;
     private float offsetY;
     private static float CLICK_PRECISION= 3.0f;
 
@@ -303,13 +304,32 @@ public class PostilView extends View{
             canvas.drawBitmap(mBufferBitmap, 0, 0, null);
         }
 
+//        if(mPostilTagList != null && mPostilTagList.getList() != null){
+//            List<PostilTag> list =  mPostilTagList.getList();
+//            for(PostilTag tag:list){
+//                float left = tag.getxPos() - mTagBitmapWidth/2;
+//                float top = tag.getyPos() - mTagBitmapHeight/2 - offsetY +tag.getOffsetY();
+//                Log.i("getResult!","draw tag" + tag.getxPos() + ":" + tag.getyPos());
+//                canvas.drawBitmap(mTagBitmap , left, top, null);
+//            }
+//        }
+
+        if(mCurrentTag != null && mCurrentTag.isCanMove()){
+            float left = mCurrentTag.getxPos() - mTagBitmapWidth/2;
+            float top = mCurrentTag.getyPos() - mTagBitmapHeight/2 - offsetY +mCurrentTag.getOffsetY();
+            canvas.drawBitmap(mTagBitmap , left, top, null);
+        }
+
         if(mPostilTagList != null && mPostilTagList.getList() != null){
             List<PostilTag> list =  mPostilTagList.getList();
             for(PostilTag tag:list){
-                float left = tag.getxPos() - mTagBitmapWidth/2;
-                float top = tag.getyPos() - mTagBitmapHeight/2 - offsetY +tag.getOffsetY();
-                Log.i("getResult!","draw tag" + tag.getxPos() + ":" + tag.getyPos());
-                canvas.drawBitmap(mTagBitmap , left, top, null);
+                String address = tag.getAddress();
+                Integer index = url2Index.get(address);
+                if(index == null){
+                    continue;
+                }
+                Bitmap bmp = mHistoryBitmap.get(index);
+                canvas.drawBitmap(bmp, 0, tag.getOffsetY()-offsetY, null);
             }
         }
 
@@ -341,12 +361,6 @@ public class PostilView extends View{
             boolean isTouchTag = containTagBitmap((int)x,(int)y);
             Log.i("getResult!","isTouchTag = " + isTouchTag);
             if(!isTouchTag){
-//                offsetY += (y-mLastY);
-//                Log.i("offset","offsetY = " + offsetY + "y = " + y + "mLastY = " +mLastY);
-//                mLastX = x;
-//                mLastY = y;
-//                Log.i("scrollY","ScrollY = " + mCallback.getScrollY());
-//                mCallback.getScrollY();
                 return super.onTouchEvent(event);
             } else {
                 mTagOriginX = x;
@@ -357,7 +371,10 @@ public class PostilView extends View{
         switch (action) {
             case MotionEvent.ACTION_DOWN:
                 if(mMode == Mode.MOVE_TAG){
-                    mCurrentTag.updatePos((int)x,(int)y);
+                    Log.i("containTagBitmap","333333" + canMove());
+                    if(canMove()){
+                        mCurrentTag.updatePos((int)x,(int)y);
+                    }
                     break;
                 }
                 mLastX = x;
@@ -369,7 +386,10 @@ public class PostilView extends View{
                 break;
             case MotionEvent.ACTION_MOVE:
                 if(mMode == Mode.MOVE_TAG){
-                    mCurrentTag.updatePos((int)x,(int)y);
+                    Log.i("containTagBitmap","444444" + canMove());
+                    if(canMove()){
+                        mCurrentTag.updatePos((int)x,(int)y);
+                    }
                     invalidate();
                     break;
                 }
@@ -405,6 +425,18 @@ public class PostilView extends View{
     }
 
     public boolean containTagBitmap(int x,int y){
+        if(mCurrentTag != null){
+            int top = mCurrentTag.getyPos() - mTagBitmapHeight/2 - (int)offsetY +mCurrentTag.getOffsetY();
+            int bottom= mCurrentTag.getyPos() + mTagBitmapHeight/2 - (int)offsetY +mCurrentTag.getOffsetY();
+            int left= mCurrentTag.getxPos() - mTagBitmapWidth/2;
+            int right= mCurrentTag.getxPos() + mTagBitmapWidth/2;
+            Log.i("containTagBitmap","2222222");
+            if(x > left && x < right && y > top && y < bottom){
+                Log.i("containTagBitmap","111111");
+                return true;
+            }
+        }
+
         if(mPostilTagList != null && mPostilTagList.getList() != null){
             List<PostilTag> list =  mPostilTagList.getList();
             for(PostilTag tag:list){
@@ -417,9 +449,38 @@ public class PostilView extends View{
                     return true;
                 }
             }
+        } else{
+
         }
         return false;
     }
+
+    boolean canMove(){
+        if(mCurrentTag == null){
+            Log.i("containTagBitmap","55555");
+            return false;
+        }
+        return mCurrentTag.isCanMove();
+    }
+
+//    public boolean isClickTag(float x,float y){
+//        if(mPostilTagList != null && mPostilTagList.getList() != null){
+//            List<PostilTag> list =  mPostilTagList.getList();
+//            for(PostilTag tag:list){
+//                int top = tag.getyPos() - mTagBitmapHeight/2 - (int)offsetY +tag.getOffsetY();
+//                int bottom= tag.getyPos() + mTagBitmapHeight/2 - (int)offsetY +tag.getOffsetY();
+//                int left= tag.getxPos() - mTagBitmapWidth/2;
+//                int right= tag.getxPos() + mTagBitmapWidth/2;
+//                if(x > left && x < right && y > top && y < bottom){
+//                    if(!tag.isCanMove()&& mCallback != null){
+//                        mCallback.openTag(tag);
+//                    }
+//                    return true;
+//                }
+//            }
+//        }
+//        return false;
+//    }
 
     public boolean isClickTag(float x,float y){
         if((Math.abs(x-mTagOriginX) < CLICK_PRECISION) && (Math.abs(y-mTagOriginY) < CLICK_PRECISION)){
@@ -436,10 +497,29 @@ public class PostilView extends View{
 
     public void setPostilTags(PostilTagList list){
         mPostilTagList = list;
+        Log.i("saveImage","setHistoryPictureRecord");
+        if(mPostilTagList == null){
+            return;
+        }
+        List<PostilTag> picList = mPostilTagList.getList();
+        if(picList == null){
+            return;
+        }
+        for(PostilTag pic:picList){
+            Bitmap bmp = FileUtils.loadImage(pic.getAddress());
+            mHistoryBitmap.add(bmp);
+            int index = mHistoryBitmap.size() - 1;
+            url2Index.put(pic.getAddress(),index);
+        }
         invalidate();
     }
 
     public void addPostilTag(PostilTag tag){
+        mCurrentTag = tag;
+        invalidate();
+    }
+
+    public void savePostilTag(PostilTag tag){
         mPostilTagList.getList().add(tag);
         invalidate();
     }
@@ -475,6 +555,15 @@ public class PostilView extends View{
             int index = mHistoryBitmap.size() - 1;
             url2Index.put(pic.getAddress(),index);
         }
+        invalidate();
+    }
+
+    public PostilTag getCurrentPostilTag(){
+        return mCurrentTag;
+    }
+
+    public void clearCurrentPostilTag(){
+        mCurrentTag = null;
         invalidate();
     }
 }

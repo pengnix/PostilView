@@ -16,13 +16,26 @@ public class PostilTag {
     int offsetY;
     int xPos;
     int yPos;
+    String address;
     String content;
+
+    public void setCanMove(boolean canMove) {
+        this.canMove = canMove;
+    }
+
+    boolean canMove;
+
+    public boolean isCanMove() {
+        return canMove;
+    }
 
     public PostilTag() {
         this.offsetY = 0;
         this.xPos = 0;
         this.yPos = 0;
         this.content = "";
+        this.address = "";
+        this.canMove = true;
     }
 
     public PostilTag(int offsetY, int xPos, int yPos, String content) {
@@ -30,6 +43,15 @@ public class PostilTag {
         this.xPos = xPos;
         this.yPos = yPos;
         this.content = content;
+        this.canMove = true;
+    }
+
+    public PostilTag(int offsetY, int xPos, int yPos, String content,String address) {
+        this.offsetY = offsetY;
+        this.xPos = xPos;
+        this.yPos = yPos;
+        this.content = content;
+        this.address = address;
     }
 
     public void updatePos(int x, int y){
@@ -42,6 +64,10 @@ public class PostilTag {
         this.xPos = x;
         this.yPos = y;
         this.content = content;
+    }
+
+    public String getAddress() {
+        return address;
     }
 
     public int getOffsetY() {

@@ -6,57 +6,87 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".PreviewWebviewActivity">
-    <RelativeLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/preview_title_height">
-        <TextView
-        android:id="@+id/note_back"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="20dp"
-        android:textColor="@color/red"
-        android:text="关闭"/>
-        <TextView
-            android:id="@+id/note_save"
+        <LinearLayout
+            android:id="@+id/tag_container"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="@dimen/preview_title_height">
+            <TextView
+                android:id="@+id/tag_save"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="20dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="20dp"
+                android:textColor="@color/red"
+                android:text="保存"/>
+            <TextView
+                android:id="@+id/tag_cancel"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="20dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="20dp"
+                android:textColor="@color/red"
+                android:text="取消"/>
+        </LinearLayout>
+        <RelativeLayout
+            android:id="@+id/not_edit_container"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/preview_title_height">
+            <TextView
+            android:id="@+id/note_back"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
-            android:layout_toRightOf="@+id/note_back"
+            android:layout_alignParentLeft="true"
             android:layout_marginLeft="20dp"
             android:textColor="@color/red"
-            android:visibility="visible"
-            android:text="保存"/>
-        <TextView
-            android:id="@+id/mbiaoji"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp"
-            android:textColor="@color/red"
-            android:text="标记"/>
-        <TextView
-            android:id="@+id/preview_wenzi"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_toLeftOf="@id/mbiaoji"
-            android:layout_marginRight="20dp"
-            android:textColor="@color/red"
-            android:text="文字"/>
-        <TextView
-            android:id="@+id/mguanli"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_toLeftOf="@id/preview_wenzi"
-            android:layout_marginRight="20dp"
-            android:textColor="@color/red"
-            android:visibility="gone"
-            android:text="管理"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:text="文档名XXXXXXXXXXX"
-            android:layout_centerInParent="true"/>
-    </RelativeLayout>
+            android:text="关闭"/>
+            <TextView
+                android:id="@+id/note_save"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_toRightOf="@+id/note_back"
+                android:layout_marginLeft="20dp"
+                android:textColor="@color/red"
+                android:visibility="visible"
+                android:text="保存"/>
+            <TextView
+                android:id="@+id/mbiaoji"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:textColor="@color/red"
+                android:text="标记"/>
+            <TextView
+                android:id="@+id/preview_wenzi"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_toLeftOf="@id/mbiaoji"
+                android:layout_marginRight="20dp"
+                android:textColor="@color/red"
+                android:text="文字"/>
+            <TextView
+                android:id="@+id/mguanli"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_toLeftOf="@id/preview_wenzi"
+                android:layout_marginRight="20dp"
+                android:textColor="@color/red"
+                android:visibility="gone"
+                android:text="管理"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:text="文档名XXXXXXXXXXX"
+                android:layout_centerInParent="true"/>
+        </RelativeLayout>
+    </FrameLayout>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
