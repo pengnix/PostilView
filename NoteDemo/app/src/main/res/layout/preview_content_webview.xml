@@ -118,17 +118,18 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:id="@+id/preview_root_view"
         android:layout_weight="1">
-    <com.ruaho.note.view.ObservableWebView
-            android:id="@+id/mywebview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="none"/>
-    <com.ruaho.note.view.PostilView
-            android:id="@+id/mypostilview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#00FF0000"/>
+        <com.ruaho.note.view.ObservableWebView
+                android:id="@+id/mywebview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none"/>
+        <com.ruaho.note.view.PostilView
+                android:id="@+id/mypostilview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#00FF0000"/>
     </FrameLayout>
 
     <LinearLayout

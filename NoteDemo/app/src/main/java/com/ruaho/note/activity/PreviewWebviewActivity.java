@@ -10,12 +10,15 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -41,6 +44,7 @@ import java.util.List;
 public class PreviewWebviewActivity extends AppCompatActivity {
 
     private ObservableWebView mWebView;
+    private FrameLayout mRoot;
     private PostilView mPostilView;
     private TextView mTagTxt;
     private TextView mBackTxt;
@@ -107,6 +111,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     }
 
     void initView(){
+        mRoot = findViewById(R.id.preview_root_view);
         mPostilView = findViewById(R.id.mypostilview);
         mBottomToolbar = findViewById(R.id.note_bottom_toolbar);
         mPenTxt = findViewById(R.id.preview_pen);
@@ -161,6 +166,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
                     mPostilView.setMode(PostilView.Mode.DRAW);
                     showTuyaTopToolBar();
                     mBottomToolbar.setVisibility(View.VISIBLE);
+                    addColorBar();
                 } else {
                 }
             }
@@ -447,5 +453,13 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         if(null != recordString){
             mPostilTagList = gson.fromJson(recordString, PostilTagList.class);
         }
+    }
+
+    private void addColorBar(){
+        View view = LayoutInflater.from(this).inflate(R.layout.preview_change_color_layout, null);
+        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+        lp.gravity = Gravity.BOTTOM;
+        mRoot.addView(view,lp);
     }
 }

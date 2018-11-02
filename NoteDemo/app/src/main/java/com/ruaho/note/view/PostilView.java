@@ -46,7 +46,6 @@ public class PostilView extends View{
     private PostilRecord picRecord;
     private PostilTagList mPostilTagList;
     private PostilTag mCurrentTag;
-    private PostilTag mAddNewTag;
     private float offsetY;
     private static float CLICK_PRECISION= 3.0f;
 

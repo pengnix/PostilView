@@ -7,6 +7,10 @@
     <dimen name="preview_title_btn_margintop">15dp</dimen>
     <dimen name="preview_top_txt_size">20sp</dimen>
     <dimen name="preview_bottom_bar_height">90dp</dimen>
+    <dimen name="preview_choose_color_bar_height">80dp</dimen>
+    <dimen name="preview_color_block_height">80dp</dimen>
+    <dimen name="preview_color_block_inner_height">50dp</dimen>
+    <dimen name="preview_choose_color_bar_width">300dp</dimen>
     <dimen name="preview_bottom_bar_btn_height">35dp</dimen>
     <dimen name="preview_bottom_bar_btn_margintop">25dp</dimen>
     <dimen name="preview_bottom_seekbar_width">200dp</dimen>
