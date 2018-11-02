@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.Build;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -14,6 +15,7 @@ import com.ruaho.note.activity.R;
 
 public class ColorBlockView extends View {
     Paint p;
+    Paint marginPaint;
     Context mContext;
     float height;
     float width;
@@ -24,6 +26,8 @@ public class ColorBlockView extends View {
     float top;
     float bottom;
     int color = Color.RED;
+    static final float CORNOR_SIZE = 5.0f;
+    float colorMargin;
 
     public ColorBlockView(Context context) {
         super(context);
@@ -51,8 +55,11 @@ public class ColorBlockView extends View {
 
     void init(){
         p = new Paint();
-        p.setColor(color);// 设置红色
-        p.setStyle(Paint.Style.FILL);//设置填满
+        p.setColor(color);
+        p.setStyle(Paint.Style.FILL);
+        marginPaint = new Paint();
+        marginPaint.setColor(mContext.getResources().getColor(R.color.dark_gray));
+        marginPaint.setStyle(Paint.Style.FILL);
         height = mContext.getResources().getDimension(R.dimen.preview_color_block_height);
         width = height;
         blockWidth = mContext.getResources().getDimension(R.dimen.preview_color_block_inner_height);
@@ -62,11 +69,19 @@ public class ColorBlockView extends View {
         right = left + blockWidth;
         top = padding;
         bottom = top + blockHeight;
+        colorMargin = mContext.getResources().getDimension(R.dimen.preview_color_margin);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.drawRect(left, top, right, bottom, p);// 正方形
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
+            canvas.drawRoundRect(left - colorMargin, top - colorMargin, right + colorMargin, bottom + colorMargin,CORNOR_SIZE,CORNOR_SIZE, marginPaint);
+            canvas.drawRoundRect(left, top, right, bottom,CORNOR_SIZE,CORNOR_SIZE, p);
+        } else {
+            canvas.drawRect(left - colorMargin, top - colorMargin, right + colorMargin, bottom + colorMargin, p);
+            canvas.drawRect(left, top, right, bottom, p);// 正方形
+        }
+
     }
 }

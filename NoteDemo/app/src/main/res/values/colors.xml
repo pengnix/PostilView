@@ -5,6 +5,14 @@
     <color name="colorAccent">#FF4081</color>
     <color name="red">#FF0000</color>
     <color name="black">#000000</color>
+    <color name="orange">#EE9A00</color>
+    <color name="yellow">#EEEE00</color>
+    <color name="green">#66CD00</color>
+    <color name="white">#FFFFFF</color>
+    <color name="sky_blue">#87CEFF</color>
+    <color name="dark_blue">#3A5FCD</color>
+    <color name="purple">#4B0082</color>
+    <color name="dark_gray">#424242</color>
     <color name="preview_bottom_gray">#969696</color>
 
 </resources>
