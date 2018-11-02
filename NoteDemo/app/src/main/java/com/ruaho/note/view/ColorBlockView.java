@@ -82,6 +82,9 @@ public class ColorBlockView extends View {
             canvas.drawRect(left - colorMargin, top - colorMargin, right + colorMargin, bottom + colorMargin, p);
             canvas.drawRect(left, top, right, bottom, p);// 正方形
         }
+    }
 
+    public int getBlockColor(){
+        return this.color;
     }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.ruaho.note.view.ChooseColorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/preview_choose_color_bar_width"
     android:layout_height="@dimen/preview_choose_color_bar_width"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -42,4 +42,4 @@
         app:mColor="@color/black"
         android:layout_width="@dimen/preview_color_block_height"
         android:layout_height="@dimen/preview_color_block_height" />
-</LinearLayout>
+</com.ruaho.note.view.ChooseColorLayout>

@@ -32,6 +32,7 @@ import com.ruaho.note.bean.PostilTagList;
 import com.ruaho.note.util.FileUtils;
 import com.ruaho.note.util.MD5Utils;
 import com.ruaho.note.util.NoteSharePreferenceUtils;
+import com.ruaho.note.view.ChooseColorLayout;
 import com.ruaho.note.view.ObservableWebView;
 import com.ruaho.note.bean.PostilTag;
 import com.ruaho.note.view.PostilView;
@@ -66,6 +67,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     LinearLayout mTagTopBar;
     RelativeLayout mCommonToolBar;
     LinearLayout mTuYaContainer;
+    ChooseColorLayout mChooseColorBar;
     PostilRecord mPostRecord;
     PostilTagList mPostilTagList;
     public final static int REQUEST_ADD_TEXT = 1;
@@ -239,6 +241,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 mPostilView.setMode(PostilView.Mode.NOT_EDIT);
+                removeColorBar();
                 mBottomToolbar.setVisibility(View.GONE);
                 saveTuYaImage();
                 showCommonToolBar();
@@ -250,6 +253,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 mPostilView.setMode(PostilView.Mode.NOT_EDIT);
+                removeColorBar();
                 mBottomToolbar.setVisibility(View.GONE);
                 showCommonToolBar();
                 mPostilView.clear();
@@ -456,10 +460,18 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     }
 
     private void addColorBar(){
-        View view = LayoutInflater.from(this).inflate(R.layout.preview_change_color_layout, null);
+        if(mChooseColorBar == null){
+            mChooseColorBar = (ChooseColorLayout) LayoutInflater.from(this).inflate(R.layout.preview_change_color_layout, null);
+        }
         FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
         lp.gravity = Gravity.BOTTOM;
-        mRoot.addView(view,lp);
+        mRoot.addView(mChooseColorBar,lp);
+    }
+
+    private void removeColorBar(){
+        if(mChooseColorBar != null){
+            mRoot.removeView(mChooseColorBar);
+        }
     }
 }
