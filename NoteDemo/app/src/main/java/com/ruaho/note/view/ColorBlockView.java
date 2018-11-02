@@ -16,6 +16,7 @@ import com.ruaho.note.activity.R;
 public class ColorBlockView extends View {
     Paint p;
     Paint marginPaint;
+    Paint selectPaint;
     Context mContext;
     float height;
     float width;
@@ -26,6 +27,7 @@ public class ColorBlockView extends View {
     float top;
     float bottom;
     int color = Color.RED;
+    boolean select;
     static final float CORNOR_SIZE = 5.0f;
     float colorMargin;
 
@@ -40,6 +42,7 @@ public class ColorBlockView extends View {
         mContext = context;
         TypedArray array=context.obtainStyledAttributes(attrs, R.styleable.previewcolor);
         color=array.getColor(R.styleable.previewcolor_mColor,Color.RED);
+        select = array.getBoolean(R.styleable.previewcolor_mSelect,false);
         array.recycle();
         init();
     }
@@ -49,6 +52,7 @@ public class ColorBlockView extends View {
         mContext = context;
         TypedArray array=context.obtainStyledAttributes(attrs, R.styleable.previewcolor);
         color=array.getColor(R.styleable.previewcolor_mColor,Color.RED);
+        select = array.getBoolean(R.styleable.previewcolor_mSelect,false);
         array.recycle();
         init();
     }
@@ -60,6 +64,9 @@ public class ColorBlockView extends View {
         marginPaint = new Paint();
         marginPaint.setColor(mContext.getResources().getColor(R.color.dark_gray));
         marginPaint.setStyle(Paint.Style.FILL);
+        selectPaint = new Paint();
+        selectPaint.setColor(mContext.getResources().getColor(R.color.dark_purple));
+        selectPaint.setStyle(Paint.Style.FILL);
         height = mContext.getResources().getDimension(R.dimen.preview_color_block_height);
         width = height;
         blockWidth = mContext.getResources().getDimension(R.dimen.preview_color_block_inner_height);
@@ -76,11 +83,21 @@ public class ColorBlockView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
-            canvas.drawRoundRect(left - colorMargin, top - colorMargin, right + colorMargin, bottom + colorMargin,CORNOR_SIZE,CORNOR_SIZE, marginPaint);
-            canvas.drawRoundRect(left, top, right, bottom,CORNOR_SIZE,CORNOR_SIZE, p);
+            if(select){
+                canvas.drawRoundRect(left - colorMargin, top - colorMargin, right + colorMargin, bottom + colorMargin,CORNOR_SIZE,CORNOR_SIZE, selectPaint);
+                canvas.drawRoundRect(left + colorMargin, top + colorMargin, right - colorMargin, bottom - colorMargin,CORNOR_SIZE,CORNOR_SIZE, p);
+            } else {
+                canvas.drawRoundRect(left - colorMargin, top - colorMargin, right + colorMargin, bottom + colorMargin,CORNOR_SIZE,CORNOR_SIZE, marginPaint);
+                canvas.drawRoundRect(left, top, right, bottom,CORNOR_SIZE,CORNOR_SIZE, p);
+            }
         } else {
-            canvas.drawRect(left - colorMargin, top - colorMargin, right + colorMargin, bottom + colorMargin, p);
-            canvas.drawRect(left, top, right, bottom, p);// 正方形
+            if(select){
+                canvas.drawRect(left - colorMargin, top - colorMargin, right + colorMargin, bottom + colorMargin, selectPaint);
+                canvas.drawRect(left + colorMargin, top + colorMargin, right - colorMargin, bottom - colorMargin, p);// 正方形
+            } else{
+                canvas.drawRect(left - colorMargin, top - colorMargin, right + colorMargin, bottom + colorMargin, p);
+                canvas.drawRect(left, top, right, bottom, p);// 正方形
+            }
         }
     }
 
