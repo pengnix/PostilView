@@ -37,18 +37,6 @@ public class ChooseColorLayout extends LinearLayout {
     }
 
     private void init(){
-//        int count = getChildCount();
-//        Log.i("getColor","count = " + count);
-//        for(int i = 0;i<count;i++){
-//            Log.i("getColor","i = " + i);
-//            ColorBlockView childView = (ColorBlockView) getChildAt(i);
-//            childView.setOnClickListener(new OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    Log.i("getColor","color = " + ((ColorBlockView)view).getBlockColor());
-//                }
-//            });
-//        }
     }
 
     public void lazyInit(){
@@ -61,10 +49,26 @@ public class ChooseColorLayout extends LinearLayout {
                 @Override
                 public void onClick(View view) {
                     if(mCallback != null){
-                        mCallback.changePenColor(((ColorBlockView)view).getBlockColor());
+                        ColorBlockView chooseView = (ColorBlockView)view;
+                        mCallback.changePenColor(chooseView.getBlockColor());
+                        setAllChildUnSelect();
+                        chooseView.setSelect(true);
+                        chooseView.invalidate();
                     }
                 }
             });
+        }
+    }
+
+    void setAllChildUnSelect(){
+        int count = getChildCount();
+        Log.i("getColor","count = " + count);
+        for(int i = 0;i<count;i++){
+            Log.i("getColor","i = " + i);
+            ColorBlockView childView = (ColorBlockView) getChildAt(i);
+            childView.setSelect(false);
+            childView.invalidate();
+
         }
     }
 }

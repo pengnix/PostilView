@@ -104,4 +104,12 @@ public class ColorBlockView extends View {
     public int getBlockColor(){
         return this.color;
     }
+
+    public boolean isSelect() {
+        return select;
+    }
+
+    public void setSelect(boolean select) {
+        this.select = select;
+    }
 }
