@@ -144,6 +144,8 @@
             android:layout_marginTop="@dimen/preview_bottom_bar_btn_margintop"
             android:layout_width="@dimen/preview_bottom_seekbar_width"
             android:layout_height="@dimen/preview_bottom_bar_btn_height"
+            android:progressDrawable="@drawable/preview_seek_bar"
+            android:maxHeight="0.5dp"
             android:progress="10"/>
         <ImageView
             android:id="@+id/preview_pen"
