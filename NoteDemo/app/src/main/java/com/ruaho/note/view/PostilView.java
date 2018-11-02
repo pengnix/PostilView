@@ -300,9 +300,6 @@ public class PostilView extends View{
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if (mBufferBitmap != null) {
-            canvas.drawBitmap(mBufferBitmap, 0, 0, null);
-        }
 
         if(mCurrentTag != null && mCurrentTag.isCanMove()){
             float left = mCurrentTag.getxPos() - mTagBitmapWidth/2;
@@ -334,6 +331,10 @@ public class PostilView extends View{
                 Bitmap bmp = mHistoryBitmap.get(index);
                 canvas.drawBitmap(bmp, 0, pic.getOffsetY()-offsetY, null);
             }
+        }
+
+        if (mBufferBitmap != null) {
+            canvas.drawBitmap(mBufferBitmap, 0, 0, null);
         }
     }
 

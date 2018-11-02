@@ -462,6 +462,13 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     private void addColorBar(){
         if(mChooseColorBar == null){
             mChooseColorBar = (ChooseColorLayout) LayoutInflater.from(this).inflate(R.layout.preview_change_color_layout, null);
+            mChooseColorBar.lazyInit();
+            mChooseColorBar.setCallback(new ChooseColorLayout.Callback() {
+                @Override
+                public void changePenColor(int color) {
+                    mPostilView.setPenColor(color);
+                }
+            });
         }
         FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
