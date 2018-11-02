@@ -146,7 +146,6 @@
             android:layout_height="@dimen/preview_bottom_bar_btn_height"
             android:progressDrawable="@drawable/preview_seek_bar"
             android:thumb="@drawable/preview_seek_bar_thumb"
-
             android:maxHeight="1dp"
             android:minHeight="1dp"
             android:progress="10"/>

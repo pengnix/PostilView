@@ -140,12 +140,14 @@ public class PreviewWebviewActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 mPostilView.setMode(PostilView.Mode.DRAW);
+                usePenState();
             }
         });
         mEraseTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mPostilView.setMode(PostilView.Mode.ERASER);
+                useEraserState();
             }
         });
         mToBackTxt.setOnClickListener(new View.OnClickListener() {
@@ -169,6 +171,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
                     showTuyaTopToolBar();
                     mBottomToolbar.setVisibility(View.VISIBLE);
                     addColorBar();
+                    usePenState();
                 } else {
                 }
             }
@@ -265,6 +268,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
             public void onClick(View view) {
                 mSeekBar.setProgress(100);
                 mPostilView.setPenRawSize(100);
+                useBrushState();
             }
         });
 
@@ -480,5 +484,23 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         if(mChooseColorBar != null){
             mRoot.removeView(mChooseColorBar);
         }
+    }
+
+    private void usePenState(){
+        mPenTxt.setImageResource(R.drawable.shixinbi_selected);
+        mBrushTxt.setImageResource(R.drawable.caibi);
+        mEraseTxt.setImageResource(R.drawable.xiangpica);
+    }
+
+    private void useBrushState(){
+        mPenTxt.setImageResource(R.drawable.shixinbi);
+        mBrushTxt.setImageResource(R.drawable.caibi_selected);
+        mEraseTxt.setImageResource(R.drawable.xiangpica);
+    }
+
+    private void useEraserState(){
+        mPenTxt.setImageResource(R.drawable.shixinbi);
+        mBrushTxt.setImageResource(R.drawable.caibi);
+        mEraseTxt.setImageResource(R.drawable.xiangpica_selected);
     }
 }
