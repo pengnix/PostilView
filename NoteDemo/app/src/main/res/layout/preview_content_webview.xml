@@ -139,7 +139,7 @@
                 android:layout_marginRight="20dp"
                 android:textSize="@dimen/preview_top_txt_size"
                 android:textColor="@color/red"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:layout_centerVertical="true"
                 android:text="管理"/>
             <TextView

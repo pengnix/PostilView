@@ -15,4 +15,7 @@
     <dimen name="preview_bottom_bar_btn_margintop">25dp</dimen>
     <dimen name="preview_bottom_seekbar_width">200dp</dimen>
     <dimen name="preview_color_margin">1.5dp</dimen>
+    <dimen name="preview_popwindow_item_height">60dp</dimen>
+    <dimen name="preview_popwindow_item_marginleft">18dp</dimen>
+    <dimen name="preview_popwindow_item_radius">6dp</dimen>
 </resources>

@@ -3,6 +3,7 @@ package com.ruaho.note.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,6 +22,7 @@ import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -69,6 +71,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     private ImageView mTuyaConfig;
     private ImageView mTuyaCancel;
     private SeekBar mSeekBar;
+    PopupWindow popupWindow;
     LinearLayout mTagTopBar;
     RelativeLayout mCommonToolBar;
     LinearLayout mTuYaContainer;
@@ -103,6 +106,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
             }
         };
         loadHistory();
+        initPopupWindow();
     }
 
     void loadHistory(){
@@ -232,6 +236,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mControlTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                showPopWindow();
             }
         });
         mTagSave.setOnClickListener(new View.OnClickListener() {
@@ -565,5 +570,22 @@ public class PreviewWebviewActivity extends AppCompatActivity {
             mPostilTagList = new PostilTagList();
             mPostilView.clearAllBitmap();
         }
+    }
+
+    private void initPopupWindow() { //要在布局中显示的布局
+        View contentView = LayoutInflater.from(this).inflate(R.layout.preview_control_popview_layout, null, false);
+        //实例化PopupWindow并设置宽高
+        popupWindow = new PopupWindow(contentView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+        //点击外部消失，这里因为PopupWindow填充了整个窗口，所以这句代码就没用了
+        popupWindow.setOutsideTouchable(true); //设置可以点击
+        popupWindow.setTouchable(true); //进入退出的动画
+//        popupWindow.setAnimationStyle(R.style.MyPopWindowAnim);
+    }
+    private void showPopWindow() {
+        View rootview = LayoutInflater.from(PreviewWebviewActivity.this).inflate(R.layout.activity_main,
+                null);
+        popupWindow.showAtLocation(rootview, Gravity.BOTTOM, 0, 0);
+
     }
 }
