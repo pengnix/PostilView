@@ -76,6 +76,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     LinearLayout mTagTopBar;
     RelativeLayout mCommonToolBar;
     LinearLayout mTuYaContainer;
+    LinearLayout mTuYaControlTopBar;
     ChooseColorLayout mChooseColorBar;
     PostilRecord mPostRecord;
     PostilTagList mPostilTagList;
@@ -126,6 +127,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mRoot = findViewById(R.id.preview_root_view);
         mPostilView = findViewById(R.id.mypostilview);
         mBottomToolbar = findViewById(R.id.note_bottom_toolbar);
+        mTuYaControlTopBar = findViewById(R.id.preview_tuya_control_container);
         mPenTxt = findViewById(R.id.preview_pen);
         mEraseTxt = findViewById(R.id.preview_erase);
         mToBackTxt = findViewById(R.id.preview_back);
@@ -612,6 +614,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     }
 
     private void toTuyaManager(){
-
+        mTuYaControlTopBar.setVisibility(View.VISIBLE);
+        mCommonToolBar.setVisibility(View.GONE);
     }
 }

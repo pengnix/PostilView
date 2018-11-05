@@ -149,6 +149,41 @@
                 android:textSize="@dimen/preview_top_txt_size"
                 android:layout_centerInParent="true"/>
         </RelativeLayout>
+        <LinearLayout
+            android:id="@+id/preview_tuya_control_container"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="@dimen/preview_title_height">
+            <ImageView
+                android:id="@+id/tuya_control_delete"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/preview_title_btn_height"
+                android:layout_marginTop="@dimen/preview_title_btn_margintop"
+                android:src="@drawable/manage_shanchu"/>
+            <ImageView
+                android:id="@+id/tuya_control_up"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/preview_title_btn_height"
+                android:layout_marginTop="@dimen/preview_title_btn_margintop"
+                android:src="@drawable/manage_xiangshang"/>
+            <ImageView
+                android:id="@+id/tuya_control_down"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/preview_title_btn_height"
+                android:layout_marginTop="@dimen/preview_title_btn_margintop"
+                android:src="@drawable/manage_xiangxia"/>
+            <ImageView
+                android:id="@+id/tuya_control_close"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/preview_title_btn_height"
+                android:layout_marginTop="@dimen/preview_title_btn_margintop"
+                android:src="@drawable/pizhu_quxiao"/>
+        </LinearLayout>
     </FrameLayout>
     <FrameLayout
         android:layout_width="match_parent"
