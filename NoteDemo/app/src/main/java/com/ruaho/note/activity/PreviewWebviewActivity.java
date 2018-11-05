@@ -395,7 +395,6 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         Bitmap bm = mPostilView.buildBitmap();
         String savedFile = FileUtils.saveImage(bm, 100);
         if (savedFile != null) {
-            scanFile(PreviewWebviewActivity.this, savedFile);
             Picture picture = new Picture((int)(mPostilView.getOffsetY()),savedFile);
             mPostRecord.getPicList().add(picture);
             saveRecord();
@@ -407,7 +406,6 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         Bitmap bm = mPostilView.buildBitmap();
         String savedFile = FileUtils.saveImage(bm, 100);
         if (savedFile != null) {
-            scanFile(PreviewWebviewActivity.this, savedFile);
             PostilTag currentTag = mPostilView.getCurrentPostilTag();
             currentTag.setCanMove(false);
             PostilTag tag = new PostilTag(currentTag.getOffsetY(),currentTag.getxPos(),currentTag.getyPos(),currentTag.getContent(),savedFile);
@@ -415,12 +413,6 @@ public class PreviewWebviewActivity extends AppCompatActivity {
             saveTags();
         }else{
         }
-    }
-
-    private void scanFile(Context context, String filePath) {
-        Intent scanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        scanIntent.setData(Uri.fromFile(new File(filePath)));
-        context.sendBroadcast(scanIntent);
     }
 
     private void saveRecord(){
