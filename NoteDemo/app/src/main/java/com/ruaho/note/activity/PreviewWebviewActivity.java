@@ -267,7 +267,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 mSeekBar.setProgress(100);
-                mPostilView.setPenRawSize(100);
+                mPostilView.setPenRawSize(100*50/100);
                 useBrushState();
             }
         });
@@ -276,7 +276,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                     Log.i("progresschange","i = " + i);
-                mPostilView.setPenRawSize(i);
+                mPostilView.setPenRawSize(i*50/100);
             }
 
             @Override

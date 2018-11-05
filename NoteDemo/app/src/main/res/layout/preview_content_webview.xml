@@ -148,7 +148,7 @@
             android:thumb="@drawable/preview_seek_bar_thumb"
             android:maxHeight="1dp"
             android:minHeight="1dp"
-            android:progress="10"/>
+            android:progress="20"/>
         <ImageView
             android:id="@+id/preview_pen"
             android:layout_width="@dimen/note_bar_default_width"

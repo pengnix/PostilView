@@ -110,7 +110,7 @@ public class PostilView extends View{
         mPaint.setFilterBitmap(true);
         mPaint.setStrokeJoin(Paint.Join.ROUND);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
-        mDrawSize = DimenUtils.dp2pxInt(3);
+        mDrawSize = 10;//DimenUtils.dp2pxInt(3);
         Log.i("progresschange","size  = " + mDrawSize);
         mEraserSize = DimenUtils.dp2pxInt(30);
         mPaint.setStrokeWidth(mDrawSize);
