@@ -80,6 +80,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     ChooseColorLayout mChooseColorBar;
     PostilRecord mPostRecord;
     PostilTagList mPostilTagList;
+    ImageView mTuyaControlClose;
     public final static int REQUEST_ADD_TEXT = 1;
     private static int REQUEST_ADD_TEXT_RESULT = 3;
     private Handler mHandler;
@@ -152,6 +153,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mTuyaCancel = findViewById(R.id.tuya_cancel);
         mSeekBar = findViewById(R.id.preview_seekbar);
         mBrushTxt = findViewById(R.id.preview_brush);
+        mTuyaControlClose = findViewById(R.id.tuya_control_close);
 
 
         mPenTxt.setOnClickListener(new View.OnClickListener() {
@@ -352,6 +354,12 @@ public class PreviewWebviewActivity extends AppCompatActivity {
                 mPostilView.setDrawMode(PostilView.DRAWMode.OVAL);
                 resetAllPenTypeIcon();
                 mTuyaOval.setImageResource(R.drawable.pizhu_tuoyuan_selected);
+            }
+        });
+        mTuyaControlClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                closeTuyaManager();
             }
         });
     }
@@ -616,5 +624,10 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     private void toTuyaManager(){
         mTuYaControlTopBar.setVisibility(View.VISIBLE);
         mCommonToolBar.setVisibility(View.GONE);
+    }
+
+    private void closeTuyaManager(){
+        mTuYaControlTopBar.setVisibility(View.GONE);
+        mCommonToolBar.setVisibility(View.VISIBLE);
     }
 }
