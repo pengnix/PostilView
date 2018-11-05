@@ -62,6 +62,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     private ImageView mTagSave;
     private ImageView mTagCancel;
     private ImageView mTuyaSave;
+    private ImageView mTuyaConfig;
     private ImageView mTuyaCancel;
     private SeekBar mSeekBar;
     LinearLayout mTagTopBar;
@@ -132,9 +133,11 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mCommonToolBar = findViewById(R.id.not_edit_container);
         mTuYaContainer = findViewById(R.id.tuya_container);
         mTuyaSave = findViewById(R.id.tuya_save);
+        mTuyaConfig = findViewById(R.id.tuya_shezhi);
         mTuyaCancel = findViewById(R.id.tuya_cancel);
         mSeekBar = findViewById(R.id.preview_seekbar);
         mBrushTxt = findViewById(R.id.preview_brush);
+
 
         mPenTxt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,7 +175,6 @@ public class PreviewWebviewActivity extends AppCompatActivity {
                     mBottomToolbar.setVisibility(View.VISIBLE);
                     addColorBar();
                     usePenState();
-                } else {
                 }
             }
         });
@@ -250,6 +252,20 @@ public class PreviewWebviewActivity extends AppCompatActivity {
                 showCommonToolBar();
                 mPostilView.clear();
                 mPostilView.setHistoryPictureRecord(mPostRecord);
+            }
+        });
+        mTuyaConfig.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mBottomToolbar.getVisibility() == View.VISIBLE){
+                    mTuyaConfig.setImageResource(R.drawable.pizhu_shezhi);
+                    removeColorBar();
+                    mBottomToolbar.setVisibility(View.GONE);
+                } else {
+                    mTuyaConfig.setImageResource(R.drawable.pizhu_shezhi_selected);
+                    addColorBar();
+                    mBottomToolbar.setVisibility(View.VISIBLE);
+                }
             }
         });
         mTuyaCancel.setOnClickListener(new View.OnClickListener() {
