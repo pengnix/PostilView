@@ -62,6 +62,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     private ImageView mTagSave;
     private ImageView mTagCancel;
     private ImageView mTuyaSave;
+    private ImageView mTuyaCurve;
     private ImageView mTuyaConfig;
     private ImageView mTuyaCancel;
     private SeekBar mSeekBar;
@@ -133,6 +134,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mCommonToolBar = findViewById(R.id.not_edit_container);
         mTuYaContainer = findViewById(R.id.tuya_container);
         mTuyaSave = findViewById(R.id.tuya_save);
+        mTuyaCurve = findViewById(R.id.tuya_curve);
         mTuyaConfig = findViewById(R.id.tuya_shezhi);
         mTuyaCancel = findViewById(R.id.tuya_cancel);
         mSeekBar = findViewById(R.id.preview_seekbar);
