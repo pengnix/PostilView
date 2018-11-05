@@ -31,6 +31,7 @@ public class FileUtils {
             FileOutputStream fos = null;
             try {
                 fos = new FileOutputStream(file);
+                //bmp.compress(Bitmap.CompressFormat.PNG, quality, fos);
                 bmp.compress(Bitmap.CompressFormat.PNG, quality, fos);
                 fos.flush();
                 return fileName;
@@ -72,6 +73,8 @@ public class FileUtils {
                 bitmap  = BitmapFactory.decodeStream(fis);
             } catch (FileNotFoundException e){
                 Log.i("saveImage","FileNotFoundException");
+            } catch (OutOfMemoryError e){
+                Log.i("saveImage","OutOfMemoryError");
             }
         }
 

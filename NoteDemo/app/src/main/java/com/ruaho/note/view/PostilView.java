@@ -29,6 +29,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.ruaho.note.view.PostilView.Mode.DRAW;
+
 public class PostilView extends View{
 
     private Paint mPaint;
@@ -183,7 +185,7 @@ public class PostilView extends View{
     public void setMode(Mode mode) {
         if (mode != mMode) {
             mMode = mode;
-            if (mMode == Mode.DRAW) {
+            if (mMode == DRAW) {
                 mPaint.setXfermode(mXferModeDraw);
                 mPaint.setStrokeWidth(mDrawSize);
             } else {
@@ -199,7 +201,7 @@ public class PostilView extends View{
 
     public void setPenRawSize(int size) {
         mDrawSize = size;
-        if(mMode == Mode.DRAW){
+        if(mMode == DRAW){
             mPaint.setStrokeWidth(mDrawSize);
         }
     }
@@ -232,7 +234,7 @@ public class PostilView extends View{
 
     public void setPenAlpha(int alpha){
         mPenAlpha = alpha;
-        if(mMode == Mode.DRAW){
+        if(mMode == DRAW){
             mPaint.setAlpha(alpha);
         }
     }
@@ -361,7 +363,7 @@ public class PostilView extends View{
         if (mBufferBitmap != null) {
             canvas.drawBitmap(mBufferBitmap, 0, 0, null);
         }
-        if(mDrawMode == DRAWMode.LINE && needDrawLine){
+        if(mMode == DRAW && mDrawMode == DRAWMode.LINE && needDrawLine){
             canvas.drawLine(mTopLeftX,mTopLeftY,mBottomRightX,mBottomRightY,mPaint);
         }
     }
@@ -462,7 +464,7 @@ public class PostilView extends View{
                     needDrawLine = false;
                     invalidate();
                 }
-                if (mMode == Mode.DRAW || mCanEraser) {
+                if (mMode == DRAW || mCanEraser) {
                     saveDrawingPath();
                 }
                 mPath.reset();
@@ -601,5 +603,24 @@ public class PostilView extends View{
 
     public void setDrawMode(DRAWMode drawMode) {
         this.mDrawMode = drawMode;
+    }
+    public void clearAllBitmap(){
+        url2Index.clear();
+        mPostilTagList = new PostilTagList();
+        picRecord = new PostilRecord();
+        mCurrentTag = null;
+        clearBitmap(mBufferBitmap);
+        clearBitmap(mTagBitmap);
+        for(Bitmap bitmap:mHistoryBitmap){
+            clearBitmap(bitmap);
+        }
+        System.gc();
+    }
+
+    public void clearBitmap(Bitmap bitmap){
+        if(bitmap != null && !bitmap.isRecycled()){
+            bitmap.recycle();
+            bitmap = null;
+        }
     }
 }

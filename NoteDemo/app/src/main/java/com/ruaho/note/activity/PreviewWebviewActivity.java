@@ -185,6 +185,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mBackTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                clearAllBitmap();
                 PreviewWebviewActivity.this.finish();
             }
         });
@@ -425,7 +426,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
 
     private void saveTuYaImage(){
         Bitmap bm = mPostilView.buildBitmap();
-        String savedFile = FileUtils.saveImage(bm, 100);
+        String savedFile = FileUtils.saveImage(bm, 50);
         if (savedFile != null) {
             Picture picture = new Picture((int)(mPostilView.getOffsetY()),savedFile);
             mPostRecord.getPicList().add(picture);
@@ -436,7 +437,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
 
     private void saveTagImage(){
         Bitmap bm = mPostilView.buildBitmap();
-        String savedFile = FileUtils.saveImage(bm, 100);
+        String savedFile = FileUtils.saveImage(bm, 50);
         if (savedFile != null) {
             PostilTag currentTag = mPostilView.getCurrentPostilTag();
             currentTag.setCanMove(false);
@@ -526,5 +527,12 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mPenTxt.setImageResource(R.drawable.shixinbi);
         mBrushTxt.setImageResource(R.drawable.caibi);
         mEraseTxt.setImageResource(R.drawable.xiangpica_selected);
+    }
+    private void clearAllBitmap(){
+        if(mPostilView != null){
+            mPostRecord = new PostilRecord();
+            mPostilTagList = new PostilTagList();
+            mPostilView.clearAllBitmap();
+        }
     }
 }
