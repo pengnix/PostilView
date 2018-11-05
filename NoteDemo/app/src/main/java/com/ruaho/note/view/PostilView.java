@@ -10,6 +10,7 @@ import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Xfermode;
+import android.os.Build;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -357,8 +358,21 @@ public class PostilView extends View{
             canvas.drawLine(mTopLeftX,mTopLeftY,mBottomRightX,mBottomRightY,mPaint);
         }
         if(mMode == DRAW && mDrawMode == DRAWMode.RECT && needDrawLine){
-            canvas.drawRect(mTopLeftX,mTopLeftY,mBottomRightX,mBottomRightY,mPaint);
+            drawPreviewRect(canvas);
         }
+        if(mMode == DRAW && mDrawMode == DRAWMode.OVAL && needDrawLine){
+            if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
+                canvas.drawOval(mTopLeftX,mTopLeftY,mBottomRightX,mBottomRightY,mPaint);
+            }
+        }
+    }
+
+    void drawPreviewRect(Canvas canvas){
+        float left = Math.min(mTopLeftX,mBottomRightX);
+        float right = Math.max(mTopLeftX,mBottomRightX);
+        float top = Math.min(mTopLeftY,mBottomRightY);
+        float bottom = Math.max(mTopLeftY,mBottomRightY);
+        canvas.drawRect(left,top,right,bottom,mPaint);
     }
 
     @SuppressWarnings("all")
@@ -393,7 +407,7 @@ public class PostilView extends View{
                 }
                 mLastX = x;
                 mLastY = y;
-                if(mDrawMode == DRAWMode.LINE || mDrawMode == DRAWMode.RECT){
+                if(mDrawMode == DRAWMode.LINE || mDrawMode == DRAWMode.RECT || mDrawMode == DRAWMode.OVAL){
                     mTopLeftX = x;
                     mTopLeftY = y;
                     needDrawLine = true;
@@ -421,7 +435,7 @@ public class PostilView extends View{
                 }
                 if(mDrawMode == DRAWMode.CURVE){
                     mPath.quadTo(mLastX, mLastY, (x + mLastX) / 2, (y + mLastY) / 2);
-                } else if(mDrawMode == DRAWMode.LINE || mDrawMode == DRAWMode.RECT){
+                } else if(mDrawMode == DRAWMode.LINE || mDrawMode == DRAWMode.RECT || mDrawMode == DRAWMode.OVAL){
                     Log.i("mDrawMode","Line");
                     mBottomRightX = x;
                     mBottomRightY = y;
@@ -463,6 +477,8 @@ public class PostilView extends View{
                     mBufferCanvas.drawPath(mPath,mPaint);
                     needDrawLine = false;
                     invalidate();
+                } else if(mDrawMode == DRAWMode.OVAL){
+
                 }
                 if (mMode == DRAW || mCanEraser) {
                     saveDrawingPath();
