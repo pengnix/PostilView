@@ -64,6 +64,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     private ImageView mTuyaSave;
     private ImageView mTuyaCurve;
     private ImageView mTuyaLine;
+    private ImageView mTuyaRect;
     private ImageView mTuyaConfig;
     private ImageView mTuyaCancel;
     private SeekBar mSeekBar;
@@ -137,6 +138,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mTuyaSave = findViewById(R.id.tuya_save);
         mTuyaCurve = findViewById(R.id.tuya_curve);
         mTuyaLine = findViewById(R.id.tuya_line);
+        mTuyaRect = findViewById(R.id.tuya_rect);
         mTuyaConfig = findViewById(R.id.tuya_shezhi);
         mTuyaCancel = findViewById(R.id.tuya_cancel);
         mSeekBar = findViewById(R.id.preview_seekbar);
@@ -326,11 +328,20 @@ public class PreviewWebviewActivity extends AppCompatActivity {
                 mTuyaLine.setImageResource(R.drawable.pizhu_zhixian_selected);
             }
         });
+        mTuyaRect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPostilView.setDrawMode(PostilView.DRAWMode.RECT);
+                resetAllPenTypeIcon();
+                mTuyaRect.setImageResource(R.drawable.pizhu_juxing_selected);
+            }
+        });
     }
 
     void resetAllPenTypeIcon(){
         mTuyaCurve.setImageResource(R.drawable.pizhu_quxian);
         mTuyaLine.setImageResource(R.drawable.pizhu_zhixian);
+        mTuyaRect.setImageResource(R.drawable.pizhu_juxing);
     }
 
     void showTagToolBar(){

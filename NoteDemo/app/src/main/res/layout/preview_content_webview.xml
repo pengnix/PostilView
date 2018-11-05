@@ -37,6 +37,13 @@
                 android:layout_marginTop="@dimen/preview_title_btn_margintop"
                 android:src="@drawable/pizhu_zhixian"/>
             <ImageView
+                android:id="@+id/tuya_rect"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/preview_title_btn_height"
+                android:layout_marginTop="@dimen/preview_title_btn_margintop"
+                android:src="@drawable/pizhu_juxing"/>
+            <ImageView
                 android:id="@+id/tuya_shezhi"
                 android:layout_width="0dp"
                 android:layout_weight="1"
