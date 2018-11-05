@@ -314,14 +314,23 @@ public class PreviewWebviewActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 mPostilView.setDrawMode(PostilView.DRAWMode.CURVE);
+                resetAllPenTypeIcon();
+                mTuyaCurve.setImageResource(R.drawable.pizhu_quxian_selected);
             }
         });
         mTuyaLine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mPostilView.setDrawMode(PostilView.DRAWMode.LINE);
+                resetAllPenTypeIcon();
+                mTuyaLine.setImageResource(R.drawable.pizhu_zhixian_selected);
             }
         });
+    }
+
+    void resetAllPenTypeIcon(){
+        mTuyaCurve.setImageResource(R.drawable.pizhu_quxian);
+        mTuyaLine.setImageResource(R.drawable.pizhu_zhixian);
     }
 
     void showTagToolBar(){
