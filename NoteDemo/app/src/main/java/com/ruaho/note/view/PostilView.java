@@ -125,7 +125,7 @@ public class PostilView extends View{
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setFilterBitmap(true);
-        mPaint.setStrokeJoin(Paint.Join.ROUND);
+//        mPaint.setStrokeJoin(Paint.Join.ROUND);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
         mDrawSize = 10;//DimenUtils.dp2pxInt(3);
         Log.i("progresschange","size  = " + mDrawSize);
@@ -159,16 +159,6 @@ public class PostilView extends View{
     }
 
     private static class PathDrawingInfo extends DrawingInfo{
-
-        Path path;
-
-        @Override
-        void draw(Canvas canvas) {
-            canvas.drawPath(path, paint);
-        }
-    }
-
-    private static class LineDrawingInfo extends DrawingInfo{
 
         Path path;
 
@@ -366,6 +356,9 @@ public class PostilView extends View{
         if(mMode == DRAW && mDrawMode == DRAWMode.LINE && needDrawLine){
             canvas.drawLine(mTopLeftX,mTopLeftY,mBottomRightX,mBottomRightY,mPaint);
         }
+        if(mMode == DRAW && mDrawMode == DRAWMode.RECT && needDrawLine){
+            canvas.drawRect(mTopLeftX,mTopLeftY,mBottomRightX,mBottomRightY,mPaint);
+        }
     }
 
     @SuppressWarnings("all")
@@ -400,7 +393,7 @@ public class PostilView extends View{
                 }
                 mLastX = x;
                 mLastY = y;
-                if(mDrawMode == DRAWMode.LINE){
+                if(mDrawMode == DRAWMode.LINE || mDrawMode == DRAWMode.RECT){
                     mTopLeftX = x;
                     mTopLeftY = y;
                     needDrawLine = true;
@@ -428,14 +421,10 @@ public class PostilView extends View{
                 }
                 if(mDrawMode == DRAWMode.CURVE){
                     mPath.quadTo(mLastX, mLastY, (x + mLastX) / 2, (y + mLastY) / 2);
-                } else if(mDrawMode == DRAWMode.LINE){
+                } else if(mDrawMode == DRAWMode.LINE || mDrawMode == DRAWMode.RECT){
                     Log.i("mDrawMode","Line");
                     mBottomRightX = x;
                     mBottomRightY = y;
-//                    mPath = new Path();
-//                    mPath.reset();
-//                    mPath.moveTo(mTopLeftX,mTopLeftY);
-//                    mPath.lineTo(x,y);
                 }
                 if (mMode == Mode.ERASER && !mCanEraser) {
                     break;
@@ -460,6 +449,17 @@ public class PostilView extends View{
                     mBottomRightY = y;
                     mPath.moveTo(mTopLeftX,mTopLeftY);
                     mPath.lineTo(x,y);
+                    mBufferCanvas.drawPath(mPath,mPaint);
+                    needDrawLine = false;
+                    invalidate();
+                } else if(mDrawMode == DRAWMode.RECT){
+                    mBottomRightX = x;
+                    mBottomRightY = y;
+                    mPath.moveTo(mTopLeftX,mTopLeftY);
+                    mPath.lineTo(mBottomRightX,mTopLeftY);
+                    mPath.lineTo(mBottomRightX,mBottomRightY);
+                    mPath.lineTo(mTopLeftX,mBottomRightY);
+                    mPath.close();
                     mBufferCanvas.drawPath(mPath,mPaint);
                     needDrawLine = false;
                     invalidate();
