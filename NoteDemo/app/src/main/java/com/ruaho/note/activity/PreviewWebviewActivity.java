@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -572,20 +573,45 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         }
     }
 
-    private void initPopupWindow() { //要在布局中显示的布局
+    private void initPopupWindow() {
         View contentView = LayoutInflater.from(this).inflate(R.layout.preview_control_popview_layout, null, false);
-        //实例化PopupWindow并设置宽高
+
         popupWindow = new PopupWindow(contentView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
-        //点击外部消失，这里因为PopupWindow填充了整个窗口，所以这句代码就没用了
         popupWindow.setOutsideTouchable(true); //设置可以点击
-        popupWindow.setTouchable(true); //进入退出的动画
-//        popupWindow.setAnimationStyle(R.style.MyPopWindowAnim);
+        popupWindow.setTouchable(true);
+        contentView.findViewById(R.id.preview_control_tuya).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupWindow.dismiss();
+                toTuyaManager();
+            }
+        });
+        contentView.findViewById(R.id.preview_control_tag).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupWindow.dismiss();
+                toWordsManager();
+            }
+        });
+        contentView.findViewById(R.id.preview_control_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupWindow.dismiss();
+            }
+        });
     }
     private void showPopWindow() {
         View rootview = LayoutInflater.from(PreviewWebviewActivity.this).inflate(R.layout.activity_main,
                 null);
         popupWindow.showAtLocation(rootview, Gravity.BOTTOM, 0, 0);
+    }
+
+    private void toWordsManager(){
+
+    }
+
+    private void toTuyaManager(){
 
     }
 }
