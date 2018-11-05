@@ -361,9 +361,7 @@ public class PostilView extends View{
             drawPreviewRect(canvas);
         }
         if(mMode == DRAW && mDrawMode == DRAWMode.OVAL && needDrawLine){
-            if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
-                canvas.drawOval(mTopLeftX,mTopLeftY,mBottomRightX,mBottomRightY,mPaint);
-            }
+            drawPreviewOval(canvas);
         }
     }
 
@@ -373,6 +371,16 @@ public class PostilView extends View{
         float top = Math.min(mTopLeftY,mBottomRightY);
         float bottom = Math.max(mTopLeftY,mBottomRightY);
         canvas.drawRect(left,top,right,bottom,mPaint);
+    }
+
+    void drawPreviewOval(Canvas canvas){
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
+            float left = Math.min(mTopLeftX,mBottomRightX);
+            float right = Math.max(mTopLeftX,mBottomRightX);
+            float top = Math.min(mTopLeftY,mBottomRightY);
+            float bottom = Math.max(mTopLeftY,mBottomRightY);
+            canvas.drawOval(left,top,right,bottom,mPaint);
+        }
     }
 
     @SuppressWarnings("all")
@@ -478,7 +486,14 @@ public class PostilView extends View{
                     needDrawLine = false;
                     invalidate();
                 } else if(mDrawMode == DRAWMode.OVAL){
-
+                    mBottomRightX = x;
+                    mBottomRightY = y;
+                    mPath.moveTo(mTopLeftX,mTopLeftY);
+                    mPath.addOval(mTopLeftX,mTopLeftY,mBottomRightX,mBottomRightY,Path.Direction.CW);
+//                    mPath.lineTo(x,y);
+                    mBufferCanvas.drawPath(mPath,mPaint);
+                    needDrawLine = false;
+                    invalidate();
                 }
                 if (mMode == DRAW || mCanEraser) {
                     saveDrawingPath();
