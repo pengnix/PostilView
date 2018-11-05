@@ -63,6 +63,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     private ImageView mTagCancel;
     private ImageView mTuyaSave;
     private ImageView mTuyaCurve;
+    private ImageView mTuyaLine;
     private ImageView mTuyaConfig;
     private ImageView mTuyaCancel;
     private SeekBar mSeekBar;
@@ -135,6 +136,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mTuYaContainer = findViewById(R.id.tuya_container);
         mTuyaSave = findViewById(R.id.tuya_save);
         mTuyaCurve = findViewById(R.id.tuya_curve);
+        mTuyaLine = findViewById(R.id.tuya_line);
         mTuyaConfig = findViewById(R.id.tuya_shezhi);
         mTuyaCancel = findViewById(R.id.tuya_cancel);
         mSeekBar = findViewById(R.id.preview_seekbar);
@@ -305,6 +307,18 @@ public class PreviewWebviewActivity extends AppCompatActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
 
+            }
+        });
+        mTuyaCurve.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPostilView.setDrawMode(PostilView.DRAWMode.CURVE);
+            }
+        });
+        mTuyaLine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPostilView.setDrawMode(PostilView.DRAWMode.LINE);
             }
         });
     }

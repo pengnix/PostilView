@@ -37,6 +37,11 @@ public class PostilView extends View{
     private float mLastY;
     private float mTagOriginX;
     private float mTagOriginY;
+    //用于直线两点确定图形
+    private float mTopLeftX;
+    private float mTopLeftY;
+    private float mBottomRightX;
+    private float mBottomRightY;
     private Bitmap mBufferBitmap;
     private Bitmap mTagBitmap;
     private List<Bitmap> mHistoryBitmap;
@@ -48,6 +53,7 @@ public class PostilView extends View{
     private PostilTag mCurrentTag;
     private float offsetY;
     private static float CLICK_PRECISION= 3.0f;
+    private boolean needDrawLine = false;
 
     private static final int MAX_CACHE_STEP = 20;
 
@@ -72,7 +78,16 @@ public class PostilView extends View{
         MOVE_TAG
     }
 
+    public enum DRAWMode {
+        CURVE,
+        LINE,
+        RECT,
+        OVAL
+    }
+
     private Mode mMode = Mode.NOT_EDIT;
+    //曲线-直线-矩形-椭圆
+    private DRAWMode mDrawMode = DRAWMode.CURVE;
 
 
     public PostilView(Context context) {
@@ -142,6 +157,16 @@ public class PostilView extends View{
     }
 
     private static class PathDrawingInfo extends DrawingInfo{
+
+        Path path;
+
+        @Override
+        void draw(Canvas canvas) {
+            canvas.drawPath(path, paint);
+        }
+    }
+
+    private static class LineDrawingInfo extends DrawingInfo{
 
         Path path;
 
@@ -336,6 +361,9 @@ public class PostilView extends View{
         if (mBufferBitmap != null) {
             canvas.drawBitmap(mBufferBitmap, 0, 0, null);
         }
+        if(mDrawMode == DRAWMode.LINE && needDrawLine){
+            canvas.drawLine(mTopLeftX,mTopLeftY,mBottomRightX,mBottomRightY,mPaint);
+        }
     }
 
     @SuppressWarnings("all")
@@ -370,10 +398,18 @@ public class PostilView extends View{
                 }
                 mLastX = x;
                 mLastY = y;
+                if(mDrawMode == DRAWMode.LINE){
+                    mTopLeftX = x;
+                    mTopLeftY = y;
+                    needDrawLine = true;
+                }
                 if (mPath == null) {
                     mPath = new Path();
                 }
-                mPath.moveTo(x,y);
+                if(mDrawMode == DRAWMode.CURVE){
+                    mPath.moveTo(x,y);
+                }
+
                 break;
             case MotionEvent.ACTION_MOVE:
                 if(mMode == Mode.MOVE_TAG){
@@ -385,15 +421,26 @@ public class PostilView extends View{
                     break;
                 }
                 //这里终点设为两点的中心点的目的在于使绘制的曲线更平滑，如果终点直接设置为x,y，效果和lineto是一样的,实际是折线效果
-                mPath.quadTo(mLastX, mLastY, (x + mLastX) / 2, (y + mLastY) / 2);
                 if (mBufferBitmap == null) {
                     initBuffer();
+                }
+                if(mDrawMode == DRAWMode.CURVE){
+                    mPath.quadTo(mLastX, mLastY, (x + mLastX) / 2, (y + mLastY) / 2);
+                } else if(mDrawMode == DRAWMode.LINE){
+                    Log.i("mDrawMode","Line");
+                    mBottomRightX = x;
+                    mBottomRightY = y;
+//                    mPath = new Path();
+//                    mPath.reset();
+//                    mPath.moveTo(mTopLeftX,mTopLeftY);
+//                    mPath.lineTo(x,y);
                 }
                 if (mMode == Mode.ERASER && !mCanEraser) {
                     break;
                 }
-                mBufferCanvas.drawPath(mPath,mPaint);
-
+                if(mDrawMode == DRAWMode.CURVE){
+                    mBufferCanvas.drawPath(mPath,mPaint);
+                }
                 invalidate();
                 mLastX = x;
                 mLastY = y;
@@ -405,6 +452,15 @@ public class PostilView extends View{
                         openTag();
                     }
                     break;
+                }
+                if(mDrawMode == DRAWMode.LINE){
+                    mBottomRightX = x;
+                    mBottomRightY = y;
+                    mPath.moveTo(mTopLeftX,mTopLeftY);
+                    mPath.lineTo(x,y);
+                    mBufferCanvas.drawPath(mPath,mPaint);
+                    needDrawLine = false;
+                    invalidate();
                 }
                 if (mMode == Mode.DRAW || mCanEraser) {
                     saveDrawingPath();
@@ -537,5 +593,13 @@ public class PostilView extends View{
     public void clearCurrentPostilTag(){
         mCurrentTag = null;
         invalidate();
+    }
+
+    public DRAWMode getDrawMode() {
+        return mDrawMode;
+    }
+
+    public void setDrawMode(DRAWMode drawMode) {
+        this.mDrawMode = drawMode;
     }
 }
