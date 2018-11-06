@@ -490,7 +490,6 @@ public class PostilView extends View{
                     mBottomRightY = y;
                     mPath.moveTo(mTopLeftX,mTopLeftY);
                     mPath.addOval(mTopLeftX,mTopLeftY,mBottomRightX,mBottomRightY,Path.Direction.CW);
-//                    mPath.lineTo(x,y);
                     mBufferCanvas.drawPath(mPath,mPaint);
                     needDrawLine = false;
                     invalidate();
