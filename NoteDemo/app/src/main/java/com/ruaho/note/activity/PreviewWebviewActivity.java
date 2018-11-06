@@ -74,6 +74,8 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     private ImageView mTuyaNext;
     private ImageView mTuyaPreview;
     private ImageView mTuyaDelete;
+    private TextView mWordsManagerCloseBtn;
+    LinearLayout mLeftWordsBar;
     private SeekBar mSeekBar;
     PopupWindow popupWindow;
     PopupWindow tuyaDeletePopupWindow;
@@ -162,7 +164,8 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mTuyaNext = findViewById(R.id.tuya_control_down);
         mTuyaPreview = findViewById(R.id.tuya_control_up);
         mTuyaDelete = findViewById(R.id.tuya_control_delete);
-
+        mLeftWordsBar = findViewById(R.id.preview_left_menu);
+        mWordsManagerCloseBtn = findViewById(R.id.preview_word_manager_close);
 
         mPenTxt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -222,6 +225,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
                 jumpToAddWordsActivity();
             }
         });
+
 
         mPostilView.setCallback(new PostilView.Callback() {
             @Override
@@ -389,6 +393,12 @@ public class PreviewWebviewActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 showTuYaDeletePopWindow();
+            }
+        });
+        mWordsManagerCloseBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                hideWordsManager();
             }
         });
     }
@@ -681,7 +691,11 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     }
 
     private void toWordsManager(){
+        mLeftWordsBar.setVisibility(View.VISIBLE);
+    }
 
+    private void hideWordsManager(){
+        mLeftWordsBar.setVisibility(View.GONE);
     }
 
     private void toTuyaManager(){
@@ -720,28 +734,5 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mPostilView.deleteCurrentTuya();
         saveRecord();
         mPostilView.invalidate();
-    }
-
-    private void addWordManagerBar(){
-        if(mChooseColorBar == null){
-            mChooseColorBar = (ChooseColorLayout) LayoutInflater.from(this).inflate(R.layout.preview_change_color_layout, null);
-            mChooseColorBar.lazyInit();
-            mChooseColorBar.setCallback(new ChooseColorLayout.Callback() {
-                @Override
-                public void changePenColor(int color) {
-                    mPostilView.setPenColor(color);
-                }
-            });
-        }
-        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-        lp.gravity = Gravity.BOTTOM;
-        mRoot.addView(mChooseColorBar,lp);
-    }
-
-    private void removeWordManagerBar(){
-        if(mChooseColorBar != null){
-            mRoot.removeView(mChooseColorBar);
-        }
     }
 }
