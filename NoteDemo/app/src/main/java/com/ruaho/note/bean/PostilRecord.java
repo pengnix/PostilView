@@ -19,6 +19,10 @@ public class PostilRecord {
         return picList;
     }
 
+    public void setPicList(List<Picture> picList) {
+        this.picList = picList;
+    }
+
     @Override
     public String toString() {
         return "PostilRecord{" +

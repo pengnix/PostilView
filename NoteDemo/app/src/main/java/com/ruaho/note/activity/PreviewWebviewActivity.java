@@ -711,7 +711,9 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     }
 
     public void deleteAllTuya(){
-
+        mPostRecord.setPicList(new ArrayList<Picture>());
+        saveRecord();
+        mPostilView.invalidate();
     }
 
     public void deleteCurrentTuya(){
