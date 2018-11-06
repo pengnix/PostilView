@@ -10,6 +10,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -29,6 +32,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.ruaho.note.adapter.PreviewWordsAdapter;
 import com.ruaho.note.bean.Picture;
 import com.ruaho.note.bean.PostilRecord;
 import com.ruaho.note.bean.PostilTagList;
@@ -87,6 +91,9 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     PostilRecord mPostRecord;
     PostilTagList mPostilTagList;
     ImageView mTuyaControlClose;
+    RecyclerView mWordsRecycleView;
+    PreviewWordsAdapter mPreviewWordsAdapter;
+
     public final static int REQUEST_ADD_TEXT = 1;
     private static int REQUEST_ADD_TEXT_RESULT = 3;
     private Handler mHandler;
@@ -117,6 +124,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         loadHistory();
         initMainPopupWindow();
         initTuYaDeletePopupWindow();
+        initWordsList();
     }
 
     void loadHistory(){
@@ -166,6 +174,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mTuyaDelete = findViewById(R.id.tuya_control_delete);
         mLeftWordsBar = findViewById(R.id.preview_left_menu);
         mWordsManagerCloseBtn = findViewById(R.id.preview_word_manager_close);
+        mWordsRecycleView = findViewById(R.id.preview_words_list);
 
         mPenTxt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -401,6 +410,15 @@ public class PreviewWebviewActivity extends AppCompatActivity {
                 hideWordsManager();
             }
         });
+    }
+
+    void initWordsList(){
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mWordsRecycleView.setLayoutManager(linearLayoutManager);
+        mPreviewWordsAdapter = new PreviewWordsAdapter(PreviewWebviewActivity.this,mPostilTagList);
+        mWordsRecycleView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        mWordsRecycleView.setAdapter(mPreviewWordsAdapter);
     }
 
     void resetAllPenTypeIcon(){
