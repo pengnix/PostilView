@@ -20,5 +20,7 @@
     <dimen name="preview_popwindow_item_radius">6dp</dimen>
     <dimen name="preview_left_menu_width">400dp</dimen>
     <dimen name="preview_left_item_height">60dp</dimen>
-    <dimen name="preview_left_item_margin_left">20dp</dimen>
+    <dimen name="preview_left_item_padding_left">20dp</dimen>
+    <dimen name="preview_left_item_text_padding_left">20dp</dimen>
+    <dimen name="preview_left_words_paddingtop">10dp</dimen>
 </resources>
