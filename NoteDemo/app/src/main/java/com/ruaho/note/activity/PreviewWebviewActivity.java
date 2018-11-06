@@ -717,6 +717,31 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     }
 
     public void deleteCurrentTuya(){
+        mPostilView.deleteCurrentTuya();
+        saveRecord();
+        mPostilView.invalidate();
+    }
 
+    private void addWordManagerBar(){
+        if(mChooseColorBar == null){
+            mChooseColorBar = (ChooseColorLayout) LayoutInflater.from(this).inflate(R.layout.preview_change_color_layout, null);
+            mChooseColorBar.lazyInit();
+            mChooseColorBar.setCallback(new ChooseColorLayout.Callback() {
+                @Override
+                public void changePenColor(int color) {
+                    mPostilView.setPenColor(color);
+                }
+            });
+        }
+        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+        lp.gravity = Gravity.BOTTOM;
+        mRoot.addView(mChooseColorBar,lp);
+    }
+
+    private void removeWordManagerBar(){
+        if(mChooseColorBar != null){
+            mRoot.removeView(mChooseColorBar);
+        }
     }
 }

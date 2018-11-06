@@ -709,4 +709,12 @@ public class PostilView extends View{
         }
     }
 
+    public void deleteCurrentTuya(){
+        if(picRecord != null && picRecord.getPicList() != null){
+            if(currentTuYaIndex < picRecord.getPicList().size() && currentTuYaIndex >=0){
+                picRecord.getPicList().remove(currentTuYaIndex);
+            }
+        }
+    }
+
 }
