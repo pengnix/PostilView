@@ -39,12 +39,22 @@ public class PreviewWordsAdapter extends RecyclerView.Adapter<PreviewWordsAdapte
         if(list != null && list.getList() != null){
             PostilTag words = list.getList().get(i);
             viewHolder.mTextView.setText(words.getContent());
+            viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    goToPosition();
+                }
+            });
         }
     }
 
     @Override
     public int getItemCount() {
         return list.getList().size();
+    }
+
+    protected void goToPosition(){
+
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
