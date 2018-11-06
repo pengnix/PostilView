@@ -73,8 +73,10 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     private ImageView mTuyaCancel;
     private ImageView mTuyaNext;
     private ImageView mTuyaPreview;
+    private ImageView mTuyaDelete;
     private SeekBar mSeekBar;
     PopupWindow popupWindow;
+    PopupWindow tuyaDeletePopupWindow;
     LinearLayout mTagTopBar;
     RelativeLayout mCommonToolBar;
     LinearLayout mTuYaContainer;
@@ -112,6 +114,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         };
         loadHistory();
         initMainPopupWindow();
+        initTuYaDeletePopupWindow();
     }
 
     void loadHistory(){
@@ -158,6 +161,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mTuyaControlClose = findViewById(R.id.tuya_control_close);
         mTuyaNext = findViewById(R.id.tuya_control_down);
         mTuyaPreview = findViewById(R.id.tuya_control_up);
+        mTuyaDelete = findViewById(R.id.tuya_control_delete);
 
 
         mPenTxt.setOnClickListener(new View.OnClickListener() {
@@ -379,6 +383,12 @@ public class PreviewWebviewActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 previewTuya();
+            }
+        });
+        mTuyaDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showTuYaDeletePopWindow();
             }
         });
     }
@@ -636,6 +646,40 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         popupWindow.showAtLocation(rootview, Gravity.BOTTOM, 0, 0);
     }
 
+    private void initTuYaDeletePopupWindow() {
+        View contentView = LayoutInflater.from(this).inflate(R.layout.preview_tuya_delete_popview_layout, null, false);
+
+        tuyaDeletePopupWindow = new PopupWindow(contentView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        tuyaDeletePopupWindow.setBackgroundDrawable(new BitmapDrawable());
+        tuyaDeletePopupWindow.setOutsideTouchable(true); //设置可以点击
+        tuyaDeletePopupWindow.setTouchable(true);
+        contentView.findViewById(R.id.preview_tuya_delete_current).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tuyaDeletePopupWindow.dismiss();
+                deleteCurrentTuya();
+            }
+        });
+        contentView.findViewById(R.id.preview_tuya_delete_all).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tuyaDeletePopupWindow.dismiss();
+                deleteAllTuya();
+            }
+        });
+        contentView.findViewById(R.id.preview_tag_delete_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tuyaDeletePopupWindow.dismiss();
+            }
+        });
+    }
+    private void showTuYaDeletePopWindow() {
+        View rootview = LayoutInflater.from(PreviewWebviewActivity.this).inflate(R.layout.activity_main,
+                null);
+        tuyaDeletePopupWindow.showAtLocation(rootview, Gravity.BOTTOM, 0, 0);
+    }
+
     private void toWordsManager(){
 
     }
@@ -664,5 +708,13 @@ public class PreviewWebviewActivity extends AppCompatActivity {
 
     public void previewTuya(){
         mPostilView.previewTuya();
+    }
+
+    public void deleteAllTuya(){
+
+    }
+
+    public void deleteCurrentTuya(){
+
     }
 }
