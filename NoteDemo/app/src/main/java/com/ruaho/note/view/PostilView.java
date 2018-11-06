@@ -74,11 +74,14 @@ public class PostilView extends View{
 
     private Callback mCallback;
 
+    private int currentTuYaIndex;
+
     public enum Mode {
         DRAW,
         ERASER,
         NOT_EDIT,
-        MOVE_TAG
+        MOVE_TAG,
+        MANAGE_TUYA
     }
 
     public enum DRAWMode {
@@ -114,6 +117,7 @@ public class PostilView extends View{
     public interface Callback {
         void onUndoRedoStatusChanged();
         void openTag(PostilTag tag);
+        void scrollTo(int x,int y);
     }
 
     public void setCallback(Callback callback){
@@ -338,16 +342,31 @@ public class PostilView extends View{
             }
         }
 
-        if(picRecord != null && picRecord.getPicList() != null){
-            List<Picture> picList = picRecord.getPicList();
-            for(Picture pic:picList){
-                String address = pic.getAddress();
-                Integer index = url2Index.get(address);
-                if(index == null){
-                    continue;
+        if(mMode == Mode.MANAGE_TUYA){
+            if(picRecord != null && picRecord.getPicList() != null){
+                if(currentTuYaIndex < picRecord.getPicList().size()){
+                    Picture pic = picRecord.getPicList().get(currentTuYaIndex);
+                    String address = pic.getAddress();
+                    Integer index = url2Index.get(address);
+                    if(index == null){
+                        return;
+                    }
+                    Bitmap bmp = mHistoryBitmap.get(index);
+                    canvas.drawBitmap(bmp, 0, pic.getOffsetY()-offsetY, null);
                 }
-                Bitmap bmp = mHistoryBitmap.get(index);
-                canvas.drawBitmap(bmp, 0, pic.getOffsetY()-offsetY, null);
+            }
+        } else {
+            if(picRecord != null && picRecord.getPicList() != null){
+                List<Picture> picList = picRecord.getPicList();
+                for(Picture pic:picList){
+                    String address = pic.getAddress();
+                    Integer index = url2Index.get(address);
+                    if(index == null){
+                        continue;
+                    }
+                    Bitmap bmp = mHistoryBitmap.get(index);
+                    canvas.drawBitmap(bmp, 0, pic.getOffsetY()-offsetY, null);
+                }
             }
         }
 
@@ -392,6 +411,10 @@ public class PostilView extends View{
         final int action = event.getAction() & MotionEvent.ACTION_MASK;
         final float x = event.getX();
         final float y = event.getY();
+
+        if(mMode == Mode.MANAGE_TUYA){
+            return super.onTouchEvent(event);
+        }
 
         if(mMode == Mode.NOT_EDIT){
             boolean isTouchTag = containTagBitmap((int)x,(int)y);
@@ -528,8 +551,6 @@ public class PostilView extends View{
                     return true;
                 }
             }
-        } else{
-
         }
         return false;
     }
@@ -653,4 +674,39 @@ public class PostilView extends View{
             bitmap = null;
         }
     }
+
+    public int getCurrentTuYaIndex() {
+        return currentTuYaIndex;
+    }
+
+    public void setCurrentTuYaIndex(int currentTuYaIndex) {
+        this.currentTuYaIndex = currentTuYaIndex;
+    }
+
+    public void nextTuya(){
+        if(picRecord != null && picRecord.getPicList() != null){
+            if((currentTuYaIndex + 1) < picRecord.getPicList().size()){
+                currentTuYaIndex++;
+                if(mCallback != null){
+                    Picture pic = picRecord.getPicList().get(currentTuYaIndex);
+                    mCallback.scrollTo(0,pic.getOffsetY());
+                    invalidate();
+                }
+            }
+        }
+    }
+
+    public void previewTuya(){
+        if(picRecord != null && picRecord.getPicList() != null){
+            if(currentTuYaIndex -1 >= 0){
+                currentTuYaIndex--;
+                if(mCallback != null){
+                    Picture pic = picRecord.getPicList().get(currentTuYaIndex);
+                    mCallback.scrollTo(0,pic.getOffsetY());
+                    invalidate();
+                }
+            }
+        }
+    }
+
 }

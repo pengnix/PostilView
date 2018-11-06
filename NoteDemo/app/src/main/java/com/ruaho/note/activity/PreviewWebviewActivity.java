@@ -71,6 +71,8 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     private ImageView mTuyaOval;
     private ImageView mTuyaConfig;
     private ImageView mTuyaCancel;
+    private ImageView mTuyaNext;
+    private ImageView mTuyaPreview;
     private SeekBar mSeekBar;
     PopupWindow popupWindow;
     LinearLayout mTagTopBar;
@@ -154,6 +156,8 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mSeekBar = findViewById(R.id.preview_seekbar);
         mBrushTxt = findViewById(R.id.preview_brush);
         mTuyaControlClose = findViewById(R.id.tuya_control_close);
+        mTuyaNext = findViewById(R.id.tuya_control_down);
+        mTuyaPreview = findViewById(R.id.tuya_control_up);
 
 
         mPenTxt.setOnClickListener(new View.OnClickListener() {
@@ -216,6 +220,11 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         });
 
         mPostilView.setCallback(new PostilView.Callback() {
+            @Override
+            public void scrollTo(int x, int y) {
+                scrollToYforWebView(y);
+            }
+
             @Override
             public void onUndoRedoStatusChanged() {
 
@@ -360,6 +369,18 @@ public class PreviewWebviewActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 closeTuyaManager();
+            }
+        });
+        mTuyaNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                nextTuya();
+            }
+        });
+        mTuyaPreview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                previewTuya();
             }
         });
     }
@@ -622,12 +643,28 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     }
 
     private void toTuyaManager(){
+        mPostilView.setCurrentTuYaIndex(0);
         mTuYaControlTopBar.setVisibility(View.VISIBLE);
         mCommonToolBar.setVisibility(View.GONE);
+        mPostilView.setMode(PostilView.Mode.MANAGE_TUYA);
+        mPostilView.invalidate();
     }
 
     private void closeTuyaManager(){
         mTuYaControlTopBar.setVisibility(View.GONE);
         mCommonToolBar.setVisibility(View.VISIBLE);
+        mPostilView.setMode(PostilView.Mode.NOT_EDIT);
+    }
+
+    public void scrollToYforWebView(int y){
+        mWebView.scrollTo(0,y);
+    }
+
+    public void nextTuya(){
+        mPostilView.nextTuya();
+    }
+
+    public void previewTuya(){
+        mPostilView.previewTuya();
     }
 }
