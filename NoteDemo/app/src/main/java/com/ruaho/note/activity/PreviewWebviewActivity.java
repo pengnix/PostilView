@@ -111,7 +111,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
             }
         };
         loadHistory();
-        initPopupWindow();
+        initMainPopupWindow();
     }
 
     void loadHistory(){
@@ -244,13 +244,12 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mSaveTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //saveTags();
             }
         });
         mControlTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showPopWindow();
+                showMainPopWindow();
             }
         });
         mTagSave.setOnClickListener(new View.OnClickListener() {
@@ -260,7 +259,6 @@ public class PreviewWebviewActivity extends AppCompatActivity {
                 saveTagImage();
                 mPostilView.clearCurrentPostilTag();
                 mPostilView.setPostilTags(mPostilTagList);
-                //saveTags();
             }
         });
         mTagCancel.setOnClickListener(new View.OnClickListener() {
@@ -604,7 +602,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         }
     }
 
-    private void initPopupWindow() {
+    private void initMainPopupWindow() {
         View contentView = LayoutInflater.from(this).inflate(R.layout.preview_control_popview_layout, null, false);
 
         popupWindow = new PopupWindow(contentView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
@@ -632,7 +630,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
             }
         });
     }
-    private void showPopWindow() {
+    private void showMainPopWindow() {
         View rootview = LayoutInflater.from(PreviewWebviewActivity.this).inflate(R.layout.activity_main,
                 null);
         popupWindow.showAtLocation(rootview, Gravity.BOTTOM, 0, 0);
