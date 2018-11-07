@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ruaho.note.activity.PreviewWebviewActivity;
 import com.ruaho.note.activity.R;
 import com.ruaho.note.bean.PostilTag;
 import com.ruaho.note.bean.PostilTagList;
@@ -37,12 +38,12 @@ public class PreviewWordsAdapter extends RecyclerView.Adapter<PreviewWordsAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         if(list != null && list.getList() != null){
-            PostilTag words = list.getList().get(i);
+            final PostilTag words = list.getList().get(i);
             viewHolder.mTextView.setText(words.getContent());
             viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    goToPosition();
+                    goToPosition(words.getOffsetY());
                 }
             });
         }
@@ -53,8 +54,8 @@ public class PreviewWordsAdapter extends RecyclerView.Adapter<PreviewWordsAdapte
         return list.getList().size();
     }
 
-    protected void goToPosition(){
-
+    protected void goToPosition(int y){
+        ((PreviewWebviewActivity)mContext).scrollToYforWebView(y);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
