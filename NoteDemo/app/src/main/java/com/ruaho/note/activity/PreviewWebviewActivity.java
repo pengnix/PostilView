@@ -90,7 +90,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     LinearLayout mTuYaControlTopBar;
     ChooseColorLayout mChooseColorBar;
     PostilRecord mPostRecord;
-    PostilTagList mPostilTagList;
+    PostilTagList mPostilWordList;
     ImageView mTuyaControlClose;
     RecyclerView mWordsRecycleView;
     PreviewWordsAdapter mPreviewWordsAdapter;
@@ -112,7 +112,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
             url = intent.getStringExtra("previewurl");
         }
         mPostRecord = new PostilRecord();
-        mPostilTagList = new PostilTagList();
+        mPostilWordList = new PostilTagList();
         hideBar();
         initView();
         initWebView();
@@ -132,7 +132,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         loadRecord();
         mPostilView.setHistoryPictureRecord(mPostRecord);
         loadTags();
-        mPostilView.setPostilTags(mPostilTagList);
+        mPostilView.setPostilTags(mPostilWordList);
     }
 
     void hideBar(){
@@ -276,7 +276,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
                 showCommonToolBar();
                 saveTagImage();
                 mPostilView.clearCurrentPostilTag();
-                mPostilView.setPostilTags(mPostilTagList);
+                mPostilView.setPostilTags(mPostilWordList);
             }
         });
         mTagCancel.setOnClickListener(new View.OnClickListener() {
@@ -417,7 +417,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mWordsRecycleView.setLayoutManager(linearLayoutManager);
-        mPreviewWordsAdapter = new PreviewWordsAdapter(PreviewWebviewActivity.this,mPostilTagList);
+        mPreviewWordsAdapter = new PreviewWordsAdapter(PreviewWebviewActivity.this,mPostilWordList);
         mWordsRecycleView.addOnItemTouchListener(new SwipeItemLayout.OnSwipeItemTouchListener(PreviewWebviewActivity.this));
         mWordsRecycleView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         mWordsRecycleView.setAdapter(mPreviewWordsAdapter);
@@ -548,7 +548,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
             PostilTag currentTag = mPostilView.getCurrentPostilTag();
             currentTag.setCanMove(false);
             PostilTag tag = new PostilTag(currentTag.getOffsetY(),currentTag.getxPos(),currentTag.getyPos(),currentTag.getContent(),savedFile);
-            mPostilTagList.getList().add(tag);
+            mPostilWordList.getList().add(tag);
             saveTags();
         }else{
         }
@@ -576,7 +576,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
 
     private void saveTags(){
         Gson gson = new Gson();
-        String recordString = gson.toJson(mPostilTagList);
+        String recordString = gson.toJson(mPostilWordList);
         Log.i("saveImage","saveTag = " + recordString);
         String key = MD5Utils.stringToMD5("NoteTags" + url);
         Log.i("saveImage","saveTag key = " + key);
@@ -590,7 +590,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         Log.i("saveImage","loadTags = " + recordString);
         Log.i("saveImage","loadTags key = " + key);
         if(null != recordString){
-            mPostilTagList = gson.fromJson(recordString, PostilTagList.class);
+            mPostilWordList = gson.fromJson(recordString, PostilTagList.class);
         }
     }
 
@@ -637,7 +637,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     private void clearAllBitmap(){
         if(mPostilView != null){
             mPostRecord = new PostilRecord();
-            mPostilTagList = new PostilTagList();
+            mPostilWordList = new PostilTagList();
             mPostilView.clearAllBitmap();
         }
     }
@@ -759,7 +759,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     public void deleteWordTag(){
 //        saveTagImage();
         saveTags();
-        mPostilView.setPostilTags(mPostilTagList);
+        mPostilView.setPostilTags(mPostilWordList);
         mPreviewWordsAdapter.notifyDataSetChanged();
     }
 }
