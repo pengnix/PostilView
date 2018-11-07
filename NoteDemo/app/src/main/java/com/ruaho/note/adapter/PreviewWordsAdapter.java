@@ -3,6 +3,7 @@ package com.ruaho.note.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,9 +41,10 @@ public class PreviewWordsAdapter extends RecyclerView.Adapter<PreviewWordsAdapte
         if(list != null && list.getList() != null){
             final PostilTag words = list.getList().get(i);
             viewHolder.mTextView.setText(words.getContent());
-            viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+            viewHolder.mMainView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Log.i("ttttttt",""+words.getOffsetY());
                     goToPosition(words.getOffsetY());
                 }
             });
@@ -61,9 +63,11 @@ public class PreviewWordsAdapter extends RecyclerView.Adapter<PreviewWordsAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
         View mView;
         TextView mTextView;
+        View mMainView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             mView = itemView;
+            mMainView = mView.findViewById(R.id.preview_item_main);
             mTextView = mView.findViewById(R.id.preview_word_item_txt);
         }
     }

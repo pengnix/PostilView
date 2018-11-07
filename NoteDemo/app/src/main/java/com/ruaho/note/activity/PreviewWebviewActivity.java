@@ -44,6 +44,7 @@ import com.ruaho.note.view.ObservableWebView;
 import com.ruaho.note.bean.PostilTag;
 import com.ruaho.note.view.PostilView;
 import com.ruaho.note.util.ScreenUtils;
+import com.ruaho.note.view.SwipeItemLayout;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -417,6 +418,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mWordsRecycleView.setLayoutManager(linearLayoutManager);
         mPreviewWordsAdapter = new PreviewWordsAdapter(PreviewWebviewActivity.this,mPostilTagList);
+        mWordsRecycleView.addOnItemTouchListener(new SwipeItemLayout.OnSwipeItemTouchListener(PreviewWebviewActivity.this));
         mWordsRecycleView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         mWordsRecycleView.setAdapter(mPreviewWordsAdapter);
     }
