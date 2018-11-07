@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="20dp"
-            android:textColor="@color/red"
+            android:textColor="@color/preview_red"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:textSize="@dimen/preview_top_txt_size"

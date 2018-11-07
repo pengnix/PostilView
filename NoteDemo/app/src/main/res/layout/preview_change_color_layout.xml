@@ -7,47 +7,47 @@
     android:paddingLeft="20dp"
     android:orientation="horizontal">
     <com.ruaho.note.view.ColorBlockView
-        app:mColor="@color/red"
+        app:mColor="@color/preview_red"
         app:mSelect="true"
         android:layout_width="@dimen/preview_color_block_height"
         android:layout_height="@dimen/preview_color_block_height" />
     <com.ruaho.note.view.ColorBlockView
-        app:mColor="@color/orange"
+        app:mColor="@color/preview_orange"
         app:mSelect="false"
         android:layout_width="@dimen/preview_color_block_height"
         android:layout_height="@dimen/preview_color_block_height" />
     <com.ruaho.note.view.ColorBlockView
-        app:mColor="@color/yellow"
+        app:mColor="@color/preview_yellow"
         app:mSelect="false"
         android:layout_width="@dimen/preview_color_block_height"
         android:layout_height="@dimen/preview_color_block_height" />
     <com.ruaho.note.view.ColorBlockView
-        app:mColor="@color/green"
+        app:mColor="@color/preview_green"
         app:mSelect="false"
         android:layout_width="@dimen/preview_color_block_height"
         android:layout_height="@dimen/preview_color_block_height" />
     <com.ruaho.note.view.ColorBlockView
-        app:mColor="@color/white"
+        app:mColor="@color/preview_white"
         app:mSelect="false"
         android:layout_width="@dimen/preview_color_block_height"
         android:layout_height="@dimen/preview_color_block_height" />
     <com.ruaho.note.view.ColorBlockView
-        app:mColor="@color/sky_blue"
+        app:mColor="@color/preview_sky_blue"
         app:mSelect="false"
         android:layout_width="@dimen/preview_color_block_height"
         android:layout_height="@dimen/preview_color_block_height" />
     <com.ruaho.note.view.ColorBlockView
-        app:mColor="@color/dark_blue"
+        app:mColor="@color/preview_dark_blue"
         app:mSelect="false"
         android:layout_width="@dimen/preview_color_block_height"
         android:layout_height="@dimen/preview_color_block_height" />
     <com.ruaho.note.view.ColorBlockView
-        app:mColor="@color/purple"
+        app:mColor="@color/preview_purple"
         app:mSelect="false"
         android:layout_width="@dimen/preview_color_block_height"
         android:layout_height="@dimen/preview_color_block_height" />
     <com.ruaho.note.view.ColorBlockView
-        app:mColor="@color/black"
+        app:mColor="@color/preview_black"
         app:mSelect="false"
         android:layout_width="@dimen/preview_color_block_height"
         android:layout_height="@dimen/preview_color_block_height" />

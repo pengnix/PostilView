@@ -101,7 +101,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="20dp"
                     android:textSize="@dimen/preview_top_txt_size"
-                    android:textColor="@color/red"
+                    android:textColor="@color/preview_red"
                     android:layout_centerVertical="true"
                     android:text="关闭"/>
                 <TextView
@@ -111,7 +111,7 @@
                     android:layout_toRightOf="@+id/note_back"
                     android:layout_marginLeft="20dp"
                     android:textSize="@dimen/preview_top_txt_size"
-                    android:textColor="@color/red"
+                    android:textColor="@color/preview_red"
                     android:layout_centerVertical="true"
                     android:visibility="gone"
                     android:text="保存"/>
@@ -122,7 +122,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="20dp"
                     android:textSize="@dimen/preview_top_txt_size"
-                    android:textColor="@color/red"
+                    android:textColor="@color/preview_red"
                     android:layout_centerVertical="true"
                     android:text="标记"/>
                 <TextView
@@ -132,7 +132,7 @@
                     android:layout_toLeftOf="@id/mbiaoji"
                     android:layout_marginRight="20dp"
                     android:textSize="@dimen/preview_top_txt_size"
-                    android:textColor="@color/red"
+                    android:textColor="@color/preview_red"
                     android:layout_centerVertical="true"
                     android:text="文字"/>
                 <TextView
@@ -142,7 +142,7 @@
                     android:layout_toLeftOf="@id/preview_wenzi"
                     android:layout_marginRight="20dp"
                     android:textSize="@dimen/preview_top_txt_size"
-                    android:textColor="@color/red"
+                    android:textColor="@color/preview_red"
                     android:visibility="visible"
                     android:layout_centerVertical="true"
                     android:text="管理"/>
@@ -273,7 +273,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:visibility="gone"
-        android:background="@color/light_gray">
+        android:background="@color/preview_light_gray">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/preview_title_height">
@@ -284,14 +284,14 @@
                 android:layout_alignParentLeft="true"
                 android:layout_marginLeft="20dp"
                 android:textSize="@dimen/preview_top_txt_size"
-                android:textColor="@color/red"
+                android:textColor="@color/preview_red"
                 android:layout_centerVertical="true"
                 android:text="关闭"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="文字笔记管理"
-                android:textColor="@color/black"
+                android:textColor="@color/preview_black"
                 android:textSize="@dimen/preview_top_txt_size"
                 android:layout_centerInParent="true"/>
         </RelativeLayout>

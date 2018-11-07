@@ -62,10 +62,10 @@ public class ColorBlockView extends View {
         p.setColor(color);
         p.setStyle(Paint.Style.FILL);
         marginPaint = new Paint();
-        marginPaint.setColor(mContext.getResources().getColor(R.color.dark_gray));
+        marginPaint.setColor(mContext.getResources().getColor(R.color.preview_dark_gray));
         marginPaint.setStyle(Paint.Style.FILL);
         selectPaint = new Paint();
-        selectPaint.setColor(mContext.getResources().getColor(R.color.dark_purple));
+        selectPaint.setColor(mContext.getResources().getColor(R.color.preview_dark_purple));
         selectPaint.setStyle(Paint.Style.FILL);
         height = mContext.getResources().getDimension(R.dimen.preview_color_block_height);
         width = height;

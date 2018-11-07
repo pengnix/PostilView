@@ -26,12 +26,12 @@
             android:gravity="center"
             android:paddingLeft="@dimen/preview_left_item_text_padding_left"
             android:textSize="20sp"
-            android:textColor="@color/black"/>
+            android:textColor="@color/preview_black"/>
     </RelativeLayout>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:background="@color/black">
+        android:background="@color/preview_black">
         <TextView
             android:id="@+id/preview_item_edit"
             android:text="编辑"
@@ -49,7 +49,7 @@
             android:textSize="20sp"
             android:gravity="center"
             android:layout_width="80dp"
-            android:background="@color/red"
+            android:background="@color/preview_red"
             android:layout_height="match_parent" />
     </LinearLayout>
 </com.ruaho.note.view.SwipeItemLayout>
