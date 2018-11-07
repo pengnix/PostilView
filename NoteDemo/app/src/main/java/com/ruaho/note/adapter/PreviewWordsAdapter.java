@@ -40,6 +40,7 @@ public class PreviewWordsAdapter extends RecyclerView.Adapter<PreviewWordsAdapte
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         if(list != null && list.getList() != null){
             final PostilTag words = list.getList().get(i);
+            final int index = i;
             viewHolder.mTextView.setText(words.getContent());
             viewHolder.mMainView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -56,7 +57,7 @@ public class PreviewWordsAdapter extends RecyclerView.Adapter<PreviewWordsAdapte
             viewHolder.mDeleteTxt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    deleteCurrentWord();
+                    deleteCurrentWord(index);
                 }
             });
         }
@@ -71,8 +72,11 @@ public class PreviewWordsAdapter extends RecyclerView.Adapter<PreviewWordsAdapte
         ((PreviewWebviewActivity)mContext).scrollToYforWebView(y);
     }
 
-    protected void deleteCurrentWord(){
-
+    protected void deleteCurrentWord(int index){
+        if(list != null && list.getList() != null){
+            list.getList().remove(index);
+            ((PreviewWebviewActivity)mContext).deleteWordTag();
+        }
     }
 
     protected void modifyCurrentWord(){

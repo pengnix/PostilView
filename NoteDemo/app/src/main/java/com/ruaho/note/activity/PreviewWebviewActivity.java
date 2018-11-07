@@ -755,4 +755,11 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         saveRecord();
         mPostilView.invalidate();
     }
+
+    public void deleteWordTag(){
+//        saveTagImage();
+        saveTags();
+        mPostilView.setPostilTags(mPostilTagList);
+        mPreviewWordsAdapter.notifyDataSetChanged();
+    }
 }
