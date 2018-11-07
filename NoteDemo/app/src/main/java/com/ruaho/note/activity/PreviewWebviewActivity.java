@@ -90,6 +90,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     RecyclerView mWordsRecycleView;
     PreviewWordsAdapter mPreviewWordsAdapter;
     int mEditIndex;//编辑文字index
+    static int QUALITY = 50;
 
     public final static int REQUEST_ADD_TEXT = 1;
     private static int REQUEST_ADD_TEXT_RESULT = 3;
@@ -550,7 +551,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
 
     private void saveTuYaImage(){
         Bitmap bm = mPostilView.buildBitmap();
-        String savedFile = FileUtils.saveImage(bm, 50);
+        String savedFile = FileUtils.saveImage(bm, QUALITY);
         if (savedFile != null) {
             Picture picture = new Picture((int)(mPostilView.getOffsetY()),savedFile);
             mPostRecord.getPicList().add(picture);
@@ -561,7 +562,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
 
     private void saveTagImage(){
         Bitmap bm = mPostilView.buildBitmap();
-        String savedFile = FileUtils.saveImage(bm, 50);
+        String savedFile = FileUtils.saveImage(bm, QUALITY);
         if (savedFile != null) {
             PostilWord currentTag = mPostilView.getCurrentPostilTag();
             currentTag.setCanMove(false);
