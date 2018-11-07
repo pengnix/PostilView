@@ -3,15 +3,15 @@ package com.ruaho.note.bean;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PostilRecord {
+public class PostilRecordList {
 
     List<Picture> picList;
 
-    public PostilRecord() {
+    public PostilRecordList() {
         this.picList = new ArrayList<Picture>();
     }
 
-    public PostilRecord(List<Picture> picList) {
+    public PostilRecordList(List<Picture> picList) {
         this.picList = picList;
     }
 
@@ -25,7 +25,7 @@ public class PostilRecord {
 
     @Override
     public String toString() {
-        return "PostilRecord{" +
+        return "PostilRecordList{" +
                 "picList=" + picList +
                 '}';
     }

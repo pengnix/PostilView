@@ -3,26 +3,22 @@ package com.ruaho.note.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ruaho.note.activity.PreviewWebviewActivity;
 import com.ruaho.note.activity.R;
-import com.ruaho.note.bean.PostilTag;
-import com.ruaho.note.bean.PostilTagList;
-
-import java.util.List;
+import com.ruaho.note.bean.PostilWord;
+import com.ruaho.note.bean.PostilWordsList;
 
 public class PreviewWordsAdapter extends RecyclerView.Adapter<PreviewWordsAdapter.ViewHolder>{
 
-    PostilTagList list;
+    PostilWordsList list;
     Context mContext;
 
-    public PreviewWordsAdapter(Context context, PostilTagList list) {
+    public PreviewWordsAdapter(Context context, PostilWordsList list) {
         mContext = context;
         this.list = list;
     }
@@ -39,7 +35,7 @@ public class PreviewWordsAdapter extends RecyclerView.Adapter<PreviewWordsAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         if(list != null && list.getList() != null){
-            final PostilTag words = list.getList().get(i);
+            final PostilWord words = list.getList().get(i);
             final int index = i;
             viewHolder.mTextView.setText(words.getContent());
             viewHolder.mMainView.setOnClickListener(new View.OnClickListener() {

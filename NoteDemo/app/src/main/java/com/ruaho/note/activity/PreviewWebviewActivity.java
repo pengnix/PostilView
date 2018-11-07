@@ -1,10 +1,8 @@
 package com.ruaho.note.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,7 +15,6 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -34,21 +31,19 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.ruaho.note.adapter.PreviewWordsAdapter;
 import com.ruaho.note.bean.Picture;
-import com.ruaho.note.bean.PostilRecord;
-import com.ruaho.note.bean.PostilTagList;
+import com.ruaho.note.bean.PostilRecordList;
+import com.ruaho.note.bean.PostilWordsList;
+import com.ruaho.note.bean.PostilWord;
 import com.ruaho.note.util.FileUtils;
 import com.ruaho.note.util.MD5Utils;
 import com.ruaho.note.util.NoteSharePreferenceUtils;
 import com.ruaho.note.view.ChooseColorLayout;
 import com.ruaho.note.view.ObservableWebView;
-import com.ruaho.note.bean.PostilTag;
 import com.ruaho.note.view.PostilView;
 import com.ruaho.note.util.ScreenUtils;
 import com.ruaho.note.view.SwipeItemLayout;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 public class PreviewWebviewActivity extends AppCompatActivity {
 
@@ -89,8 +84,8 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     LinearLayout mTuYaContainer;
     LinearLayout mTuYaControlTopBar;
     ChooseColorLayout mChooseColorBar;
-    PostilRecord mPostRecord;
-    PostilTagList mPostilWordList;
+    PostilRecordList mPostRecord;
+    PostilWordsList mPostilWordList;
     ImageView mTuyaControlClose;
     RecyclerView mWordsRecycleView;
     PreviewWordsAdapter mPreviewWordsAdapter;
@@ -111,8 +106,8 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         if(intent != null){
             url = intent.getStringExtra("previewurl");
         }
-        mPostRecord = new PostilRecord();
-        mPostilWordList = new PostilTagList();
+        mPostRecord = new PostilRecordList();
+        mPostilWordList = new PostilWordsList();
         hideBar();
         initView();
         initWebView();
@@ -249,7 +244,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
             }
 
             @Override
-            public void openTag(PostilTag tag) {
+            public void openTag(PostilWord tag) {
                 Log.i("getResult!","tag = " + tag.toString());
                 Intent intent = new Intent(PreviewWebviewActivity.this,AddWordActivity.class);
                 intent.putExtra("content", tag.getContent());
@@ -505,11 +500,11 @@ public class PreviewWebviewActivity extends AppCompatActivity {
                 Log.i("getResult!","height = " + height + "width = " + width);
                 if(x != -1 && y != -1){
                     Log.i("SSSSSSSS","update" + offset + ":" + x + ":" + y);
-                    mPostilView.updatePostilTag(new PostilTag(offset,x,y,result));
+                    mPostilView.updatePostilTag(new PostilWord(offset,x,y,result));
                 } else {
                     offset = (int)mPostilView.getOffsetY();
                     Log.i("SSSSSSSS","add" + offset+ ":" + width/2 + ":" + height/2);
-                    mPostilView.addPostilTag(new PostilTag(offset,width/2,height/2,result));
+                    mPostilView.addPostilTag(new PostilWord(offset,width/2,height/2,result));
                     showTagToolBar();
                 }
                 return;
@@ -545,9 +540,9 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         Bitmap bm = mPostilView.buildBitmap();
         String savedFile = FileUtils.saveImage(bm, 50);
         if (savedFile != null) {
-            PostilTag currentTag = mPostilView.getCurrentPostilTag();
+            PostilWord currentTag = mPostilView.getCurrentPostilTag();
             currentTag.setCanMove(false);
-            PostilTag tag = new PostilTag(currentTag.getOffsetY(),currentTag.getxPos(),currentTag.getyPos(),currentTag.getContent(),savedFile);
+            PostilWord tag = new PostilWord(currentTag.getOffsetY(),currentTag.getxPos(),currentTag.getyPos(),currentTag.getContent(),savedFile);
             mPostilWordList.getList().add(tag);
             saveTags();
         }else{
@@ -570,7 +565,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         Log.i("saveImage","loadRecord = " + recordString);
         Log.i("saveImage","loadRecord key = " + key);
         if(null != recordString){
-            mPostRecord = gson.fromJson(recordString, PostilRecord.class);
+            mPostRecord = gson.fromJson(recordString, PostilRecordList.class);
         }
     }
 
@@ -590,7 +585,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         Log.i("saveImage","loadTags = " + recordString);
         Log.i("saveImage","loadTags key = " + key);
         if(null != recordString){
-            mPostilWordList = gson.fromJson(recordString, PostilTagList.class);
+            mPostilWordList = gson.fromJson(recordString, PostilWordsList.class);
         }
     }
 
@@ -636,8 +631,8 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     }
     private void clearAllBitmap(){
         if(mPostilView != null){
-            mPostRecord = new PostilRecord();
-            mPostilWordList = new PostilTagList();
+            mPostRecord = new PostilRecordList();
+            mPostilWordList = new PostilWordsList();
             mPostilView.clearAllBitmap();
         }
     }

@@ -7,8 +7,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.ruaho.note.bean.PostilTag;
-
 public class ChooseColorLayout extends LinearLayout {
 
     Callback mCallback = null;

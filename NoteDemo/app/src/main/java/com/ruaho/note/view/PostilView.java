@@ -19,9 +19,9 @@ import android.view.View;
 
 import com.ruaho.note.activity.R;
 import com.ruaho.note.bean.Picture;
-import com.ruaho.note.bean.PostilRecord;
-import com.ruaho.note.bean.PostilTag;
-import com.ruaho.note.bean.PostilTagList;
+import com.ruaho.note.bean.PostilRecordList;
+import com.ruaho.note.bean.PostilWord;
+import com.ruaho.note.bean.PostilWordsList;
 import com.ruaho.note.util.DimenUtils;
 import com.ruaho.note.util.FileUtils;
 
@@ -51,9 +51,9 @@ public class PostilView extends View{
     private int mTagBitmapHeight;
     private int mTagBitmapWidth;
     private Canvas mBufferCanvas;
-    private PostilRecord picRecord;
-    private PostilTagList mPostilWordsList;
-    private PostilTag mCurrentWord;
+    private PostilRecordList picRecord;
+    private PostilWordsList mPostilWordsList;
+    private PostilWord mCurrentWord;
     private float offsetY;
     private static float CLICK_PRECISION= 3.0f;
     private boolean needDrawLine = false;
@@ -116,7 +116,7 @@ public class PostilView extends View{
 
     public interface Callback {
         void onUndoRedoStatusChanged();
-        void openTag(PostilTag tag);
+        void openTag(PostilWord tag);
         void scrollTo(int x,int y);
     }
 
@@ -330,8 +330,8 @@ public class PostilView extends View{
         }
 
         if(mPostilWordsList != null && mPostilWordsList.getList() != null){
-            List<PostilTag> list =  mPostilWordsList.getList();
-            for(PostilTag tag:list){
+            List<PostilWord> list =  mPostilWordsList.getList();
+            for(PostilWord tag:list){
                 String address = tag.getAddress();
                 Integer index = url2Index.get(address);
                 if(index == null){
@@ -540,8 +540,8 @@ public class PostilView extends View{
         }
 
         if(mPostilWordsList != null && mPostilWordsList.getList() != null){
-            List<PostilTag> list =  mPostilWordsList.getList();
-            for(PostilTag tag:list){
+            List<PostilWord> list =  mPostilWordsList.getList();
+            for(PostilWord tag:list){
                 int top = tag.getyPos() - mTagBitmapHeight/2 - (int)offsetY +tag.getOffsetY();
                 int bottom= tag.getyPos() + mTagBitmapHeight/2 - (int)offsetY +tag.getOffsetY();
                 int left= tag.getxPos() - mTagBitmapWidth/2;
@@ -576,17 +576,17 @@ public class PostilView extends View{
         }
     }
 
-    public void setPostilTags(PostilTagList list){
+    public void setPostilTags(PostilWordsList list){
         mPostilWordsList = list;
         Log.i("saveImage","setHistoryPictureRecord");
         if(mPostilWordsList == null){
             return;
         }
-        List<PostilTag> picList = mPostilWordsList.getList();
+        List<PostilWord> picList = mPostilWordsList.getList();
         if(picList == null){
             return;
         }
-        for(PostilTag pic:picList){
+        for(PostilWord pic:picList){
             Bitmap bmp = FileUtils.loadImage(pic.getAddress());
             mHistoryBitmap.add(bmp);
             int index = mHistoryBitmap.size() - 1;
@@ -595,17 +595,17 @@ public class PostilView extends View{
         invalidate();
     }
 
-    public void addPostilTag(PostilTag tag){
+    public void addPostilTag(PostilWord tag){
         mCurrentWord = tag;
         invalidate();
     }
 
-    public void savePostilTag(PostilTag tag){
+    public void savePostilTag(PostilWord tag){
         mPostilWordsList.getList().add(tag);
         invalidate();
     }
 
-    public void updatePostilTag(PostilTag tag){
+    public void updatePostilTag(PostilWord tag){
         mCurrentWord.updateAll(tag.getOffsetY(),tag.getxPos(),tag.getyPos(),tag.getContent());
         invalidate();
     }
@@ -620,7 +620,7 @@ public class PostilView extends View{
         return offsetY;
     }
 
-    public void setHistoryPictureRecord(PostilRecord record){
+    public void setHistoryPictureRecord(PostilRecordList record){
         Log.i("saveImage","setHistoryPictureRecord");
         picRecord = record;
         if(picRecord == null){
@@ -639,7 +639,7 @@ public class PostilView extends View{
         invalidate();
     }
 
-    public PostilTag getCurrentPostilTag(){
+    public PostilWord getCurrentPostilTag(){
         return mCurrentWord;
     }
 
@@ -657,8 +657,8 @@ public class PostilView extends View{
     }
     public void clearAllBitmap(){
         url2Index.clear();
-        mPostilWordsList = new PostilTagList();
-        picRecord = new PostilRecord();
+        mPostilWordsList = new PostilWordsList();
+        picRecord = new PostilRecordList();
         mCurrentWord = null;
         clearBitmap(mBufferBitmap);
         clearBitmap(mTagBitmap);

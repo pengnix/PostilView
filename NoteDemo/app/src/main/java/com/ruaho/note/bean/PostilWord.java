@@ -1,6 +1,6 @@
 package com.ruaho.note.bean;
 
-public class PostilTag {
+public class PostilWord {
     public int getxPos() {
         return xPos;
     }
@@ -29,7 +29,7 @@ public class PostilTag {
         return canMove;
     }
 
-    public PostilTag() {
+    public PostilWord() {
         this.offsetY = 0;
         this.xPos = 0;
         this.yPos = 0;
@@ -38,7 +38,7 @@ public class PostilTag {
         this.canMove = true;
     }
 
-    public PostilTag(int offsetY, int xPos, int yPos, String content) {
+    public PostilWord(int offsetY, int xPos, int yPos, String content) {
         this.offsetY = offsetY;
         this.xPos = xPos;
         this.yPos = yPos;
@@ -46,7 +46,7 @@ public class PostilTag {
         this.canMove = true;
     }
 
-    public PostilTag(int offsetY, int xPos, int yPos, String content,String address) {
+    public PostilWord(int offsetY, int xPos, int yPos, String content, String address) {
         this.offsetY = offsetY;
         this.xPos = xPos;
         this.yPos = yPos;
@@ -76,7 +76,7 @@ public class PostilTag {
 
     @Override
     public String toString() {
-        return "PostilTag{" +
+        return "PostilWord{" +
                 "offsetY=" + offsetY +
                 ", xPos=" + xPos +
                 ", yPos=" + yPos +
