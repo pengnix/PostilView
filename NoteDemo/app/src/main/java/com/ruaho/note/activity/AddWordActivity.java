@@ -25,24 +25,32 @@ public class AddWordActivity extends AppCompatActivity {
     private int y = -1;
     private int offsetY = -1;
     private boolean canEdit;
+    private boolean fromManager;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         canEdit = true;
+        fromManager = false;
         setContentView(R.layout.activity_addwords);
         initView();
         hideBar();
         initData();
-        if(canEdit){
+        if(fromManager){
             mEditText.setFocusable(true);
             mEditText.setFocusableInTouchMode(true);
             mEditText.requestFocus();
-//            callKeyboard();
         } else {
-            mEditText.setEnabled(false);
-            mEditText.setFocusable(false);
-            mEditText.setKeyListener(null);
-            mTitleTxt.setText(R.string.preview_word_look);
+            if(canEdit){
+                mEditText.setFocusable(true);
+                mEditText.setFocusableInTouchMode(true);
+                mEditText.requestFocus();
+//            callKeyboard();
+            } else {
+                mEditText.setEnabled(false);
+                mEditText.setFocusable(false);
+                mEditText.setKeyListener(null);
+                mTitleTxt.setText(R.string.preview_word_look);
+            }
         }
     }
 
@@ -60,6 +68,7 @@ public class AddWordActivity extends AppCompatActivity {
                 intent.putExtra("x", x);
                 intent.putExtra("y", y);
                 intent.putExtra("offsetY", offsetY);
+                intent.putExtra("fromManager",fromManager);
                 AddWordActivity.this.setResult(REQUEST_ADD_TEXT_RESULT, intent);
                 AddWordActivity.this.finish();
             }
@@ -76,6 +85,7 @@ public class AddWordActivity extends AppCompatActivity {
                 x = intent.getIntExtra("x",-1);
                 y = intent.getIntExtra("y",-1);
                 offsetY = intent.getIntExtra("offsetY",-1);
+                fromManager = intent.getBooleanExtra("fromManager",false);
             }
         }
     }

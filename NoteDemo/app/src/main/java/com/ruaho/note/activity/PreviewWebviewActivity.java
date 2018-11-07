@@ -89,6 +89,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     ImageView mTuyaControlClose;
     RecyclerView mWordsRecycleView;
     PreviewWordsAdapter mPreviewWordsAdapter;
+    int mEditIndex;//编辑文字index
 
     public final static int REQUEST_ADD_TEXT = 1;
     private static int REQUEST_ADD_TEXT_RESULT = 3;
@@ -448,6 +449,18 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         startActivityForResult(intent,REQUEST_ADD_TEXT);
     }
 
+    public void jumpToEditWordsActivity(PostilWord tag,int editIndex){
+        mEditIndex = editIndex;
+        Log.i("getResult!","tag = " + tag.toString());
+        Intent intent = new Intent(PreviewWebviewActivity.this,AddWordActivity.class);
+        intent.putExtra("content", tag.getContent());
+        intent.putExtra("x",tag.getxPos());
+        intent.putExtra("y",tag.getyPos());
+        intent.putExtra("offsetY", tag.getOffsetY());
+        intent.putExtra("fromManager", true);//从编辑页来可点击
+        startActivityForResult(intent,REQUEST_ADD_TEXT);
+    }
+
     void initWebView(){
         mWebView = findViewById(R.id.mywebview);
         mWebView.getSettings().setJavaScriptEnabled(true);
@@ -497,15 +510,25 @@ public class PreviewWebviewActivity extends AppCompatActivity {
                 Log.i("getResult!",result);
                 int height = ScreenUtils.getScreebHeight(getApplicationContext());
                 int width = ScreenUtils.getScreenWidth(getApplicationContext());
+                boolean fromManager = data.getExtras().getBoolean("fromManager",false);
                 Log.i("getResult!","height = " + height + "width = " + width);
-                if(x != -1 && y != -1){
-                    Log.i("SSSSSSSS","update" + offset + ":" + x + ":" + y);
-                    mPostilView.updatePostilTag(new PostilWord(offset,x,y,result));
+                if(fromManager){
+                    //从管理页编辑文字
+                    if(mPostilWordList != null && mPostilWordList.getList() != null){
+                        mPostilWordList.getList().get(mEditIndex).setContent(result);
+                        mPreviewWordsAdapter.notifyDataSetChanged();
+                        saveTags();
+                    }
                 } else {
-                    offset = (int)mPostilView.getOffsetY();
-                    Log.i("SSSSSSSS","add" + offset+ ":" + width/2 + ":" + height/2);
-                    mPostilView.addPostilTag(new PostilWord(offset,width/2,height/2,result));
-                    showTagToolBar();
+                    if(x != -1 && y != -1){
+                        Log.i("SSSSSSSS","update" + offset + ":" + x + ":" + y);
+                        mPostilView.updatePostilTag(new PostilWord(offset,x,y,result));
+                    } else {
+                        offset = (int)mPostilView.getOffsetY();
+                        Log.i("SSSSSSSS","add" + offset+ ":" + width/2 + ":" + height/2);
+                        mPostilView.addPostilTag(new PostilWord(offset,width/2,height/2,result));
+                        showTagToolBar();
+                    }
                 }
                 return;
             }

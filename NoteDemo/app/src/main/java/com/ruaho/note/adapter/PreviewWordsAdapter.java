@@ -47,7 +47,7 @@ public class PreviewWordsAdapter extends RecyclerView.Adapter<PreviewWordsAdapte
             viewHolder.mEditTxt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    modifyCurrentWord();
+                    modifyCurrentWord(index);
                 }
             });
             viewHolder.mDeleteTxt.setOnClickListener(new View.OnClickListener() {
@@ -75,8 +75,10 @@ public class PreviewWordsAdapter extends RecyclerView.Adapter<PreviewWordsAdapte
         }
     }
 
-    protected void modifyCurrentWord(){
-
+    protected void modifyCurrentWord(int index){
+        if(list != null && list.getList() != null){
+            ((PreviewWebviewActivity)mContext).jumpToEditWordsActivity(list.getList().get(index),index);
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

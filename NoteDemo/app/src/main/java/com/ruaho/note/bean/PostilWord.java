@@ -74,6 +74,10 @@ public class PostilWord {
         return offsetY;
     }
 
+    public void setContent(String content) {
+        this.content = content;
+    }
+
     @Override
     public String toString() {
         return "PostilWord{" +
