@@ -44,8 +44,19 @@ public class PreviewWordsAdapter extends RecyclerView.Adapter<PreviewWordsAdapte
             viewHolder.mMainView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.i("ttttttt",""+words.getOffsetY());
                     goToPosition(words.getOffsetY());
+                }
+            });
+            viewHolder.mEditTxt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    modifyCurrentWord();
+                }
+            });
+            viewHolder.mDeleteTxt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    deleteCurrentWord();
                 }
             });
         }
@@ -60,15 +71,27 @@ public class PreviewWordsAdapter extends RecyclerView.Adapter<PreviewWordsAdapte
         ((PreviewWebviewActivity)mContext).scrollToYforWebView(y);
     }
 
+    protected void deleteCurrentWord(){
+
+    }
+
+    protected void modifyCurrentWord(){
+
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         View mView;
         TextView mTextView;
         View mMainView;
+        TextView mEditTxt;
+        TextView mDeleteTxt;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             mView = itemView;
             mMainView = mView.findViewById(R.id.preview_item_main);
             mTextView = mView.findViewById(R.id.preview_word_item_txt);
+            mEditTxt = mView.findViewById(R.id.preview_item_edit);
+            mDeleteTxt = mView.findViewById(R.id.preview_item_delete);
         }
     }
 }

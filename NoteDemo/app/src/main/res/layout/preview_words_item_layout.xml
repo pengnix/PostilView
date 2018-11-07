@@ -33,7 +33,7 @@
         android:layout_height="match_parent"
         android:background="@color/black">
         <TextView
-            android:id="@+id/mark"
+            android:id="@+id/preview_item_edit"
             android:text="编辑"
             android:textColor="#ffffff"
             android:textSize="20sp"
@@ -43,7 +43,7 @@
             android:layout_height="match_parent" />
 
         <TextView
-            android:id="@+id/delete"
+            android:id="@+id/preview_item_delete"
             android:text="删除"
             android:textColor="#ffffff"
             android:textSize="20sp"
