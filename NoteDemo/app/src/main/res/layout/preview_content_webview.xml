@@ -149,6 +149,7 @@
                     android:layout_centerVertical="true"
                     android:text="管理"/>
                 <TextView
+                    android:id="@+id/preview_view_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="文档名XXXXXXXXXXX"

@@ -89,6 +89,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     ImageView mTuyaControlClose;
     RecyclerView mWordsRecycleView;
     PreviewWordsAdapter mPreviewWordsAdapter;
+    TextView mTitleTxt;
     int mEditIndex;//编辑文字index
     static int QUALITY = 20;
 
@@ -96,6 +97,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     private static int REQUEST_ADD_TEXT_RESULT = 3;
     private Handler mHandler;
     private String url = "";
+    private String title = "";
 
     private static final int MSG_SAVE_SUCCESS = 1;
     private static final int MSG_SAVE_FAILED = 2;
@@ -107,6 +109,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if(intent != null){
             url = intent.getStringExtra("previewurl");
+            title = intent.getStringExtra("previewtitle");
         }
         mPostRecord = new PostilRecordList();
         mPostilWordList = new PostilWordsList();
@@ -173,6 +176,8 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mLeftWordsBar = findViewById(R.id.preview_left_menu);
         mWordsManagerCloseBtn = findViewById(R.id.preview_word_manager_close);
         mWordsRecycleView = findViewById(R.id.preview_words_list);
+        mTitleTxt = findViewById(R.id.preview_view_title);
+        mTitleTxt.setText(title);
 
         mPenTxt.setOnClickListener(new View.OnClickListener() {
             @Override
