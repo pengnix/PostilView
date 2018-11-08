@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/preview_white"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -12,6 +13,7 @@
         android:orientation="vertical">
         <FrameLayout
             android:layout_width="match_parent"
+            android:background="@color/preview_title_light_gray"
             android:layout_height="@dimen/preview_title_height">
             <LinearLayout
                 android:id="@+id/tuya_container"

@@ -16,5 +16,6 @@
     <color name="preview_dark_gray">#424242</color>
     <color name="preview_bottom_gray">#969696</color>
     <color name="preview_light_gray">#F8F8F8</color>
+    <color name="preview_title_light_gray">#E8E8E8</color>
 
 </resources>

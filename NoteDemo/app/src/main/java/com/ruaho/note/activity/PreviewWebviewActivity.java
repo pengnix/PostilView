@@ -90,7 +90,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     RecyclerView mWordsRecycleView;
     PreviewWordsAdapter mPreviewWordsAdapter;
     int mEditIndex;//编辑文字index
-    static int QUALITY = 50;
+    static int QUALITY = 20;
 
     public final static int REQUEST_ADD_TEXT = 1;
     private static int REQUEST_ADD_TEXT_RESULT = 3;
