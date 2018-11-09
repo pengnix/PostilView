@@ -22,6 +22,7 @@ import com.ruaho.note.bean.Picture;
 import com.ruaho.note.bean.PostilRecordList;
 import com.ruaho.note.bean.PostilWord;
 import com.ruaho.note.bean.PostilWordsList;
+import com.ruaho.note.util.BitmapUtils;
 import com.ruaho.note.util.DimenUtils;
 import com.ruaho.note.util.FileUtils;
 
@@ -142,6 +143,7 @@ public class PostilView extends View{
         mPaint.setXfermode(mXferModeDraw);
 
         mTagBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.pizhu_tag);
+        mTagBitmap = BitmapUtils.bitMapScale(mTagBitmap,0.7f);
         mTagBitmapHeight = mTagBitmap.getHeight();
         mTagBitmapWidth = mTagBitmap.getWidth();
 
