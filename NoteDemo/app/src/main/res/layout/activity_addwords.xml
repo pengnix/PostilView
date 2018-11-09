@@ -9,7 +9,7 @@
     tools:context=".MainActivity">
 
     <RelativeLayout
-        android:background="#C5C1AA"
+        android:background="@color/preview_title_light_gray"
         android:layout_width="match_parent"
         android:layout_height="@dimen/preview_title_height">
         <TextView
