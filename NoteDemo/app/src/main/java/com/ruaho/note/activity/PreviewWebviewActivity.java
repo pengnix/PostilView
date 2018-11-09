@@ -491,9 +491,9 @@ public class PreviewWebviewActivity extends AppCompatActivity {
                 view.loadUrl(url);
                 //设置加载进度条
                 view.setWebChromeClient(new WebChromeClientProgress());
+                view.setWebViewClient(new PreviewWebClient());
                 return true;
             }
-
         });
         mWebView.setOnScrollChangedCallback(new ObservableWebView.OnScrollChangedCallback() {
             @Override
@@ -543,15 +543,31 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     }
 
     private class WebChromeClientProgress extends WebChromeClient {
+
         @Override
         public void onProgressChanged(WebView view, int progress) {
             super.onProgressChanged(view, progress);
+//            if(progress == 100 && mPostilView != null && mPostilView.getVisibility() == View.INVISIBLE){
+//                Log.i("WebChromeClient","Finish");
+//                mPostilView.setVisibility(View.VISIBLE);
+//            }
         }
     }
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 
+    }
+
+    private class PreviewWebClient extends WebViewClient {
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+            if(mPostilView != null && mPostilView.getVisibility() == View.INVISIBLE){
+                Log.i("WebChromeClient","Finish2");
+                mPostilView.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     private void saveTuYaImage(){
