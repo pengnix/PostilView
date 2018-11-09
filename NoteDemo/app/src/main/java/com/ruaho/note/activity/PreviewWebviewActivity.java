@@ -328,6 +328,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mBrushTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mPostilView.setMode(PostilView.Mode.DRAW);
                 mSeekBar.setProgress(100);
                 mPostilView.setPenRawSize(100*50/100);
                 useBrushState();
