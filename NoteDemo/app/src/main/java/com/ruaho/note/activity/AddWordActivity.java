@@ -39,6 +39,7 @@ public class AddWordActivity extends AppCompatActivity {
             mEditText.setFocusable(true);
             mEditText.setFocusableInTouchMode(true);
             mEditText.requestFocus();
+            mTitleTxt.setText("编辑");
         } else {
             if(canEdit){
                 mEditText.setFocusable(true);

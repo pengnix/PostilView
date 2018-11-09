@@ -209,6 +209,10 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mTagTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(mLeftWordsBar != null && mLeftWordsBar.getVisibility() == View.VISIBLE){
+                    hideWordsManager();
+                    return;
+                }
                 if(mPostilView.getMode() == PostilView.Mode.NOT_EDIT){
                     mPostilView.setMode(PostilView.Mode.DRAW);
                     showTuyaTopToolBar();
@@ -234,6 +238,10 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mWordTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(mLeftWordsBar != null && mLeftWordsBar.getVisibility() == View.VISIBLE){
+                    hideWordsManager();
+                    return;
+                }
                 jumpToAddWordsActivity();
             }
         });
@@ -269,6 +277,10 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mControlTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(mLeftWordsBar != null && mLeftWordsBar.getVisibility() == View.VISIBLE){
+                    hideWordsManager();
+                    return;
+                }
                 showMainPopWindow();
             }
         });
