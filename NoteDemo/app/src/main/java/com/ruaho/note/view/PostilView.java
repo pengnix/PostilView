@@ -205,6 +205,7 @@ public class PostilView extends View{
 
     public void setPenColor(int color) {
         mPaint.setColor(color);
+        mPaint.setAlpha(getPenAlpha());
     }
 
     private void reDraw(){

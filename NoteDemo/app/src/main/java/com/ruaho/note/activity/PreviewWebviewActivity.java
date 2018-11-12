@@ -183,12 +183,14 @@ public class PreviewWebviewActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 mPostilView.setMode(PostilView.Mode.DRAW);
+                mPostilView.setPenAlpha(255);
                 usePenState();
             }
         });
         mEraseTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mPostilView.setPenAlpha(255);
                 mPostilView.setMode(PostilView.Mode.ERASER);
                 useEraserState();
             }
@@ -343,6 +345,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
                 mPostilView.setMode(PostilView.Mode.DRAW);
                 mSeekBar.setProgress(100);
                 mPostilView.setPenRawSize(100*50/100);
+                mPostilView.setPenAlpha(150);
                 useBrushState();
             }
         });
