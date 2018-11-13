@@ -12,7 +12,8 @@ import com.ruaho.note.util.NoteSharePreferenceUtils;
 
 public class MainActivity extends AppCompatActivity {
 
-    String url = "http://www.baidu.com";
+//    String url = "http://www.baidu.com";
+    String url = "http://www.oschina.net";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
