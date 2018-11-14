@@ -349,7 +349,6 @@ public class PostilView extends View{
                     continue;
                 }
                 Bitmap bmp = mHistoryBitmap.get(index);
-
                 positionMatrix.reset();
                 float scale = currentNewScale/tag.getScale();
                 float oX = tag.getOffsetX() * scale - offsetX;
@@ -370,7 +369,13 @@ public class PostilView extends View{
                         return;
                     }
                     Bitmap bmp = mHistoryBitmap.get(index);
-                    canvas.drawBitmap(bmp, 0, pic.getOffsetY()-offsetY, null);
+                    positionMatrix.reset();
+                    float scale = currentNewScale/pic.getScale();
+                    float oX = pic.getOffsetX() * scale - offsetX;
+                    float oY = pic.getOffsetY() * scale- offsetY;
+                    positionMatrix.setTranslate(oX,oY);
+                    positionMatrix.preScale(scale, scale);
+                    canvas.drawBitmap(bmp,positionMatrix,null);
                 }
             }
         } else {
