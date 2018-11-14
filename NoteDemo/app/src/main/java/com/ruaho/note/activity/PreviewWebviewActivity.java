@@ -297,6 +297,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
                 saveTagImage();
                 mPostilView.clearCurrentPostilTag();
                 mPostilView.setPostilTags(mPostilWordList);
+                enableZoom();
             }
         });
         mTagCancel.setOnClickListener(new View.OnClickListener() {
@@ -304,6 +305,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
             public void onClick(View view) {
                 showCommonToolBar();
                 mPostilView.clearCurrentPostilTag();
+                enableZoom();
             }
         });
         mTuyaSave.setOnClickListener(new View.OnClickListener() {
@@ -562,6 +564,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
                         Log.i("activityR","add" + offsetY+ ":" + width/2 + ":" + height/2);
                         mPostilView.addPostilTag(new PostilWord(offsetX,offsetY,width/2,height/2,scale,result));
                         showTagToolBar();
+                        disableZoom();
                     }
                 }
                 return;
@@ -849,4 +852,18 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mPostilView.setPostilTags(mPostilWordList);
         mPreviewWordsAdapter.notifyDataSetChanged();
     }
+
+     public void enableZoom(){
+         if(mWebView != null){
+             mWebView.getSettings().setSupportZoom(true);
+             mWebView.getSettings().setBuiltInZoomControls(true);
+         }
+     }
+
+     public void disableZoom(){
+        if(mWebView != null){
+            mWebView.getSettings().setSupportZoom(false);
+            mWebView.getSettings().setBuiltInZoomControls(false);
+        }
+     }
 }

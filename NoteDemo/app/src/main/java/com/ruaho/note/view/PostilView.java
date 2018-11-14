@@ -335,6 +335,13 @@ public class PostilView extends View{
 
         if(mCurrentWord != null && mCurrentWord.isCanMove()){
             Log.i("activityR","can move");
+//            positionMatrix.reset();
+//            float scale = currentNewScale/mCurrentWord.getScale();
+//            float oX = mCurrentWord.getOffsetX() * scale - offsetX;
+//            float oY = mCurrentWord.getOffsetY() * scale- offsetY;
+//            positionMatrix.setTranslate(oX,oY);
+//            positionMatrix.preScale(scale, scale);
+//            canvas.drawBitmap(mTagBitmap,positionMatrix,null);
             float left = mCurrentWord.getxPos() - mTagBitmapWidth/2;
             float top = mCurrentWord.getyPos() - mTagBitmapHeight/2 - offsetY +mCurrentWord.getOffsetY();
             canvas.drawBitmap(mTagBitmap , left, top, null);
@@ -447,7 +454,7 @@ public class PostilView extends View{
 
         if(mMode == Mode.NOT_EDIT){
             boolean isTouchTag = containTagBitmap((int)x,(int)y);
-            Log.i("getResult!","isTouchTag = " + isTouchTag);
+            Log.i("checkClick","isTouchTag = " + isTouchTag);
             if(!isTouchTag){
                 return super.onTouchEvent(event);
             } else {
@@ -513,6 +520,7 @@ public class PostilView extends View{
             case MotionEvent.ACTION_UP:
                 if(mMode == Mode.MOVE_TAG){
                     mMode = Mode.NOT_EDIT;
+                    Log.i("checkClick","isClickTag = " + isClickTag(x,y));
                     if(isClickTag(x,y)){
                         openTag();
                     }
