@@ -13,7 +13,9 @@ public class PostilWord {
         return content;
     }
 
+    int offsetX;
     int offsetY;
+    float scale;
     int xPos;
     int yPos;
     String address;

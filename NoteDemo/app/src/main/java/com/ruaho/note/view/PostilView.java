@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
@@ -56,10 +57,13 @@ public class PostilView extends View{
     private PostilWordsList mPostilWordsList;
     private PostilWord mCurrentWord;
     private float offsetY;
+    private float offsetX;
     private static float CLICK_PRECISION= 3.0f;
     private boolean needDrawLine = false;
-
+    public final static float SCALE_BASE = 1.5f;
+    private float currentNewScale = 1.5f;
     private static final int MAX_CACHE_STEP = 20;
+    private Matrix positionMatrix = null;
 
     private List<DrawingInfo> mDrawingList;
     private List<DrawingInfo> mRemovedList;
@@ -151,8 +155,11 @@ public class PostilView extends View{
     }
 
     void initData(){
+        positionMatrix = new Matrix();
         mHistoryBitmap = new ArrayList<Bitmap>();
+        offsetX = 0;
         offsetY = 0;
+        currentNewScale = 1.5f;
     }
 
     private void initBuffer(){
@@ -368,7 +375,13 @@ public class PostilView extends View{
                         continue;
                     }
                     Bitmap bmp = mHistoryBitmap.get(index);
-                    canvas.drawBitmap(bmp, 0, pic.getOffsetY()-offsetY, null);
+                    positionMatrix.reset();
+                    float scale = currentNewScale/pic.getScale();
+                    float oX = pic.getOffsetX() * scale - offsetX;
+                    float oY = pic.getOffsetY() * scale- offsetY;
+                    positionMatrix.setTranslate(oX,oY);
+                    positionMatrix.preScale(scale, scale);
+                    canvas.drawBitmap(bmp,positionMatrix,null);
                 }
             }
         }
@@ -613,14 +626,24 @@ public class PostilView extends View{
         invalidate();
     }
 
-    public void updateOffsetY(int dy){
+    public void updatePositionInfo(int dx,int dy, float newScale){
+        Log.i("updatePositionInfo","dx:dy:newScale=" + dx +":" + dy+":"+ newScale);
+        offsetX = dx;
         offsetY = dy;
-        Log.i("offsetY","dy = " + dy);
+        currentNewScale = newScale;
         invalidate();
+    }
+
+    public float getCurrentNewScale(){
+        return currentNewScale;
     }
 
     public float getOffsetY(){
         return offsetY;
+    }
+
+    public float getOffsetX(){
+        return offsetX;
     }
 
     public void setHistoryPictureRecord(PostilRecordList record){

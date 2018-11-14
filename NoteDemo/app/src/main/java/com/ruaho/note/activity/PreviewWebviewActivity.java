@@ -45,6 +45,8 @@ import com.ruaho.note.view.SwipeItemLayout;
 
 import java.util.ArrayList;
 
+import static com.ruaho.note.view.PostilView.SCALE_BASE;
+
 public class PreviewWebviewActivity extends AppCompatActivity {
 
     private ObservableWebView mWebView;
@@ -486,13 +488,13 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     void initWebView(){
         mWebView = findViewById(R.id.mywebview);
         mWebView.getSettings().setJavaScriptEnabled(true);
-//        mWebView.getSettings().setSupportZoom(true);
+        mWebView.getSettings().setSupportZoom(true);
         mWebView.getSettings().setDomStorageEnabled(true);
         mWebView.getSettings().setAllowFileAccess(true);
 //        mWebView.getSettings().setPluginsEnabled(true);
         mWebView.getSettings().setUseWideViewPort(true);
         mWebView.setVerticalScrollBarEnabled(false);
-//        mWebView.getSettings().setBuiltInZoomControls(true);
+        mWebView.getSettings().setBuiltInZoomControls(true);
         mWebView.requestFocus();
         mWebView.getSettings().setLoadWithOverviewMode(true);
         mWebView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
@@ -513,11 +515,12 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         });
         mWebView.setOnScrollChangedCallback(new ObservableWebView.OnScrollChangedCallback() {
             @Override
-            public void onScroll(int dx, int dy) {
-                Log.i("dxdy","dx = " + dx + "dy = " +dy);
-                mPostilView.updateOffsetY(dy);
+            public void onScroll(int dx, int dy, float scale) {
+                Log.i("onScaleChanged","dx = " + dx + "dy = " +dy);
+                mPostilView.updatePositionInfo(dx,dy,scale);
             }
         });
+
     }
 
     @Override
@@ -576,6 +579,14 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     }
 
     private class PreviewWebClient extends WebViewClient {
+
+        @Override
+        public void onScaleChanged(WebView view, float oldScale, float newScale) {
+            super.onScaleChanged(view, oldScale, newScale);
+            Log.i("onScaleChanged","oldScale = " + oldScale + ":newScale = " + newScale);
+            onScaleChange(view.getScrollX(),view.getScrollY(),oldScale, newScale);
+        }
+
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
@@ -586,11 +597,17 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         }
     }
 
+    private void onScaleChange(int dx,int dy,float oldScale, float newScale){
+        mPostilView.updatePositionInfo(dx,dy,newScale);
+    }
+
     private void saveTuYaImage(){
         Bitmap bm = mPostilView.buildBitmap();
         String savedFile = FileUtils.saveImage(bm, QUALITY);
         if (savedFile != null) {
-            Picture picture = new Picture((int)(mPostilView.getOffsetY()),savedFile);
+            float offsetX = mPostilView.getOffsetX(); //* SCALE_BASE/mPostilView.getCurrentNewScale();
+            float offsetY = mPostilView.getOffsetY();// * SCALE_BASE/mPostilView.getCurrentNewScale();
+            Picture picture = new Picture((int)offsetX,(int)offsetY,savedFile,mPostilView.getCurrentNewScale());
             mPostRecord.getPicList().add(picture);
             saveRecord();
         }else{
@@ -623,8 +640,8 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         String key = MD5Utils.stringToMD5("NoteRecords" + url);
         String recordString = NoteSharePreferenceUtils.getPrefString(key,null);
         Gson gson = new Gson();
-        Log.i("saveImage","loadRecord = " + recordString);
-        Log.i("saveImage","loadRecord key = " + key);
+        Log.i("loadRecord","loadRecord = " + recordString);
+        Log.i("loadRecord","loadRecord key = " + key);
         if(null != recordString){
             mPostRecord = gson.fromJson(recordString, PostilRecordList.class);
         }
