@@ -6,7 +6,7 @@ public class Picture {
     int offsetX;
     //放大率，不是除以base的倍数
     float scale;
-
+    //图片地址
     String address;
 
     public float getScale() {

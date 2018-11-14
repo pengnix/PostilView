@@ -18,6 +18,7 @@ public class PostilWord {
     float scale;
     int xPos;
     int yPos;
+    //图片地址
     String address;
     String content;
 
@@ -48,11 +49,20 @@ public class PostilWord {
         this.canMove = true;
     }
 
-    public PostilWord(int offsetY, int xPos, int yPos, String content, String address) {
-        this.offsetY = offsetY;
-        this.xPos = xPos;
-        this.yPos = yPos;
-        this.content = content;
+    public PostilWord(int offsetX,int offsetY, int xPos, int yPos,float scale, String content, String address) {
+        this(offsetX,offsetY,xPos,yPos,content,address);
+        this.scale = scale;
+    }
+
+    public PostilWord(int offsetX,int offsetY, int xPos, int yPos,float scale, String content) {
+        this(offsetY,xPos,yPos,content);
+        this.scale = scale;
+        this.offsetX = offsetX;
+    }
+
+    public PostilWord(int offsetX,int offsetY, int xPos, int yPos, String content, String address) {
+        this(offsetY,xPos,yPos,content);
+        this.offsetX = offsetX;
         this.address = address;
     }
 
@@ -68,12 +78,26 @@ public class PostilWord {
         this.content = content;
     }
 
+    public void updateAll(int offsetX,int offsetY,int x,int y,float scale,String content){
+        updateAll(offsetY,x,y,content);
+        this.offsetX = offsetX;
+        this.scale = scale;
+    }
+
     public String getAddress() {
         return address;
     }
 
     public int getOffsetY() {
         return offsetY;
+    }
+
+    public int getOffsetX() {
+        return offsetX;
+    }
+
+    public float getScale() {
+        return scale;
     }
 
     public void setContent(String content) {
@@ -83,10 +107,14 @@ public class PostilWord {
     @Override
     public String toString() {
         return "PostilWord{" +
-                "offsetY=" + offsetY +
+                "offsetX=" + offsetX +
+                ", offsetY=" + offsetY +
+                ", scale=" + scale +
                 ", xPos=" + xPos +
                 ", yPos=" + yPos +
+                ", address='" + address + '\'' +
                 ", content='" + content + '\'' +
+                ", canMove=" + canMove +
                 '}';
     }
 }

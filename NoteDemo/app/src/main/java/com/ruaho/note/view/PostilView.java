@@ -334,6 +334,7 @@ public class PostilView extends View{
         super.onDraw(canvas);
 
         if(mCurrentWord != null && mCurrentWord.isCanMove()){
+            Log.i("activityR","can move");
             float left = mCurrentWord.getxPos() - mTagBitmapWidth/2;
             float top = mCurrentWord.getyPos() - mTagBitmapHeight/2 - offsetY +mCurrentWord.getOffsetY();
             canvas.drawBitmap(mTagBitmap , left, top, null);
@@ -564,6 +565,7 @@ public class PostilView extends View{
                 int right= tag.getxPos() + mTagBitmapWidth/2;
                 if(x > left && x < right && y > top && y < bottom){
                     mCurrentWord = tag;
+                    Log.i("activityR","containTagBitmap="+ mCurrentWord.toString());
                     return true;
                 }
             }
@@ -588,6 +590,7 @@ public class PostilView extends View{
 
     public void openTag(){
         if(mCurrentWord != null && mCallback != null){
+            Log.i("activityR","openTag= "+ mCurrentWord.toString());
             mCallback.openTag(mCurrentWord);
         }
     }
@@ -622,7 +625,7 @@ public class PostilView extends View{
     }
 
     public void updatePostilTag(PostilWord tag){
-        mCurrentWord.updateAll(tag.getOffsetY(),tag.getxPos(),tag.getyPos(),tag.getContent());
+        mCurrentWord.updateAll(tag.getOffsetX(),tag.getOffsetY(),tag.getxPos(),tag.getyPos(),tag.getScale(),tag.getContent());
         invalidate();
     }
 

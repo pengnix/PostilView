@@ -24,6 +24,8 @@ public class AddWordActivity extends AppCompatActivity {
     private int x = -1;
     private int y = -1;
     private int offsetY = -1;
+    private int offsetX = -1;
+    private float scale = -1.0f;
     private boolean canEdit;
     private boolean fromManager;
     @Override
@@ -68,7 +70,9 @@ public class AddWordActivity extends AppCompatActivity {
                 intent.putExtra("result", result);
                 intent.putExtra("x", x);
                 intent.putExtra("y", y);
+                intent.putExtra("offsetX",offsetX);
                 intent.putExtra("offsetY", offsetY);
+                intent.putExtra("scale",scale);
                 intent.putExtra("fromManager",fromManager);
                 AddWordActivity.this.setResult(REQUEST_ADD_TEXT_RESULT, intent);
                 AddWordActivity.this.finish();
@@ -85,7 +89,9 @@ public class AddWordActivity extends AppCompatActivity {
                 mEditText.setText(content);
                 x = intent.getIntExtra("x",-1);
                 y = intent.getIntExtra("y",-1);
+                offsetX = intent.getIntExtra("offsetX",-1);
                 offsetY = intent.getIntExtra("offsetY",-1);
+                scale = intent.getFloatExtra("scale",-1.0f);
                 fromManager = intent.getBooleanExtra("fromManager",false);
             }
         }

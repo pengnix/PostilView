@@ -269,7 +269,9 @@ public class PreviewWebviewActivity extends AppCompatActivity {
                 intent.putExtra("content", tag.getContent());
                 intent.putExtra("x",tag.getxPos());
                 intent.putExtra("y",tag.getyPos());
+                intent.putExtra("offsetX", tag.getOffsetX());
                 intent.putExtra("offsetY", tag.getOffsetY());
+                intent.putExtra("scale", tag.getScale());
                 startActivityForResult(intent,REQUEST_ADD_TEXT);
             }
         });
@@ -480,7 +482,9 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         intent.putExtra("content", tag.getContent());
         intent.putExtra("x",tag.getxPos());
         intent.putExtra("y",tag.getyPos());
+        intent.putExtra("offsetX", tag.getOffsetX());
         intent.putExtra("offsetY", tag.getOffsetY());
+        intent.putExtra("scale", tag.getScale());
         intent.putExtra("fromManager", true);//从编辑页来可点击
         startActivityForResult(intent,REQUEST_ADD_TEXT);
     }
@@ -531,12 +535,15 @@ public class PreviewWebviewActivity extends AppCompatActivity {
                 String result = data.getExtras().getString("result");
                 int x = data.getExtras().getInt("x");
                 int y = data.getExtras().getInt("y");
-                int offset = data.getExtras().getInt("offsetY");
-                Log.i("getResult!",result);
+                float scale = data.getExtras().getFloat("scale");
+                int offsetX = data.getExtras().getInt("offsetX");
+                int offsetY = data.getExtras().getInt("offsetY");
                 int height = ScreenUtils.getScreebHeight(getApplicationContext());
                 int width = ScreenUtils.getScreenWidth(getApplicationContext());
                 boolean fromManager = data.getExtras().getBoolean("fromManager",false);
-                Log.i("getResult!","height = " + height + "width = " + width);
+                Log.i("activityR","" + x + ":" + y +":" + scale + ":" + offsetX +":"
+                        + offsetY + ":" + fromManager);
+                Log.i("activityR","height=" + height + "width=" + width);
                 if(fromManager){
                     //从管理页编辑文字
                     if(mPostilWordList != null && mPostilWordList.getList() != null){
@@ -546,12 +553,14 @@ public class PreviewWebviewActivity extends AppCompatActivity {
                     }
                 } else {
                     if(x != -1 && y != -1){
-                        Log.i("SSSSSSSS","update" + offset + ":" + x + ":" + y);
-                        mPostilView.updatePostilTag(new PostilWord(offset,x,y,result));
+                        Log.i("activityR","update" + offsetY + ":" + x + ":" + y);
+                        mPostilView.updatePostilTag(new PostilWord(offsetX,offsetY,x,y,scale,result));
                     } else {
-                        offset = (int)mPostilView.getOffsetY();
-                        Log.i("SSSSSSSS","add" + offset+ ":" + width/2 + ":" + height/2);
-                        mPostilView.addPostilTag(new PostilWord(offset,width/2,height/2,result));
+                        offsetX = (int)mPostilView.getOffsetX();
+                        offsetY = (int)mPostilView.getOffsetY();
+                        scale = mPostilView.getCurrentNewScale();
+                        Log.i("activityR","add" + offsetY+ ":" + width/2 + ":" + height/2);
+                        mPostilView.addPostilTag(new PostilWord(offsetX,offsetY,width/2,height/2,scale,result));
                         showTagToolBar();
                     }
                 }
@@ -620,7 +629,12 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         if (savedFile != null) {
             PostilWord currentTag = mPostilView.getCurrentPostilTag();
             currentTag.setCanMove(false);
-            PostilWord tag = new PostilWord(currentTag.getOffsetY(),currentTag.getxPos(),currentTag.getyPos(),currentTag.getContent(),savedFile);
+            Log.i("activityR","currentTag = " + currentTag.toString());
+            PostilWord tag = new PostilWord(currentTag.getOffsetX(),currentTag.getOffsetY()
+                    ,currentTag.getxPos(),currentTag.getyPos(),currentTag.getScale()
+                    ,currentTag.getContent(),savedFile);
+            tag.setCanMove(currentTag.isCanMove());
+            Log.i("activityR","tag = " + tag.toString());
             mPostilWordList.getList().add(tag);
             saveTags();
         }else{
