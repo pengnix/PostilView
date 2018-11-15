@@ -34,6 +34,7 @@ import com.ruaho.note.bean.Picture;
 import com.ruaho.note.bean.PostilRecordList;
 import com.ruaho.note.bean.PostilWordsList;
 import com.ruaho.note.bean.PostilWord;
+import com.ruaho.note.util.BitmapCache;
 import com.ruaho.note.util.FileUtils;
 import com.ruaho.note.util.MD5Utils;
 import com.ruaho.note.util.NoteSharePreferenceUtils;
@@ -867,4 +868,10 @@ public class PreviewWebviewActivity extends AppCompatActivity {
             mWebView.getSettings().setBuiltInZoomControls(false);
         }
      }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        BitmapCache.getInstance().clear();
+    }
 }

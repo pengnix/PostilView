@@ -23,6 +23,7 @@ import com.ruaho.note.bean.Picture;
 import com.ruaho.note.bean.PostilRecordList;
 import com.ruaho.note.bean.PostilWord;
 import com.ruaho.note.bean.PostilWordsList;
+import com.ruaho.note.util.BitmapCache;
 import com.ruaho.note.util.BitmapUtils;
 import com.ruaho.note.util.DimenUtils;
 import com.ruaho.note.util.FileUtils;
@@ -50,7 +51,7 @@ public class PostilView extends View{
     private float mBottomRightY;
     private Bitmap mBufferBitmap;
     private Bitmap mTagBitmap;
-    private List<Bitmap> mHistoryBitmap;
+//    private List<Bitmap> mHistoryBitmap;
     private int mTagBitmapHeight;
     private int mTagBitmapWidth;
     private Canvas mBufferCanvas;
@@ -74,7 +75,7 @@ public class PostilView extends View{
     private int mDrawSize;
     private int mEraserSize;
     private int mPenAlpha = 255;
-    private Map<String,Integer> url2Index;
+//    private Map<String,Integer> url2Index;
 
     private boolean mCanEraser;
 
@@ -131,7 +132,7 @@ public class PostilView extends View{
     }
 
     private void init() {
-        url2Index = new HashMap<String,Integer>();
+//        url2Index = new HashMap<String,Integer>();
         setDrawingCacheEnabled(true);
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
         mPaint.setStyle(Paint.Style.STROKE);
@@ -157,7 +158,7 @@ public class PostilView extends View{
 
     void initData(){
         positionMatrix = new Matrix();
-        mHistoryBitmap = new ArrayList<Bitmap>();
+//        mHistoryBitmap = new ArrayList<Bitmap>();
         offsetX = 0;
         offsetY = 0;
         currentNewScale = 1.5f;
@@ -352,11 +353,11 @@ public class PostilView extends View{
             List<PostilWord> list =  mPostilWordsList.getList();
             for(PostilWord tag:list){
                 String address = tag.getAddress();
-                Integer index = url2Index.get(address);
-                if(index == null){
-                    continue;
-                }
-                Bitmap bmp = mHistoryBitmap.get(index);
+//                Integer index = url2Index.get(address);
+//                if(index == null){
+//                    continue;
+//                }
+                Bitmap bmp = BitmapCache.getInstance().getSafe(address);
                 positionMatrix.reset();
                 float scale = currentNewScale/tag.getScale();
                 float oX = tag.getOffsetX() * scale - offsetX;
@@ -372,11 +373,11 @@ public class PostilView extends View{
                 if(currentTuYaIndex < picRecord.getPicList().size()){
                     Picture pic = picRecord.getPicList().get(currentTuYaIndex);
                     String address = pic.getAddress();
-                    Integer index = url2Index.get(address);
-                    if(index == null){
-                        return;
-                    }
-                    Bitmap bmp = mHistoryBitmap.get(index);
+//                    Integer index = url2Index.get(address);
+//                    if(index == null){
+//                        return;
+//                    }
+                    Bitmap bmp = BitmapCache.getInstance().getSafe(address);
                     positionMatrix.reset();
                     float scale = currentNewScale/pic.getScale();
                     float oX = pic.getOffsetX() * scale - offsetX;
@@ -391,14 +392,14 @@ public class PostilView extends View{
                 List<Picture> picList = picRecord.getPicList();
                 for(Picture pic:picList){
                     String address = pic.getAddress();
-                    Integer index = url2Index.get(address);
-                    if(index == null){
-                        continue;
-                    }
-                    Bitmap bmp = mHistoryBitmap.get(index);
-//                    if(bmp == null){
+//                    Integer index = url2Index.get(address);
+//                    if(index == null){
 //                        continue;
 //                    }
+                    Bitmap bmp = BitmapCache.getInstance().getSafe(address);
+                    if(bmp == null){
+                        continue;
+                    }
                     positionMatrix.reset();
                     float scale = currentNewScale/pic.getScale();
                     float oX = pic.getOffsetX() * scale - offsetX;
@@ -638,12 +639,13 @@ public class PostilView extends View{
         if(picList == null){
             return;
         }
-        for(PostilWord pic:picList){
-            Bitmap bmp = FileUtils.loadImage(pic.getAddress());
-            mHistoryBitmap.add(bmp);
-            int index = mHistoryBitmap.size() - 1;
-            url2Index.put(pic.getAddress(),index);
-        }
+//        for(PostilWord pic:picList){
+//            BitmapCache.getInstance().put(pic.getAddress());
+////            Bitmap bmp = FileUtils.loadImage(pic.getAddress());
+////            mHistoryBitmap.add(bmp);
+////            int index = mHistoryBitmap.size() - 1;
+////            url2Index.put(pic.getAddress(),index);
+//        }
         invalidate();
     }
 
@@ -692,12 +694,13 @@ public class PostilView extends View{
         if(picList == null){
             return;
         }
-        for(Picture pic:picList){
-            Bitmap bmp = FileUtils.loadImage(pic.getAddress());
-            mHistoryBitmap.add(bmp);
-            int index = mHistoryBitmap.size() - 1;
-            url2Index.put(pic.getAddress(),index);
-        }
+//        for(Picture pic:picList){
+//            BitmapCache.getInstance().put(pic.getAddress());
+////            Bitmap bmp = FileUtils.loadImage(pic.getAddress());
+////            mHistoryBitmap.add(bmp);
+////            int index = mHistoryBitmap.size() - 1;
+////            url2Index.put(pic.getAddress(),index);
+//        }
         invalidate();
     }
 
@@ -718,15 +721,15 @@ public class PostilView extends View{
         this.mDrawMode = drawMode;
     }
     public void clearAllBitmap(){
-        url2Index.clear();
+//        url2Index.clear();
         mPostilWordsList = new PostilWordsList();
         picRecord = new PostilRecordList();
         mCurrentWord = null;
         clearBitmap(mBufferBitmap);
         clearBitmap(mTagBitmap);
-        for(Bitmap bitmap:mHistoryBitmap){
-            clearBitmap(bitmap);
-        }
+//        for(Bitmap bitmap:mHistoryBitmap){
+//            clearBitmap(bitmap);
+//        }
         System.gc();
     }
 
