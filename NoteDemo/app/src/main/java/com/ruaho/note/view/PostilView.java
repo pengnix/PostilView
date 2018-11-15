@@ -578,11 +578,20 @@ public class PostilView extends View{
 
         if(mPostilWordsList != null && mPostilWordsList.getList() != null){
             List<PostilWord> list =  mPostilWordsList.getList();
+            Log.i("checkClick","x="+x+"y="+y);
             for(PostilWord tag:list){
-                int top = tag.getyPos() - mTagBitmapHeight/2 - (int)offsetY +tag.getOffsetY();
-                int bottom= tag.getyPos() + mTagBitmapHeight/2 - (int)offsetY +tag.getOffsetY();
-                int left= tag.getxPos() - mTagBitmapWidth/2;
-                int right= tag.getxPos() + mTagBitmapWidth/2;
+                float scale = currentNewScale/tag.getScale();
+                float centerX = (tag.getOffsetX() + tag.getxPos()) * scale - offsetX;
+                float centerY = (tag.getOffsetY() + tag.getyPos()) * scale - offsetY;
+                float top =  centerY - mTagBitmapWidth/2 ;
+                float bottom= centerY + mTagBitmapWidth/2;
+                float left = centerX - mTagBitmapWidth/2;
+                float right= centerX + mTagBitmapWidth/2;
+//                Log.i("checkClick","offsetX="+offsetX+"offsetY=" +offsetY
+//                        +"getOffsetX="+tag.getOffsetX()+"getOffsetY="+tag.getOffsetY()
+//                        +"getxPos="+ tag.getxPos()+"getyPos=" + tag.getyPos()+"BitmapWidth="+mTagBitmapWidth);
+//                Log.i("checkClick","left="+left+"right="+right+
+//                        "top="+top+"bottom="+bottom+"scale="+scale);
                 if(x > left && x < right && y > top && y < bottom){
                     mCurrentWord = tag;
                     Log.i("activityR","containTagBitmap="+ mCurrentWord.toString());
