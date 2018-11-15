@@ -358,6 +358,9 @@ public class PostilView extends View{
 //                    continue;
 //                }
                 Bitmap bmp = BitmapCache.getInstance().getSafe(address);
+                if(bmp == null){
+                    continue;
+                }
                 positionMatrix.reset();
                 float scale = currentNewScale/tag.getScale();
                 float oX = tag.getOffsetX() * scale - offsetX;
