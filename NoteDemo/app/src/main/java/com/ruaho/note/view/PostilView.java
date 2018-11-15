@@ -26,6 +26,7 @@ import com.ruaho.note.bean.PostilWordsList;
 import com.ruaho.note.util.BitmapUtils;
 import com.ruaho.note.util.DimenUtils;
 import com.ruaho.note.util.FileUtils;
+import com.ruaho.note.util.ScreenUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;

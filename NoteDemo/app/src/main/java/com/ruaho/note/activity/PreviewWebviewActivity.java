@@ -135,6 +135,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mPostilView.setHistoryPictureRecord(mPostRecord);
         loadTags();
         mPostilView.setPostilTags(mPostilWordList);
+//        Log.i("calSize","SHeight"+ ScreenUtils.getScreebHeight(this) + "SWidth"+ScreenUtils.getScreenWidth(this));
     }
 
     void hideBar(){

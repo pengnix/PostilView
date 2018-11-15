@@ -69,10 +69,11 @@ public class FileUtils {
             String uri = appDir + "/" + fileName;
             Log.i("saveImage","loadImage uri ="+ uri);
             try{
-                FileInputStream fis = new FileInputStream(uri);
-                bitmap  = BitmapFactory.decodeStream(fis);
-            } catch (FileNotFoundException e){
-                Log.i("saveImage","FileNotFoundException");
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inPreferredConfig = Bitmap.Config.ARGB_4444;
+                bitmap = BitmapFactory.decodeFile(uri,options);
+//                Log.i("calSize",name+"height = "+bitmap.getHeight() + "width = "+bitmap.getWidth());
+//                Log.i("calSize",name+"size = " + BitmapUtils.getBitmapSize(bitmap));
             } catch (OutOfMemoryError e){
                 Log.i("saveImage","OutOfMemoryError");
             }
