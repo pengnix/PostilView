@@ -10,4 +10,11 @@ public class BitmapUtils {
         Bitmap resizeBmp = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);
         return resizeBmp;
     }
+
+    public static String getBitmapSize(Bitmap bitmap){
+        int rowBytes = bitmap.getRowBytes();
+        int height = bitmap.getHeight();
+        long memorySize = rowBytes*height;
+        return "" + (float)memorySize/1024 + "KB";
+    }
 }
