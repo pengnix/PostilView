@@ -395,6 +395,9 @@ public class PostilView extends View{
                         continue;
                     }
                     Bitmap bmp = mHistoryBitmap.get(index);
+//                    if(bmp == null){
+//                        continue;
+//                    }
                     positionMatrix.reset();
                     float scale = currentNewScale/pic.getScale();
                     float oX = pic.getOffsetX() * scale - offsetX;

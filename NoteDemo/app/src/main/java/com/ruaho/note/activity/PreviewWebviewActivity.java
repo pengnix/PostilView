@@ -617,8 +617,8 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         Bitmap bm = mPostilView.buildBitmap();
         String savedFile = FileUtils.saveImage(bm, QUALITY);
         if (savedFile != null) {
-            float offsetX = mPostilView.getOffsetX(); //* SCALE_BASE/mPostilView.getCurrentNewScale();
-            float offsetY = mPostilView.getOffsetY();// * SCALE_BASE/mPostilView.getCurrentNewScale();
+            float offsetX = mPostilView.getOffsetX();
+            float offsetY = mPostilView.getOffsetY();
             Picture picture = new Picture((int)offsetX,(int)offsetY,savedFile,mPostilView.getCurrentNewScale());
             mPostRecord.getPicList().add(picture);
             saveRecord();
