@@ -358,6 +358,7 @@ public class PostilView extends View{
                 float oX = tag.getOffsetX() * scale - offsetX;
                 float oY = tag.getOffsetY() * scale- offsetY;
                 if(!isBitmapVisible(scale,oX,oY)){
+                    BitmapCache.getInstance().recycle(address);
                     continue;
                 }
                 Bitmap bmp = BitmapCache.getInstance().getSafe(address);
@@ -395,6 +396,7 @@ public class PostilView extends View{
                     float oX = pic.getOffsetX() * scale - offsetX;
                     float oY = pic.getOffsetY() * scale- offsetY;
                     if(!isBitmapVisible(scale,oX,oY)){
+                        BitmapCache.getInstance().recycle(address);
                         continue;
                     }
                     Bitmap bmp = BitmapCache.getInstance().getSafe(address);
