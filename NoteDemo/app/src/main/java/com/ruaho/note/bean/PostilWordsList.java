@@ -17,4 +17,8 @@ public class PostilWordsList {
     public List<PostilWord> getList() {
         return list;
     }
+
+    public boolean isEmpty(){
+        return list == null || list.isEmpty();
+    }
 }

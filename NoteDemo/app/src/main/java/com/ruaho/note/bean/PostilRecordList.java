@@ -23,6 +23,10 @@ public class PostilRecordList {
         this.picList = picList;
     }
 
+    public boolean isEmpty(){
+        return picList == null || picList.isEmpty();
+    }
+
     @Override
     public String toString() {
         return "PostilRecordList{" +

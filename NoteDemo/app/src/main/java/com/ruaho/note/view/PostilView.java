@@ -350,7 +350,7 @@ public class PostilView extends View{
             canvas.drawBitmap(mTagBitmap , left, top, null);
         }
 
-        if(mPostilWordsList != null && mPostilWordsList.getList() != null){
+        if(mPostilWordsList != null && !mPostilWordsList.isEmpty()){
             List<PostilWord> list =  mPostilWordsList.getList();
             for(PostilWord tag:list){
                 String address = tag.getAddress();
@@ -373,7 +373,7 @@ public class PostilView extends View{
         }
 
         if(mMode == Mode.MANAGE_TUYA){
-            if(picRecord != null && picRecord.getPicList() != null){
+            if(picRecord != null && !picRecord.isEmpty()){
                 if(currentTuYaIndex < picRecord.getPicList().size()){
                     Picture pic = picRecord.getPicList().get(currentTuYaIndex);
                     String address = pic.getAddress();
@@ -388,7 +388,7 @@ public class PostilView extends View{
                 }
             }
         } else {
-            if(picRecord != null && picRecord.getPicList() != null){
+            if(picRecord != null && !picRecord.isEmpty()){
                 List<Picture> picList = picRecord.getPicList();
                 for(Picture pic:picList){
                     String address = pic.getAddress();
@@ -423,7 +423,6 @@ public class PostilView extends View{
         if(mMode == DRAW && mDrawMode == DRAWMode.OVAL && needDrawLine){
             drawPreviewOval(canvas);
         }
-//        printWebViewVisibleRect();
     }
 
     void drawPreviewRect(Canvas canvas){
