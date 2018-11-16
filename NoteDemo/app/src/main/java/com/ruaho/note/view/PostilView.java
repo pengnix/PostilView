@@ -10,6 +10,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
 import android.graphics.Xfermode;
 import android.os.Build;
 import android.support.annotation.Nullable;
@@ -353,18 +354,17 @@ public class PostilView extends View{
             List<PostilWord> list =  mPostilWordsList.getList();
             for(PostilWord tag:list){
                 String address = tag.getAddress();
-//                Integer index = url2Index.get(address);
-//                if(index == null){
-//                    continue;
-//                }
+                float scale = currentNewScale/tag.getScale();
+                float oX = tag.getOffsetX() * scale - offsetX;
+                float oY = tag.getOffsetY() * scale- offsetY;
+                if(!isBitmapVisible(scale,oX,oY)){
+                    continue;
+                }
                 Bitmap bmp = BitmapCache.getInstance().getSafe(address);
                 if(bmp == null){
                     continue;
                 }
                 positionMatrix.reset();
-                float scale = currentNewScale/tag.getScale();
-                float oX = tag.getOffsetX() * scale - offsetX;
-                float oY = tag.getOffsetY() * scale- offsetY;
                 positionMatrix.setTranslate(oX,oY);
                 positionMatrix.preScale(scale, scale);
                 canvas.drawBitmap(bmp,positionMatrix,null);
@@ -376,10 +376,6 @@ public class PostilView extends View{
                 if(currentTuYaIndex < picRecord.getPicList().size()){
                     Picture pic = picRecord.getPicList().get(currentTuYaIndex);
                     String address = pic.getAddress();
-//                    Integer index = url2Index.get(address);
-//                    if(index == null){
-//                        return;
-//                    }
                     Bitmap bmp = BitmapCache.getInstance().getSafe(address);
                     positionMatrix.reset();
                     float scale = currentNewScale/pic.getScale();
@@ -395,18 +391,17 @@ public class PostilView extends View{
                 List<Picture> picList = picRecord.getPicList();
                 for(Picture pic:picList){
                     String address = pic.getAddress();
-//                    Integer index = url2Index.get(address);
-//                    if(index == null){
-//                        continue;
-//                    }
+                    float scale = currentNewScale/pic.getScale();
+                    float oX = pic.getOffsetX() * scale - offsetX;
+                    float oY = pic.getOffsetY() * scale- offsetY;
+                    if(!isBitmapVisible(scale,oX,oY)){
+                        continue;
+                    }
                     Bitmap bmp = BitmapCache.getInstance().getSafe(address);
                     if(bmp == null){
                         continue;
                     }
                     positionMatrix.reset();
-                    float scale = currentNewScale/pic.getScale();
-                    float oX = pic.getOffsetX() * scale - offsetX;
-                    float oY = pic.getOffsetY() * scale- offsetY;
                     positionMatrix.setTranslate(oX,oY);
                     positionMatrix.preScale(scale, scale);
                     canvas.drawBitmap(bmp,positionMatrix,null);
@@ -426,6 +421,7 @@ public class PostilView extends View{
         if(mMode == DRAW && mDrawMode == DRAWMode.OVAL && needDrawLine){
             drawPreviewOval(canvas);
         }
+//        printWebViewVisibleRect();
     }
 
     void drawPreviewRect(Canvas canvas){
@@ -569,6 +565,26 @@ public class PostilView extends View{
                 break;
         }
         return true;
+    }
+
+    private void printWebViewVisibleRect(){
+        float scale = currentNewScale/SCALE_BASE;
+        float left = offsetX;
+        float top = offsetY;
+        float right = left + getWidth();
+        float bottom = top + getHeight();
+        Log.i("VisibleRect","left="+left+"right="
+                +right+"top="+top+"bottom="+bottom+"scale="+scale);
+    }
+
+    private boolean isBitmapVisible(float scale,float oX,float oY){
+        int width =getWidth();
+        int height = getHeight();
+        Rect originRect = new Rect(0,0,width,height);
+        Rect bitmapRect = new Rect((int)oX,(int)oY,(int)(oX+width*scale),(int)(oY+height*scale));
+//        Log.i("VisibleRect","origin="+origin.toString()+"map="+map.toString());
+//        Log.i("VisibleRect","scale = " + scale +"oX = "+ oX+"oY = "+oY+"交集="+Rect.intersects(origin,map));
+        return Rect.intersects(originRect,bitmapRect);
     }
 
     public boolean containTagBitmap(int x,int y){
