@@ -45,6 +45,15 @@ public class BitmapCache {
         }
     }
 
+    public void put(String uri,Bitmap bmp){
+        if(enableSoftReference){
+            SoftReference<Bitmap> d = new SoftReference<Bitmap>(bmp);
+            mImageCacheReferenceMap.put(uri, d);
+        } else {
+            mImageCacheMap.put(uri, bmp);
+        }
+    }
+
     public void recycle(String uri){
         if(enableSoftReference){
 
@@ -78,9 +87,10 @@ public class BitmapCache {
             if (softReference != null) {
                 return softReference;
             } else {
-                put(uri);
+                Bitmap bmp = FileUtils.loadImage(uri);
+                put(uri,bmp);
                 Log.i("getSafeFail","1");
-                return FileUtils.loadImage(uri);
+                return bmp;
             }
         }
     }
