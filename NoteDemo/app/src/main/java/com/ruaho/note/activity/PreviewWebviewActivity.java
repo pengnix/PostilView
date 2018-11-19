@@ -38,6 +38,7 @@ import com.ruaho.note.util.BitmapCache;
 import com.ruaho.note.util.FileUtils;
 import com.ruaho.note.util.MD5Utils;
 import com.ruaho.note.util.NoteSharePreferenceUtils;
+import com.ruaho.note.util.VersionUtils;
 import com.ruaho.note.view.ChooseColorLayout;
 import com.ruaho.note.view.ObservableWebView;
 import com.ruaho.note.view.PostilView;
@@ -650,13 +651,13 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         Gson gson = new Gson();
         String recordString = gson.toJson(mPostRecord);
         Log.i("saveImage","saveRecord = " + recordString);
-        String key = MD5Utils.stringToMD5("NoteRecords" + url);
+        String key = MD5Utils.stringToMD5("NoteRecords"+ VersionUtils.getVersion() + url);
         Log.i("saveImage","saveRecord key = " + key);
         NoteSharePreferenceUtils.setPrefString(key,recordString);
     }
 
     private void loadRecord(){
-        String key = MD5Utils.stringToMD5("NoteRecords" + url);
+        String key = MD5Utils.stringToMD5("NoteRecords"+ VersionUtils.getVersion() + url);
         String recordString = NoteSharePreferenceUtils.getPrefString(key,null);
         Gson gson = new Gson();
         Log.i("loadRecord","loadRecord = " + recordString);
@@ -670,13 +671,13 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         Gson gson = new Gson();
         String recordString = gson.toJson(mPostilWordList);
         Log.i("saveImage","saveTag = " + recordString);
-        String key = MD5Utils.stringToMD5("NoteTags" + url);
+        String key = MD5Utils.stringToMD5("NoteTags"+ VersionUtils.getVersion() + url);
         Log.i("saveImage","saveTag key = " + key);
         NoteSharePreferenceUtils.setPrefString(key,recordString);
     }
 
     private void loadTags(){
-        String key = MD5Utils.stringToMD5("NoteTags" + url);
+        String key = MD5Utils.stringToMD5("NoteTags"+ VersionUtils.getVersion() + url);
         String recordString = NoteSharePreferenceUtils.getPrefString(key,null);
         Gson gson = new Gson();
         Log.i("saveImage","loadTags = " + recordString);
