@@ -27,6 +27,7 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.ruaho.note.adapter.PreviewWordsAdapter;
@@ -103,8 +104,8 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     private String url = "";
     private String title = "";
 
-    private static final int MSG_SAVE_SUCCESS = 1;
-    private static final int MSG_SAVE_FAILED = 2;
+    private static final int TUYA_SAVE_SUCCESS = 1;
+    private static final int TUYA_SAVE_FAILED = 2;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -130,6 +131,26 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         initMainPopupWindow();
         initTuYaDeletePopupWindow();
         initWordsList();
+        mHandler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                switch (msg.what){
+                    case TUYA_SAVE_SUCCESS:
+                        mPostilView.setMode(PostilView.Mode.NOT_EDIT);
+                        removeColorBar();
+                        mBottomToolbar.setVisibility(View.GONE);
+                        showCommonToolBar();
+                        mPostilView.clear();
+                        mPostilView.setHistoryPictureRecord(mPostRecord);
+                        Toast.makeText(PreviewWebviewActivity.this,"保存成功",Toast.LENGTH_LONG).show();
+                        break;
+                    case TUYA_SAVE_FAILED:
+                        Toast.makeText(PreviewWebviewActivity.this,"保存失败",Toast.LENGTH_LONG).show();
+                        break;
+                }
+                super.handleMessage(msg);
+            }
+        };
     }
 
     void loadHistory(){
@@ -314,13 +335,8 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mTuyaSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mPostilView.setMode(PostilView.Mode.NOT_EDIT);
-                removeColorBar();
-                mBottomToolbar.setVisibility(View.GONE);
-                saveTuYaImage();
-                showCommonToolBar();
-                mPostilView.clear();
-                mPostilView.setHistoryPictureRecord(mPostRecord);
+                saveTuyaToDo();
+
             }
         });
         mTuyaConfig.setOnClickListener(new View.OnClickListener() {
@@ -448,6 +464,16 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mWordsRecycleView.addOnItemTouchListener(new SwipeItemLayout.OnSwipeItemTouchListener(PreviewWebviewActivity.this));
         mWordsRecycleView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         mWordsRecycleView.setAdapter(mPreviewWordsAdapter);
+    }
+
+    void saveTuyaToDo(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                saveTuYaImage();
+                mHandler.sendEmptyMessage(TUYA_SAVE_SUCCESS);
+            }
+        }).start();
     }
 
     void resetAllPenTypeIcon(){
