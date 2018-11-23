@@ -106,6 +106,8 @@ public class PreviewWebviewActivity extends AppCompatActivity {
 
     private static final int TUYA_SAVE_SUCCESS = 1;
     private static final int TUYA_SAVE_FAILED = 2;
+    private static final int WORD_SAVE_SUCCESS = 3;
+    private static final int WORD_SAVE_FAILED = 4;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -145,6 +147,16 @@ public class PreviewWebviewActivity extends AppCompatActivity {
                         Toast.makeText(PreviewWebviewActivity.this,"保存成功",Toast.LENGTH_LONG).show();
                         break;
                     case TUYA_SAVE_FAILED:
+                        Toast.makeText(PreviewWebviewActivity.this,"保存失败",Toast.LENGTH_LONG).show();
+                        break;
+                    case WORD_SAVE_SUCCESS:
+                        showCommonToolBar();
+                        mPostilView.clearCurrentPostilTag();
+                        mPostilView.setPostilTags(mPostilWordList);
+                        enableZoom();
+                        Toast.makeText(PreviewWebviewActivity.this,"保存成功",Toast.LENGTH_LONG).show();
+                        break;
+                    case WORD_SAVE_FAILED:
                         Toast.makeText(PreviewWebviewActivity.this,"保存失败",Toast.LENGTH_LONG).show();
                         break;
                 }
@@ -317,11 +329,8 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mTagSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showCommonToolBar();
-                saveTagImage();
-                mPostilView.clearCurrentPostilTag();
-                mPostilView.setPostilTags(mPostilWordList);
-                enableZoom();
+                saveWordsTodo();
+
             }
         });
         mTagCancel.setOnClickListener(new View.OnClickListener() {
@@ -653,6 +662,16 @@ public class PreviewWebviewActivity extends AppCompatActivity {
             saveRecord();
         }else{
         }
+    }
+
+    private void saveWordsTodo(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                saveTagImage();
+                mHandler.sendEmptyMessage(WORD_SAVE_SUCCESS);
+            }
+        }).start();
     }
 
     private void saveTagImage(){
