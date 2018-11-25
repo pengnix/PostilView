@@ -809,7 +809,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         });
     }
     private void showMainPopWindow() {
-        View rootview = LayoutInflater.from(PreviewWebviewActivity.this).inflate(R.layout.activity_main,
+        View rootview = LayoutInflater.from(PreviewWebviewActivity.this).inflate(R.layout.pop_main,
                 null);
         popupWindow.showAtLocation(rootview, Gravity.BOTTOM, 0, 0);
     }
@@ -843,7 +843,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         });
     }
     private void showTuYaDeletePopWindow() {
-        View rootview = LayoutInflater.from(PreviewWebviewActivity.this).inflate(R.layout.activity_main,
+        View rootview = LayoutInflater.from(PreviewWebviewActivity.this).inflate(R.layout.pop_main,
                 null);
         tuyaDeletePopupWindow.showAtLocation(rootview, Gravity.BOTTOM, 0, 0);
     }
