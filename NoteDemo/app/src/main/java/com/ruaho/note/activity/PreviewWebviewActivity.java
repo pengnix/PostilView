@@ -220,9 +220,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mPenTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mPostilView.setMode(PostilView.Mode.DRAW);
-                mPostilView.setPenAlpha(255);
-                usePenState();
+                changeToPenState();
             }
         });
         mEraseTxt.setOnClickListener(new View.OnClickListener() {
@@ -404,6 +402,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mTuyaCurve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                changeToPenState();
                 mPostilView.setDrawMode(PostilView.DRAWMode.CURVE);
                 resetAllPenTypeIcon();
                 mTuyaCurve.setImageResource(R.drawable.pizhu_quxian_selected);
@@ -412,6 +411,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mTuyaLine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                changeToPenState();
                 mPostilView.setDrawMode(PostilView.DRAWMode.LINE);
                 resetAllPenTypeIcon();
                 mTuyaLine.setImageResource(R.drawable.pizhu_zhixian_selected);
@@ -420,6 +420,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mTuyaRect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                changeToPenState();
                 mPostilView.setDrawMode(PostilView.DRAWMode.RECT);
                 resetAllPenTypeIcon();
                 mTuyaRect.setImageResource(R.drawable.pizhu_juxing_selected);
@@ -428,6 +429,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mTuyaOval.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                changeToPenState();
                 mPostilView.setDrawMode(PostilView.DRAWMode.OVAL);
                 resetAllPenTypeIcon();
                 mTuyaOval.setImageResource(R.drawable.pizhu_tuoyuan_selected);
@@ -753,6 +755,12 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         if(mChooseColorBar != null){
             mRoot.removeView(mChooseColorBar);
         }
+    }
+
+    private void changeToPenState(){
+        mPostilView.setMode(PostilView.Mode.DRAW);
+        mPostilView.setPenAlpha(255);
+        usePenState();
     }
 
     private void usePenState(){
