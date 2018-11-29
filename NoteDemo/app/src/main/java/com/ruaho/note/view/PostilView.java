@@ -799,7 +799,7 @@ public class PostilView extends View{
             }
         }
     }
-    
+
     public void setEnableMovePage(boolean enable){
         this.enableMovePage = enable;
     }

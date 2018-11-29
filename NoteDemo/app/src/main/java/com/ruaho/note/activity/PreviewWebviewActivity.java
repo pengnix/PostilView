@@ -155,6 +155,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
                         mPostilView.setPostilTags(mPostilWordList);
                         enableZoom();
                         Toast.makeText(PreviewWebviewActivity.this,"保存成功",Toast.LENGTH_LONG).show();
+                        mPreviewWordsAdapter.notifyDataSetChanged();
                         break;
                     case WORD_SAVE_FAILED:
                         Toast.makeText(PreviewWebviewActivity.this,"保存失败",Toast.LENGTH_LONG).show();
@@ -605,6 +606,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
                         mPostilView.addPostilTag(new PostilWord(offsetX,offsetY,width/2,height/2,scale,result));
                         showTagToolBar();
                         disableZoom();
+                        Toast.makeText(PreviewWebviewActivity.this,R.string.preview_move_toast,Toast.LENGTH_LONG).show();
                     }
                 }
                 return;
@@ -618,10 +620,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         @Override
         public void onProgressChanged(WebView view, int progress) {
             super.onProgressChanged(view, progress);
-//            if(progress == 100 && mPostilView != null && mPostilView.getVisibility() == View.INVISIBLE){
-//                Log.i("WebChromeClient","Finish");
-//                mPostilView.setVisibility(View.VISIBLE);
-//            }
+
         }
     }
 
