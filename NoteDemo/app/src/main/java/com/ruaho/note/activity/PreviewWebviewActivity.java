@@ -913,6 +913,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
          if(mWebView != null){
              mWebView.getSettings().setSupportZoom(true);
              mWebView.getSettings().setBuiltInZoomControls(true);
+             mPostilView.setEnableMovePage(true);
          }
      }
 
@@ -920,6 +921,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         if(mWebView != null){
             mWebView.getSettings().setSupportZoom(false);
             mWebView.getSettings().setBuiltInZoomControls(false);
+            mPostilView.setEnableMovePage(false);
         }
      }
 

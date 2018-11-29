@@ -76,6 +76,7 @@ public class PostilView extends View{
     private int mDrawSize;
     private int mEraserSize;
     private int mPenAlpha = 255;
+    private boolean enableMovePage = true;
 //    private Map<String,Integer> url2Index;
 
     private boolean mCanEraser;
@@ -461,7 +462,11 @@ public class PostilView extends View{
             boolean isTouchTag = containTagBitmap((int)x,(int)y);
             Log.i("checkClick","isTouchTag = " + isTouchTag);
             if(!isTouchTag){
-                return super.onTouchEvent(event);
+                if(enableMovePage){
+                    return super.onTouchEvent(event);
+                } else {
+                    return true;
+                }
             } else {
                 mTagOriginX = x;
                 mTagOriginY = y;
@@ -659,13 +664,6 @@ public class PostilView extends View{
         if(picList == null){
             return;
         }
-//        for(PostilWord pic:picList){
-//            BitmapCache.getInstance().put(pic.getAddress());
-////            Bitmap bmp = FileUtils.loadImage(pic.getAddress());
-////            mHistoryBitmap.add(bmp);
-////            int index = mHistoryBitmap.size() - 1;
-////            url2Index.put(pic.getAddress(),index);
-//        }
         invalidate();
     }
 
@@ -800,6 +798,10 @@ public class PostilView extends View{
                 picRecord.getPicList().remove(currentTuYaIndex);
             }
         }
+    }
+    
+    public void setEnableMovePage(boolean enable){
+        this.enableMovePage = enable;
     }
 
 }
