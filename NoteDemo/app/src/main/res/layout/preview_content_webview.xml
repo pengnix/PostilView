@@ -225,6 +225,7 @@
                 android:progressDrawable="@drawable/preview_seek_bar"
                 android:thumb="@drawable/preview_seek_bar_thumb"
                 android:layout_marginLeft="20dp"
+                android:thumbOffset="0dp"
                 android:maxHeight="1dp"
                 android:minHeight="1dp"
                 android:progress="20"/>
