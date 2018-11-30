@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent=new Intent(MainActivity.this, PreviewWebviewActivity.class);
                 intent.putExtra("previewurl", url);
                 intent.putExtra("previewtitle", "我的百度");
+                intent.putExtra("watermark", "我的ZZG不可能这么可爱");
+                intent.putExtra("marknum", 3);
                 startActivity(intent);
             }
         });

@@ -1,6 +1,7 @@
 package com.ruaho.note.activity;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -40,6 +42,7 @@ import com.ruaho.note.util.DialogUtils;
 import com.ruaho.note.util.FileUtils;
 import com.ruaho.note.util.MD5Utils;
 import com.ruaho.note.util.NoteSharePreferenceUtils;
+import com.ruaho.note.util.StringUtils;
 import com.ruaho.note.util.VersionUtils;
 import com.ruaho.note.view.ChooseColorLayout;
 import com.ruaho.note.view.ObservableWebView;
@@ -49,11 +52,14 @@ import com.ruaho.note.view.SwipeItemLayout;
 
 import java.util.ArrayList;
 
+import me.grantland.widget.AutofitTextView;
+
 import static com.ruaho.note.view.PostilView.SCALE_BASE;
 
 public class PreviewWebviewActivity extends AppCompatActivity {
 
     private ObservableWebView mWebView;
+    private LinearLayout mWaterMarkLayout;
     private FrameLayout mRoot;
     private PostilView mPostilView;
     private TextView mTagTxt;
@@ -104,6 +110,8 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     private Handler mHandler;
     private String url = "";
     private String title = "";
+    private String waterMark="";
+    private int markNum =0;
 
     private static final int TUYA_SAVE_SUCCESS = 1;
     private static final int TUYA_SAVE_FAILED = 2;
@@ -118,6 +126,8 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         if(intent != null){
             url = intent.getStringExtra("previewurl");
             title = intent.getStringExtra("previewtitle");
+            waterMark = intent.getStringExtra("watermark");
+            markNum = intent.getIntExtra("marknum",0);
         }
         mPostRecord = new PostilRecordList();
         mPostilWordList = new PostilWordsList();
@@ -182,6 +192,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
 
     void initView(){
         mRoot = findViewById(R.id.preview_root_view);
+        mWaterMarkLayout = findViewById(R.id.preview_ll_water_mark);
         mPostilView = findViewById(R.id.mypostilview);
         mBottomToolbar = findViewById(R.id.note_bottom_toolbar);
         mTuYaControlTopBar = findViewById(R.id.preview_tuya_control_container);
@@ -524,6 +535,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
                 hideWordsManager();
             }
         });
+        renderWaterMarker();
     }
 
     void initWordsList(){
@@ -1016,5 +1028,37 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         BitmapCache.getInstance().clear();
+    }
+
+    /**
+     * 渲染水印
+     */
+
+    private void renderWaterMarker() {
+        if (StringUtils.isNotEmpty(waterMark) && markNum > 0) {
+            for (int i = 0; i < markNum; i++) {
+                View.inflate(this, R.layout.row_warter_mark, mWaterMarkLayout);
+            }
+            for (int i = 0; i < mWaterMarkLayout.getChildCount(); i++) {
+                View view = mWaterMarkLayout.getChildAt(i);
+                if (view instanceof AutofitTextView) {
+                    AutofitTextView autofitTextView = (AutofitTextView) view;
+                    autofitTextView.setText(waterMark);
+                }
+            }
+
+            float screenHeight = ScreenUtils.getScreebHeight(getApplicationContext());
+            float screenWidth = ScreenUtils.getScreenWidth(getApplicationContext());
+
+            ViewGroup.LayoutParams params = mWaterMarkLayout.getLayoutParams();
+            params.width = (int) Math.max(screenWidth, screenHeight);
+            mWaterMarkLayout.setLayoutParams(params);
+            int degree = Math.round(
+                    (float) (Math.atan(screenHeight / screenWidth) / Math.PI * 180));//最终角度
+            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                mWaterMarkLayout.setTranslationX(-(screenHeight - screenWidth) / 2);
+            }
+            mWaterMarkLayout.setRotation(-degree);
+        }
     }
 }

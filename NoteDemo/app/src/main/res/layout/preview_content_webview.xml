@@ -208,6 +208,14 @@
                     android:layout_height="match_parent"
                     android:visibility="invisible"
                     android:background="#00FF0000"/>
+            <!--上面一层水印-->
+            <LinearLayout
+                android:id="@+id/preview_ll_water_mark"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+            </LinearLayout>
         </FrameLayout>
 
         <LinearLayout
@@ -306,4 +314,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </LinearLayout>
+
+
 </FrameLayout>
