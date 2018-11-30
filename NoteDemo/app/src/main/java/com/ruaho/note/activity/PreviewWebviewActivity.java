@@ -36,6 +36,7 @@ import com.ruaho.note.bean.PostilRecordList;
 import com.ruaho.note.bean.PostilWordsList;
 import com.ruaho.note.bean.PostilWord;
 import com.ruaho.note.util.BitmapCache;
+import com.ruaho.note.util.DialogUtils;
 import com.ruaho.note.util.FileUtils;
 import com.ruaho.note.util.MD5Utils;
 import com.ruaho.note.util.NoteSharePreferenceUtils;
@@ -364,11 +365,26 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mTuyaCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mPostilView.setMode(PostilView.Mode.NOT_EDIT);
-                removeColorBar();
-                mBottomToolbar.setVisibility(View.GONE);
-                showCommonToolBar();
-                mPostilView.clear();
+
+                DialogUtils.createDialog(PreviewWebviewActivity.this,
+                        R.string.preview_tuya_close_title,
+                        R.string.preview_tuya_close_ok,
+                        R.string.preview_tuya_close_cancel,
+                        new DialogUtils.NoteDialogInterface() {
+                            @Override
+                            public void Ok() {
+                                mPostilView.setMode(PostilView.Mode.NOT_EDIT);
+                                removeColorBar();
+                                mBottomToolbar.setVisibility(View.GONE);
+                                showCommonToolBar();
+                                mPostilView.clear();
+                            }
+
+                            @Override
+                            public void cancel() {
+
+                            }
+                        });
             }
         });
 

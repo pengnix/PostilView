@@ -4,4 +4,7 @@
     <string name="preview_word_close">关闭</string>
     <string name="preview_word_look">查看</string>
     <string name="preview_move_toast">可以移动标记到你需要的位置</string>
+    <string name="preview_tuya_close_title">确认放弃本次标记修改吗?</string>
+    <string name="preview_tuya_close_ok">确认</string>
+    <string name="preview_tuya_close_cancel">取消</string>
 </resources>
