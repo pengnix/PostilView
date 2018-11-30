@@ -350,9 +350,24 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mTagCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showCommonToolBar();
-                mPostilView.clearCurrentPostilTag();
-                enableZoom();
+                DialogUtils.createDialog(PreviewWebviewActivity.this,
+                        R.string.preview_word_cancel_all_title,
+                        R.string.preview_tuya_close_ok,
+                        R.string.preview_tuya_close_cancel,
+                        new DialogUtils.NoteDialogInterface() {
+                            @Override
+                            public void Ok() {
+                                showCommonToolBar();
+                                mPostilView.clearCurrentPostilTag();
+                                enableZoom();
+                            }
+
+                            @Override
+                            public void cancel() {
+
+                            }
+                        });
+
             }
         });
         mTuyaSave.setOnClickListener(new View.OnClickListener() {
@@ -874,15 +889,44 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         contentView.findViewById(R.id.preview_tuya_delete_current).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tuyaDeletePopupWindow.dismiss();
-                deleteCurrentTuya();
+                DialogUtils.createDialog(PreviewWebviewActivity.this,
+                        R.string.preview_delete_current_txt,
+                        R.string.preview_tuya_close_ok,
+                        R.string.preview_tuya_close_cancel,
+                        new DialogUtils.NoteDialogInterface() {
+                            @Override
+                            public void Ok() {
+                                tuyaDeletePopupWindow.dismiss();
+                                deleteCurrentTuya();
+                            }
+
+                            @Override
+                            public void cancel() {
+
+                            }
+                        });
             }
         });
         contentView.findViewById(R.id.preview_tuya_delete_all).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tuyaDeletePopupWindow.dismiss();
-                deleteAllTuya();
+                DialogUtils.createDialog(PreviewWebviewActivity.this,
+                        R.string.preview_delete_all_txt,
+                        R.string.preview_tuya_close_ok,
+                        R.string.preview_tuya_close_cancel,
+                        new DialogUtils.NoteDialogInterface() {
+                            @Override
+                            public void Ok() {
+                                tuyaDeletePopupWindow.dismiss();
+                                deleteAllTuya();
+                            }
+
+                            @Override
+                            public void cancel() {
+
+                            }
+                        });
+
             }
         });
         contentView.findViewById(R.id.preview_tag_delete_cancel).setOnClickListener(new View.OnClickListener() {
