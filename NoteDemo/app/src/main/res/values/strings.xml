@@ -7,4 +7,6 @@
     <string name="preview_tuya_close_title">确认放弃本次标记修改吗?</string>
     <string name="preview_tuya_close_ok">确认</string>
     <string name="preview_tuya_close_cancel">取消</string>
+    <string name="preview_tuya_save_title">确认保存本次标记内容?</string>
+    <string name="preview_tuya_erase_all_title">确认删除本次全部标记内容?</string>
 </resources>

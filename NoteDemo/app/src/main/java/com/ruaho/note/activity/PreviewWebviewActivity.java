@@ -272,7 +272,21 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mEraseAllTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mPostilView.clear();
+                DialogUtils.createDialog(PreviewWebviewActivity.this,
+                        R.string.preview_tuya_erase_all_title,
+                        R.string.preview_tuya_close_ok,
+                        R.string.preview_tuya_close_cancel,
+                        new DialogUtils.NoteDialogInterface() {
+                            @Override
+                            public void Ok() {
+                                mPostilView.clear();
+                            }
+
+                            @Override
+                            public void cancel() {
+
+                            }
+                        });
             }
         });
         mWordTxt.setOnClickListener(new View.OnClickListener() {
@@ -344,8 +358,21 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mTuyaSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveTuyaToDo();
+                DialogUtils.createDialog(PreviewWebviewActivity.this,
+                        R.string.preview_tuya_save_title,
+                        R.string.preview_tuya_close_ok,
+                        R.string.preview_tuya_close_cancel,
+                        new DialogUtils.NoteDialogInterface() {
+                            @Override
+                            public void Ok() {
+                                saveTuyaToDo();
+                            }
 
+                            @Override
+                            public void cancel() {
+
+                            }
+                        });
             }
         });
         mTuyaConfig.setOnClickListener(new View.OnClickListener() {
