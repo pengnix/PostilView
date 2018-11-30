@@ -152,8 +152,8 @@ public class PreviewWebviewActivity extends AppCompatActivity {
                     case WORD_SAVE_SUCCESS:
                         showCommonToolBar();
                         mPostilView.clearCurrentPostilTag();
-                        mPostilView.setPostilTags(mPostilWordList);
                         enableZoom();
+                        mPostilView.setPostilTags(mPostilWordList);
                         Toast.makeText(PreviewWebviewActivity.this,"保存成功",Toast.LENGTH_LONG).show();
                         mPreviewWordsAdapter.notifyDataSetChanged();
                         break;
@@ -921,6 +921,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
             mWebView.getSettings().setSupportZoom(false);
             mWebView.getSettings().setBuiltInZoomControls(false);
             mPostilView.setEnableMovePage(false);
+            mPostilView.invalidate();
         }
      }
 

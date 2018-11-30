@@ -351,7 +351,7 @@ public class PostilView extends View{
             canvas.drawBitmap(mTagBitmap , left, top, null);
         }
 
-        if(mPostilWordsList != null && !mPostilWordsList.isEmpty()){
+        if(mPostilWordsList != null && !mPostilWordsList.isEmpty() && enableMovePage){
             List<PostilWord> list =  mPostilWordsList.getList();
             for(PostilWord tag:list){
                 String address = tag.getAddress();
@@ -389,7 +389,7 @@ public class PostilView extends View{
                 }
             }
         } else {
-            if(picRecord != null && !picRecord.isEmpty()){
+            if(picRecord != null && !picRecord.isEmpty() && enableMovePage){
                 List<Picture> picList = picRecord.getPicList();
                 for(Picture pic:picList){
                     String address = pic.getAddress();
@@ -412,7 +412,7 @@ public class PostilView extends View{
             }
         }
 
-        if (mBufferBitmap != null) {
+        if (mBufferBitmap != null && enableMovePage) {
             canvas.drawBitmap(mBufferBitmap, 0, 0, null);
         }
         if(mMode == DRAW && mDrawMode == DRAWMode.LINE && needDrawLine){
