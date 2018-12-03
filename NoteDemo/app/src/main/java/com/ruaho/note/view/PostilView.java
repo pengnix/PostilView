@@ -339,19 +339,12 @@ public class PostilView extends View{
 
         if(mCurrentWord != null && mCurrentWord.isCanMove()){
             Log.i("activityR","can move");
-//            positionMatrix.reset();
-//            float scale = currentNewScale/mCurrentWord.getScale();
-//            float oX = mCurrentWord.getOffsetX() * scale - offsetX;
-//            float oY = mCurrentWord.getOffsetY() * scale- offsetY;
-//            positionMatrix.setTranslate(oX,oY);
-//            positionMatrix.preScale(scale, scale);
-//            canvas.drawBitmap(mTagBitmap,positionMatrix,null);
             float left = mCurrentWord.getxPos() - mTagBitmapWidth/2;
             float top = mCurrentWord.getyPos() - mTagBitmapHeight/2 - offsetY +mCurrentWord.getOffsetY();
             canvas.drawBitmap(mTagBitmap , left, top, null);
         }
 
-        if(mPostilWordsList != null && !mPostilWordsList.isEmpty() && enableMovePage){
+        if(mPostilWordsList != null && !mPostilWordsList.isEmpty() && enableMovePage && mMode != Mode.DRAW && mMode != Mode.ERASER){
             List<PostilWord> list =  mPostilWordsList.getList();
             for(PostilWord tag:list){
                 String address = tag.getAddress();
