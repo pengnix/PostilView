@@ -974,6 +974,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mTuYaControlTopBar.setVisibility(View.GONE);
         mCommonToolBar.setVisibility(View.VISIBLE);
         mPostilView.setMode(PostilView.Mode.NOT_EDIT);
+        mPostilView.invalidate();
     }
 
     public void scrollToYforWebView(int y){
