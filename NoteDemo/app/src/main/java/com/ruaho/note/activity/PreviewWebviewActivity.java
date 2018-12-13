@@ -239,6 +239,9 @@ public class PreviewWebviewActivity extends AppCompatActivity {
         mEraseTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mPostilView.setDrawMode(PostilView.DRAWMode.CURVE);
+                resetAllPenTypeIcon();
+                mTuyaCurve.setImageResource(R.drawable.pizhu_quxian_selected);
                 mPostilView.setPenAlpha(255);
                 mPostilView.setMode(PostilView.Mode.ERASER);
                 useEraserState();
