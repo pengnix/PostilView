@@ -669,6 +669,10 @@ public class PreviewWebviewActivity extends AppCompatActivity {
                         Log.i("activityR","update" + offsetY + ":" + x + ":" + y);
                         mPostilView.updatePostilTag(new PostilWord(offsetX,offsetY,x,y,scale,result));
                     } else {
+                        if(StringUtils.isEmpty(result)){
+                            Toast.makeText(PreviewWebviewActivity.this,R.string.preview_can_not_empty,Toast.LENGTH_LONG).show();
+                            return;
+                        }
                         offsetX = (int)mPostilView.getOffsetX();
                         offsetY = (int)mPostilView.getOffsetY();
                         scale = mPostilView.getCurrentNewScale();

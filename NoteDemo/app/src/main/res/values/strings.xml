@@ -12,4 +12,5 @@
     <string name="preview_word_cancel_all_title">确认放弃本次文本修改吗?</string>
     <string name="preview_delete_current_txt">确认删除当前标记?</string>
     <string name="preview_delete_all_txt">确认删除所有标记?</string>
+    <string name="preview_can_not_empty">内容不能为空</string>
 </resources>
