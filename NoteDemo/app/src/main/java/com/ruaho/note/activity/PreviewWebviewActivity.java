@@ -872,14 +872,28 @@ public class PreviewWebviewActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 popupWindow.dismiss();
-                toTuyaManager();
+                if(isTuyaEmpty()){
+                    DialogUtils.createOKDialog(PreviewWebviewActivity.this,
+                            R.string.preview_tuya_empty,
+                            R.string.preview_tuya_close_ok,
+                            null);
+                } else {
+                    toTuyaManager();
+                }
             }
         });
         contentView.findViewById(R.id.preview_control_tag).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 popupWindow.dismiss();
-                toWordsManager();
+                if(isWordEmpty()){
+                    DialogUtils.createOKDialog(PreviewWebviewActivity.this,
+                            R.string.preview_word_empty,
+                            R.string.preview_tuya_close_ok,
+                            null);
+                } else {
+                    toWordsManager();
+                }
             }
         });
         contentView.findViewById(R.id.preview_control_cancel).setOnClickListener(new View.OnClickListener() {
@@ -889,6 +903,23 @@ public class PreviewWebviewActivity extends AppCompatActivity {
             }
         });
     }
+
+    private boolean isTuyaEmpty(){
+        if(mPostRecord != null && mPostRecord.getPicList() != null
+                && mPostRecord.getPicList().size() != 0){
+            return false;
+        }
+        return true;
+    }
+
+    private boolean isWordEmpty(){
+        if(mPostilWordList != null && mPostilWordList.getList() != null
+                && mPostilWordList.getList().size() != 0){
+            return false;
+        }
+        return true;
+    }
+
     private void showMainPopWindow() {
         View rootview = LayoutInflater.from(PreviewWebviewActivity.this).inflate(R.layout.pop_main,
                 null);

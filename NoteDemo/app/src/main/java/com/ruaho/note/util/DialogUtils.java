@@ -31,6 +31,21 @@ public class DialogUtils {
 //        dialog.setCanceledOnTouchOutside(false);
     }
 
+    public static void createOKDialog(final Activity activity,int titleID,int okId,final NoteDialogInterface callBack){
+        AlertDialog dialog = new AlertDialog.Builder(activity).setTitle(titleID)
+//                .setIcon(android.R.drawable.ic_dialog_info)
+                .setPositiveButton(okId, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(callBack != null){
+                            callBack.Ok();
+                        }
+                        //Toast.makeText(activity,"成功",Toast.LENGTH_LONG).show();
+                    }
+                }).show();
+//        dialog.setCanceledOnTouchOutside(false);
+    }
+
     public interface NoteDialogInterface{
         public void Ok();
         public void cancel();
