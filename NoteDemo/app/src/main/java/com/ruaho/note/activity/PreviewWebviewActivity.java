@@ -966,6 +966,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
                             public void Ok() {
                                 tuyaDeletePopupWindow.dismiss();
                                 deleteAllTuya();
+                                closeTuyaManager();
                             }
 
                             @Override
