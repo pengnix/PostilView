@@ -753,9 +753,9 @@ public class PreviewWebviewActivity extends AppCompatActivity {
     }
 
     private void saveTagImage(){
-        Bitmap bm = mPostilView.buildBitmap();
-        String savedFile = FileUtils.saveImage(bm, QUALITY);
-        if (savedFile != null) {
+//        Bitmap bm = mPostilView.buildBitmap();
+        String savedFile = "";//FileUtils.saveImage(bm, QUALITY);
+//        if (savedFile != null) {
             PostilWord currentTag = mPostilView.getCurrentPostilTag();
             currentTag.setCanMove(false);
             Log.i("activityR","currentTag = " + currentTag.toString());
@@ -766,8 +766,8 @@ public class PreviewWebviewActivity extends AppCompatActivity {
             Log.i("activityR","tag = " + tag.toString());
             mPostilWordList.getList().add(tag);
             saveTags();
-        }else{
-        }
+//        }else{
+//        }
     }
 
     private void saveRecord(){

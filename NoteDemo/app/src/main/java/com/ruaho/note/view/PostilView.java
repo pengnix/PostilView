@@ -347,22 +347,27 @@ public class PostilView extends View{
         if(mPostilWordsList != null && !mPostilWordsList.isEmpty() && enableMovePage && mMode != Mode.DRAW && mMode != Mode.ERASER){
             List<PostilWord> list =  mPostilWordsList.getList();
             for(PostilWord tag:list){
-                String address = tag.getAddress();
+//                String address = tag.getAddress();
                 float scale = currentNewScale/tag.getScale();
                 float oX = tag.getOffsetX() * scale - offsetX;
                 float oY = tag.getOffsetY() * scale- offsetY;
                 if(!isBitmapVisible(scale,oX,oY)){
-                    BitmapCache.getInstance().recycle(address);
+//                    BitmapCache.getInstance().recycle(address);
                     continue;
                 }
-                Bitmap bmp = BitmapCache.getInstance().getSafe(address);
-                if(bmp == null){
-                    continue;
-                }
-                positionMatrix.reset();
-                positionMatrix.setTranslate(oX,oY);
-                positionMatrix.preScale(scale, scale);
-                canvas.drawBitmap(bmp,positionMatrix,null);
+//                Bitmap bmp = BitmapCache.getInstance().getSafe(address);
+//                if(bmp == null){
+//                    continue;
+//                }
+                float centerX = (tag.getOffsetX() + tag.getxPos()) * scale - offsetX;
+                float centerY = (tag.getOffsetY() + tag.getyPos()) * scale - offsetY;
+                float top =  centerY - mTagBitmapWidth/2 ;
+                float left = centerX - mTagBitmapWidth/2;
+                canvas.drawBitmap(mTagBitmap , left, top, null);
+//                positionMatrix.reset();
+//                positionMatrix.setTranslate(oX,oY);
+//                positionMatrix.preScale(scale, scale);
+//                canvas.drawBitmap(bmp,positionMatrix,null);
             }
         }
 
