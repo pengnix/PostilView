@@ -720,7 +720,20 @@ public class PreviewWebviewActivity extends AppCompatActivity {
             super.onPageFinished(view, url);
             if(mPostilView != null && mPostilView.getVisibility() == View.INVISIBLE){
                 Log.i("WebChromeClient","Finish2");
-                mPostilView.setVisibility(View.VISIBLE);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.i("erety","1111");
+                        mPostilView.updatePositionInfo(mWebView.getScrollX(),mWebView.getScrollY(),
+                                mWebView.getScale());
+                        mPostilView.setVisibility(View.VISIBLE);
+                        mPostilView.invalidate();
+                        /**
+                         * 延时执行的代码
+                         */
+
+                    }
+                },1000);
             }
         }
     }
