@@ -307,7 +307,7 @@
                 android:textSize="@dimen/preview_top_txt_size"
                 android:layout_centerInParent="true"/>
         </RelativeLayout>
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/preview_words_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

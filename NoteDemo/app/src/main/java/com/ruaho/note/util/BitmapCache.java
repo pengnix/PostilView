@@ -1,5 +1,6 @@
 package com.ruaho.note.util;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
 
@@ -35,8 +36,8 @@ public class BitmapCache {
         }
     }
 
-    public void put(String uri){
-        Bitmap bmp = FileUtils.loadImage(uri);
+    public void put(Context context, String uri){
+        Bitmap bmp = FileUtils.loadImage(context, uri);
         if(enableSoftReference){
             SoftReference<Bitmap> d = new SoftReference<Bitmap>(bmp);
             mImageCacheReferenceMap.put(uri, d);
@@ -71,23 +72,22 @@ public class BitmapCache {
         }
     }
 
-    public Bitmap getSafe(String uri){
+    public Bitmap getSafe(Context context, String uri){
         if(enableSoftReference){
             SoftReference<Bitmap> softReference = mImageCacheReferenceMap.get(uri);
             if (softReference != null && softReference.get() != null) {
                 return softReference.get();
             } else {
-                put(uri);
+                put(context, uri);
                 Log.i("getSafeFail","1");
-                return FileUtils.loadImage(uri);
+                return FileUtils.loadImage(context, uri);
             }
         } else {
-//            Log.i("getSafeFail","size=" + mImageCacheMap.size());
             Bitmap softReference = mImageCacheMap.get(uri);
             if (softReference != null) {
                 return softReference;
             } else {
-                Bitmap bmp = FileUtils.loadImage(uri);
+                Bitmap bmp = FileUtils.loadImage(context, uri);
                 put(uri,bmp);
                 Log.i("getSafeFail","1");
                 return bmp;

@@ -13,13 +13,13 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.Xfermode;
 import android.os.Build;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.ruaho.note.activity.R;
+import com.ruaho.note.note.R;
 import com.ruaho.note.bean.Picture;
 import com.ruaho.note.bean.PostilRecordList;
 import com.ruaho.note.bean.PostilWord;
@@ -376,7 +376,7 @@ public class PostilView extends View{
                 if(currentTuYaIndex < picRecord.getPicList().size()){
                     Picture pic = picRecord.getPicList().get(currentTuYaIndex);
                     String address = pic.getAddress();
-                    Bitmap bmp = BitmapCache.getInstance().getSafe(address);
+                    Bitmap bmp = BitmapCache.getInstance().getSafe(getContext(), address);
                     positionMatrix.reset();
                     float scale = currentNewScale/pic.getScale();
                     float oX = pic.getOffsetX() * scale - offsetX;
@@ -398,7 +398,7 @@ public class PostilView extends View{
                         BitmapCache.getInstance().recycle(address);
                         continue;
                     }
-                    Bitmap bmp = BitmapCache.getInstance().getSafe(address);
+                    Bitmap bmp = BitmapCache.getInstance().getSafe(getContext(), address);
                     if(bmp == null){
                         continue;
                     }

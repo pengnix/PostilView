@@ -6,12 +6,12 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Build;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
-import com.ruaho.note.activity.R;
+import com.ruaho.note.note.R;
 
 public class ColorBlockView extends View {
     Paint p;

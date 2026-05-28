@@ -7,11 +7,11 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -37,6 +37,7 @@ import com.ruaho.note.bean.Picture;
 import com.ruaho.note.bean.PostilRecordList;
 import com.ruaho.note.bean.PostilWordsList;
 import com.ruaho.note.bean.PostilWord;
+import com.ruaho.note.note.R;
 import com.ruaho.note.util.BitmapCache;
 import com.ruaho.note.util.DialogUtils;
 import com.ruaho.note.util.FileUtils;
@@ -744,7 +745,7 @@ public class PreviewWebviewActivity extends AppCompatActivity {
 
     private void saveTuYaImage(){
         Bitmap bm = mPostilView.buildBitmap();
-        String savedFile = FileUtils.saveImage(bm, QUALITY);
+        String savedFile = FileUtils.saveImage(this, bm, QUALITY);
         if (savedFile != null) {
             float offsetX = mPostilView.getOffsetX();
             float offsetY = mPostilView.getOffsetY();

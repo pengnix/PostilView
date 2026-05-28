@@ -1,5 +1,6 @@
 package com.ruaho.note.util;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
@@ -13,70 +14,66 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class FileUtils {
-    public static String saveImage(Bitmap bmp, int quality) {
-        if (bmp == null) {
+    
+    private static File getAppDir(Context context) {
+        File appDir = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "ruahoPreview");
+        if (!appDir.exists()) {
+            appDir.mkdirs();
+        }
+        return appDir;
+    }
+
+    public static String saveImage(Context context, Bitmap bmp, int quality) {
+        if (bmp == null || context == null) {
             return null;
         }
         String fileName = System.currentTimeMillis() + ".png";
-        if(isSDCardMounted()){
-            File appDir = new File(getSDCardBaseDir() + File.separator + "ruahoPreview");
-            if (appDir == null) {
-                return null;
-            }
-            if (!appDir.exists()) {
-                appDir.mkdirs();// 递归创建自定义目录
-            }
-            File file = new File(appDir, fileName);
-            Log.i("saveImage","file is" + fileName);
-            FileOutputStream fos = null;
-            try {
-                fos = new FileOutputStream(file);
-                //bmp.compress(Bitmap.CompressFormat.PNG, quality, fos);
-                bmp.compress(Bitmap.CompressFormat.PNG, quality, fos);
-                fos.flush();
-                return fileName;
-            } catch (FileNotFoundException e) {
-                fileName = null;
-                Log.i("saveImage","FileNotFoundException");
-                e.printStackTrace();
-            } catch (IOException e) {
-                fileName = null;
-                Log.i("saveImage","IOException");
-                e.printStackTrace();
-            } finally {
-                if (fos != null) {
-                    try {
-                        fos.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+        File appDir = getAppDir(context);
+        File file = new File(appDir, fileName);
+        Log.i("saveImage","file is" + fileName + " path=" + file.getAbsolutePath());
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(file);
+            bmp.compress(Bitmap.CompressFormat.PNG, quality, fos);
+            fos.flush();
+            return fileName;
+        } catch (FileNotFoundException e) {
+            fileName = null;
+            Log.i("saveImage","FileNotFoundException");
+            e.printStackTrace();
+        } catch (IOException e) {
+            fileName = null;
+            Log.i("saveImage","IOException");
+            e.printStackTrace();
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
-        } else {
-            fileName = null;
         }
-
         return fileName;
     }
 
-    public static Bitmap loadImage(String name){
+    public static Bitmap loadImage(Context context, String name){
+        if (context == null || name == null) {
+            return null;
+        }
         Log.i("saveImage","loadImage="+ name);
         Bitmap bitmap = null;
 
-        if(isSDCardMounted()){
-            File appDir = new File(getSDCardBaseDir() + File.separator + "ruahoPreview");
-            String fileName = name;
-            String uri = appDir + "/" + fileName;
-            Log.i("saveImage","loadImage uri ="+ uri);
-            try{
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inPreferredConfig = Bitmap.Config.ARGB_4444;
-                bitmap = BitmapFactory.decodeFile(uri,options);
-//                Log.i("calSize",name+"height = "+bitmap.getHeight() + "width = "+bitmap.getWidth());
-//                Log.i("calSize",name+"size = " + BitmapUtils.getBitmapSize(bitmap));
-            } catch (OutOfMemoryError e){
-                Log.i("saveImage","OutOfMemoryError");
-            }
+        File appDir = getAppDir(context);
+        String fileName = name;
+        String uri = new File(appDir, fileName).getAbsolutePath();
+        Log.i("saveImage","loadImage uri ="+ uri);
+        try{
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inPreferredConfig = Bitmap.Config.ARGB_4444;
+            bitmap = BitmapFactory.decodeFile(uri,options);
+        } catch (OutOfMemoryError e){
+            Log.i("saveImage","OutOfMemoryError");
         }
 
         return bitmap;
