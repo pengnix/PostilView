@@ -6,11 +6,11 @@ buildscript {
 //        maven { url 'https://maven.aliyun.com/repository/jcenter' }
 //        maven { url 'https://maven.aliyun.com/repository/public' }
         google()
-        jcenter()
-//        mavenCentral()
+        mavenCentral()
+        //        mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.5.0'
+        classpath 'com.android.tools.build:gradle:8.13.0'
     }
 }
 
@@ -20,8 +20,8 @@ allprojects {
 //        maven { url 'https://maven.aliyun.com/repository/jcenter' }
 //        maven { url 'https://maven.aliyun.com/repository/public' }
         google()
-        jcenter()
-//        mavenCentral()
+        mavenCentral()
+        //        mavenCentral()
     }
 }
 
